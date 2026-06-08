@@ -3,26 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
-<title>Medallion Architecture — Dawit Adane · Data Engineer</title>
+<title>Gen AI Data Engineering Runtime - Dawit Adane</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,400&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-
-  <link rel="stylesheet" href="styles.css">
-
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<!-- NAV -->
 <nav class="nav">
   <div class="container" style="padding-top:0;padding-bottom:0;width:100%;">
     <div class="nav__inner">
-      <div class="nav__brand">Dawit Adane<em>/ Medallion Architecture</em></div>
+      <div class="nav__brand">Dawit Adane<em>/ Gen AI Data Engineering Runtime</em></div>
       <div class="nav__tabs" aria-label="Portfolio Sections">
-        <a class="nav__tab is-active" href="#sql-section">SQL</a>
-        <a class="nav__tab" href="#sim-section">Simulator</a>
-        <a class="nav__tab" href="#dash-section">Dashboard</a>
+        <a class="nav__tab is-active" href="#domains-overview">Domains</a>
+        <a class="nav__tab" href="#industries-section">Industries</a>
+        <a class="nav__tab" href="#runner-section">Live Runner</a>
+        <a class="nav__tab" href="#dashboard-section">Dashboard</a>
         <a class="nav__tab" href="#skills-section">Skills</a>
         <span class="nav__separator" aria-hidden="true"></span>
         <a class="nav__tab nav__tab--consulting" href="consulting.html">Consulting</a>
@@ -31,866 +27,335 @@
         <span class="nav__separator" aria-hidden="true"></span>
         <a class="nav__tab nav__tab--resume" href="resume.html">Resume</a>
       </div>
-      <div class="nav__right"><div class="pulse"></div><span>Interactive Portfolio</span></div>
+      <div class="nav__right"><div class="pulse"></div><span>Interactive Runtime Portfolio</span></div>
     </div>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
+<header class="hero">
   <div class="hero__mesh"></div>
   <div class="hero__grid"></div>
   <div class="container">
     <div class="hero__inner">
-      <div class="hero__eyebrow">Data Engineering Portfolio</div>
-      <h1 class="hero__h1">
-        <span class="t-bronze">Staging</span>
-        <span class="t-arrow"> → </span>
-        <span class="t-silver">Silver</span>
-        <span class="t-arrow"> → </span>
-        <span class="t-gold">Gold</span>
-      </h1>
-      <p class="hero__sub">Production SQL patterns across 5 industries — with a live pipeline simulator and Gold-layer analytics dashboard.</p>
-      <div class="hero__layers">
-        <div class="layer-card layer-card--bronze">
-          <div class="layer-card__tag">Staging</div>
-          <div class="layer-card__name">Bronze</div>
-          <div class="layer-card__desc">Raw ingest · Type cast</div>
-        </div>
-        <div class="layer-arrow">→</div>
-        <div class="layer-card layer-card--silver">
-          <div class="layer-card__tag">Cleansed</div>
-          <div class="layer-card__name">Silver</div>
-          <div class="layer-card__desc">Conformed · Enriched</div>
-        </div>
-        <div class="layer-arrow">→</div>
-        <div class="layer-card layer-card--gold">
-          <div class="layer-card__tag">Delivery</div>
-          <div class="layer-card__name">Gold</div>
-          <div class="layer-card__desc">Aggregated · Report-ready</div>
-        </div>
-      </div>
+      <div class="hero__eyebrow">Domain-First Architecture</div>
+      <h1 class="hero__h1">7 Gen AI and Data Engineering Domains</h1>
+      <p class="hero__sub">Each section shows practical Python and SQL techniques, interactive demo behavior, and tool stack cards. The live runner executes domains in sequence and feeds the capability map.</p>
     </div>
   </div>
-</div>
-<!-- ════ SECTION 1: INDUSTRY SQL ════ -->
-<section class="section" id="sql-section">
-  <div class="container">
+</header>
 
+<section class="section" id="domains-overview">
+  <div class="container">
     <div class="section__header reveal">
       <span class="section__num">01 /</span>
-      <h2 class="section__title">Industry Use Cases &amp; SQL Scripts</h2>
+      <h2 class="section__title">Domain Sections</h2>
       <div class="section__line"></div>
     </div>
 
-    <!-- Industry pills -->
-    <div class="ind-pills reveal reveal-delay-1">
-      <button class="ind-pill active" onclick="switchInd('healthcare',this)"><span class="pill-icon">🏥</span>Healthcare</button>
-      <button class="ind-pill" onclick="switchInd('finance',this)"><span class="pill-icon">💳</span>Finance</button>
-      <button class="ind-pill" onclick="switchInd('retail',this)"><span class="pill-icon">🛒</span>Retail</button>
-      <button class="ind-pill" onclick="switchInd('manufacturing',this)"><span class="pill-icon">🏭</span>Manufacturing</button>
-      <button class="ind-pill" onclick="switchInd('hr',this)"><span class="pill-icon">👥</span>HR &amp; Payroll</button>
-    </div>
+    <div id="domain-cards">
 
-    <!-- ── HEALTHCARE ── -->
-    <div class="industry-panel active reveal reveal-delay-2" id="panel-healthcare">
-      <div class="uc-card">
-        <div class="uc-card__icon">🏥</div>
-        <div class="uc-card__body">
-          <div class="uc-card__title">Patient Journey &amp; Clinical Operations Analytics</div>
-          <div class="uc-card__desc">Track patient encounters, appointment compliance, clinical outcomes and operational throughput across care sites. Power staffing models, compliance reporting, and revenue cycle visibility.</div>
-          <div class="uc-card__tags">
-            <span class="tag tag--blue">Patient Encounters</span>
-            <span class="tag tag--blue">Revenue Cycle</span>
-            <span class="tag tag--blue">Readmission Flags</span>
-            <span class="tag tag--green">HIPAA-aware Design</span>
-            <span class="tag tag--gold">SCD Type 2</span>
-          </div>
-        </div>
-      </div>
-      <div class="sql-layers">
-        <div class="sql-block l-bronze open" id="hc-b">
-          <div class="sql-block-header" onclick="toggleSql('hc-b')">
-            <span class="layer-badge lb-bronze">Staging</span>
-            <span class="sql-block-label">stg_patient_encounters — Raw EHR ingest with type casting</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Ingest raw encounter data from EHR. Generate MD5 surrogate keys, cast all types, and preserve source row for audit trail.</div>
-<pre><span class="c">-- stg_patient_encounters.sql  (Staging / Bronze)</span>
-<span class="k">WITH</span> source <span class="k">AS</span> (
-    <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ source('ehr_raw','encounters') }}</span>
-),
-staged <span class="k">AS</span> (
-    <span class="k">SELECT</span>
-        <span class="f">MD5</span>(encounter_id || patient_id)    <span class="k">AS</span> encounter_key,
-        encounter_id::VARCHAR              <span class="k">AS</span> src_encounter_id,
-        patient_id::VARCHAR               <span class="k">AS</span> src_patient_id,
-        provider_id::VARCHAR              <span class="k">AS</span> src_provider_id,
-        facility_code::VARCHAR            <span class="k">AS</span> src_facility_code,
-        encounter_date::DATE              <span class="k">AS</span> encounter_date,
-        admission_ts::TIMESTAMP_NTZ       <span class="k">AS</span> admission_at,
-        discharge_ts::TIMESTAMP_NTZ       <span class="k">AS</span> discharge_at,
-        <span class="f">UPPER</span>(<span class="f">TRIM</span>(encounter_status))     <span class="k">AS</span> encounter_status_raw,
-        billed_amount::NUMERIC(<span class="n">12</span>,<span class="n">2</span>)     <span class="k">AS</span> billed_amount,
-        insurance_code::VARCHAR           <span class="k">AS</span> insurance_code,
-        <span class="f">CURRENT_TIMESTAMP</span>()               <span class="k">AS</span> _loaded_at,
-        _source_file
-    <span class="k">FROM</span> source
-    <span class="k">WHERE</span> encounter_id <span class="k">IS NOT NULL</span>
-      <span class="k">AND</span> patient_id    <span class="k">IS NOT NULL</span>
-)
-<span class="k">SELECT</span> * <span class="k">FROM</span> staged</pre>
-          </div></div>
-        </div>
-        <div class="sql-block l-silver" id="hc-s">
-          <div class="sql-block-header" onclick="toggleSql('hc-s')">
-            <span class="layer-badge lb-silver">Silver</span>
-            <span class="sql-block-label">silver_encounters — Conformed with readmission flags &amp; LOS</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Apply business rules, standardize status vocabulary, calculate length-of-stay, and flag 30-day readmissions via LAG window function.</div>
-<pre><span class="c">-- silver_encounters.sql  (Silver)</span>
-<span class="k">WITH</span> staged    <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_patient_encounters') }}</span> ),
-     facilities <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_facilities') }}</span> )
-<span class="k">SELECT</span>
-    e.encounter_key, e.src_encounter_id, e.src_patient_id,
-    <span class="k">CASE</span> e.encounter_status_raw
-        <span class="k">WHEN</span> <span class="s">'COMP'</span>  <span class="k">THEN</span> <span class="s">'Completed'</span>
-        <span class="k">WHEN</span> <span class="s">'CANC'</span>  <span class="k">THEN</span> <span class="s">'Cancelled'</span>
-        <span class="k">WHEN</span> <span class="s">'NOSHO'</span> <span class="k">THEN</span> <span class="s">'No-Show'</span>
-        <span class="k">WHEN</span> <span class="s">'SCHED'</span> <span class="k">THEN</span> <span class="s">'Scheduled'</span>
-        <span class="k">ELSE</span> <span class="s">'Unknown'</span>
-    <span class="k">END</span>                                          <span class="k">AS</span> encounter_status,
-    <span class="f">DATEDIFF</span>(<span class="s">'hour'</span>, e.admission_at,
-        <span class="f">COALESCE</span>(e.discharge_at, <span class="f">CURRENT_TIMESTAMP</span>()))  <span class="k">AS</span> los_hours,
-    <span class="k">CASE WHEN</span>
-        <span class="f">LAG</span>(e.encounter_date)
-          <span class="k">OVER</span> (<span class="k">PARTITION BY</span> e.src_patient_id
-                <span class="k">ORDER BY</span> e.encounter_date)
-        >= <span class="f">DATEADD</span>(<span class="s">'day'</span>, -<span class="n">30</span>, e.encounter_date)
-    <span class="k">THEN TRUE ELSE FALSE END</span>                     <span class="k">AS</span> is_readmission,
-    f.facility_name, f.region,
-    e.billed_amount, e.encounter_date, e._loaded_at
-<span class="k">FROM</span> staged e
-<span class="k">LEFT JOIN</span> facilities f <span class="k">ON</span> e.src_facility_code = f.facility_code
-<span class="k">WHERE</span> e.billed_amount >= <span class="n">0</span>
-  <span class="k">AND</span> e.encounter_date >= <span class="s">'2020-01-01'</span></pre>
-          </div></div>
-        </div>
-        <div class="sql-block l-gold" id="hc-g">
-          <div class="sql-block-header" onclick="toggleSql('hc-g')">
-            <span class="layer-badge lb-gold">Gold</span>
-            <span class="sql-block-label">fct_monthly_clinical_ops — KPI mart for BI reporting</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Aggregate to monthly grain: no-show rate, readmission rate, avg LOS, revenue per encounter — all windowed for prior-month LAG comparison.</div>
-<pre><span class="c">-- fct_monthly_clinical_ops.sql  (Gold)</span>
-<span class="k">SELECT</span>
-    <span class="f">DATE_TRUNC</span>(<span class="s">'month'</span>, encounter_date)  <span class="k">AS</span> report_month,
-    region, facility_name,
-    <span class="f">COUNT</span>(*)                             <span class="k">AS</span> total_encounters,
-    <span class="f">COUNT</span>(<span class="k">DISTINCT</span> src_patient_id)       <span class="k">AS</span> unique_patients,
-    <span class="f">ROUND</span>(<span class="f">SUM</span>(<span class="k">CASE WHEN</span> encounter_status = <span class="s">'No-Show'</span>
-                <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) * <span class="n">100.0</span>
-          / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>)    <span class="k">AS</span> no_show_rate_pct,
-    <span class="f">ROUND</span>(<span class="f">SUM</span>(is_readmission::INT) * <span class="n">100.0</span>
-          / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>)    <span class="k">AS</span> readmission_rate_pct,
-    <span class="f">ROUND</span>(<span class="f">AVG</span>(los_hours), <span class="n">1</span>)           <span class="k">AS</span> avg_los_hours,
-    <span class="f">SUM</span>(billed_amount)                  <span class="k">AS</span> total_billed,
-    <span class="f">LAG</span>(<span class="f">COUNT</span>(*)) <span class="k">OVER</span> (
-        <span class="k">PARTITION BY</span> facility_name
-        <span class="k">ORDER BY</span> <span class="f">DATE_TRUNC</span>(<span class="s">'month'</span>, encounter_date)
-    )                                   <span class="k">AS</span> prev_month_encounters
-<span class="k">FROM</span> <span class="t">{{ ref('silver_encounters') }}</span>
-<span class="k">GROUP BY</span> <span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>
-<span class="k">ORDER BY</span> report_month <span class="k">DESC</span>, total_encounters <span class="k">DESC</span></pre>
-          </div></div>
-        </div>
-      </div>
-    </div>
+    <article class="domain-card reveal" id="domain-1">
+      <div class="domain-card__head"><span class="domain-chip">Domain 1</span><h3>Data Generation and Augmentation</h3></div>
+      <p class="domain-desc">Generate synthetic records and augment sparse labels for robust model and analytics pipelines.</p>
+      <div class="domain-grid">
+        <div class="code-card">
+          <div class="code-card__title">Python</div>
+<pre>import pandas as pd
+from faker import Faker
 
-    <!-- ── FINANCE ── -->
-    <div class="industry-panel" id="panel-finance">
-      <div class="uc-card">
-        <div class="uc-card__icon">💳</div>
-        <div class="uc-card__body">
-          <div class="uc-card__title">Transaction Risk &amp; Fraud Detection Analytics</div>
-          <div class="uc-card__desc">Monitor transaction volumes, detect anomalies, calculate rolling risk scores, and surface suspicious account behavior for compliance and fraud operations teams.</div>
-          <div class="uc-card__tags">
-            <span class="tag tag--blue">Transaction Monitoring</span>
-            <span class="tag tag--blue">Rolling Aggregates</span>
-            <span class="tag tag--green">Z-Score Anomaly</span>
-            <span class="tag tag--gold">Risk Scoring</span>
-          </div>
+fake = Faker()
+rows = [{"customer_id": f"C{n:04}", "region": fake.state_abbr(),
+         "ticket_text": fake.sentence(), "label": "support"}
+        for n in range(1, 6)]
+df = pd.DataFrame(rows)</pre>
+        </div>
+        <div class="code-card">
+          <div class="code-card__title">SQL</div>
+<pre>SELECT customer_id,
+       region,
+       ticket_text,
+       label,
+       CURRENT_TIMESTAMP AS generated_at
+FROM synthetic_support_seed;</pre>
         </div>
       </div>
-      <div class="sql-layers">
-        <div class="sql-block l-bronze open" id="fin-b">
-          <div class="sql-block-header" onclick="toggleSql('fin-b')">
-            <span class="layer-badge lb-bronze">Staging</span>
-            <span class="sql-block-label">stg_transactions — Ledger ingest with ROW_NUMBER dedup</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Deduplicate on source transaction ID via ROW_NUMBER, normalize currency, and preserve full audit lineage.</div>
-<pre><span class="c">-- stg_transactions.sql  (Staging / Bronze)</span>
-<span class="k">WITH</span> source  <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ source('core_banking','transactions') }}</span> ),
-     deduped <span class="k">AS</span> (
-         <span class="k">SELECT</span> *,
-             <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (
-                 <span class="k">PARTITION BY</span> transaction_id
-                 <span class="k">ORDER BY</span> processed_at <span class="k">DESC</span>
-             ) <span class="k">AS</span> rn
-         <span class="k">FROM</span> source
-     )
-<span class="k">SELECT</span>
-    <span class="f">MD5</span>(transaction_id)         <span class="k">AS</span> txn_key,
-    transaction_id::VARCHAR      <span class="k">AS</span> src_transaction_id,
-    account_id::VARCHAR          <span class="k">AS</span> src_account_id,
-    merchant_id::VARCHAR         <span class="k">AS</span> src_merchant_id,
-    processed_at::TIMESTAMP_NTZ <span class="k">AS</span> processed_at,
-    transaction_date::DATE       <span class="k">AS</span> txn_date,
-    amount::NUMERIC(<span class="n">14</span>,<span class="n">2</span>)       <span class="k">AS</span> txn_amount_local,
-    currency_code::VARCHAR(<span class="n">3</span>)   <span class="k">AS</span> currency_code,
-    <span class="f">UPPER</span>(<span class="f">TRIM</span>(txn_type))       <span class="k">AS</span> txn_type_raw,
-    <span class="f">CURRENT_TIMESTAMP</span>()         <span class="k">AS</span> _loaded_at
-<span class="k">FROM</span> deduped
-<span class="k">WHERE</span> rn = <span class="n">1</span> <span class="k">AND</span> amount > <span class="n">0</span> <span class="k">AND</span> transaction_id <span class="k">IS NOT NULL</span></pre>
-          </div></div>
-        </div>
-        <div class="sql-block l-silver" id="fin-s">
-          <div class="sql-block-header" onclick="toggleSql('fin-s')">
-            <span class="layer-badge lb-silver">Silver</span>
-            <span class="sql-block-label">silver_transactions — Rolling 7d spend &amp; z-score risk flags</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Compute rolling 7-day spend, daily velocity counts, z-score anomaly signals, and business rule risk flags per account.</div>
-<pre><span class="c">-- silver_transactions.sql  (Silver)</span>
-<span class="k">WITH</span> txns <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_transactions') }}</span> ),
-rolling <span class="k">AS</span> (
-    <span class="k">SELECT</span> *,
-        <span class="f">SUM</span>(txn_amount_local) <span class="k">OVER</span> (
-            <span class="k">PARTITION BY</span> src_account_id <span class="k">ORDER BY</span> txn_date
-            <span class="k">ROWS BETWEEN</span> <span class="n">6</span> <span class="k">PRECEDING AND CURRENT ROW</span>
-        )                              <span class="k">AS</span> rolling_7d_spend,
-        <span class="f">COUNT</span>(*) <span class="k">OVER</span> (
-            <span class="k">PARTITION BY</span> src_account_id, txn_date
-        )                              <span class="k">AS</span> daily_txn_count,
-        (txn_amount_local - <span class="f">AVG</span>(txn_amount_local) <span class="k">OVER</span>
-            (<span class="k">PARTITION BY</span> src_account_id))
-        / <span class="f">NULLIF</span>(<span class="f">STDDEV</span>(txn_amount_local) <span class="k">OVER</span>
-            (<span class="k">PARTITION BY</span> src_account_id), <span class="n">0</span>)  <span class="k">AS</span> amount_z_score
-    <span class="k">FROM</span> txns
-)
-<span class="k">SELECT</span> r.*,
-    <span class="k">CASE</span>
-        <span class="k">WHEN</span> r.rolling_7d_spend > <span class="n">10000</span>  <span class="k">THEN TRUE</span>
-        <span class="k">WHEN</span> r.daily_txn_count  > <span class="n">20</span>     <span class="k">THEN TRUE</span>
-        <span class="k">WHEN</span> r.amount_z_score   > <span class="n">3</span>      <span class="k">THEN TRUE</span>
-        <span class="k">ELSE FALSE</span>
-    <span class="k">END</span>                                <span class="k">AS</span> is_high_risk,
-    <span class="k">CASE</span> r.txn_type_raw
-        <span class="k">WHEN</span> <span class="s">'PUR'</span> <span class="k">THEN</span> <span class="s">'Purchase'</span>
-        <span class="k">WHEN</span> <span class="s">'REF'</span> <span class="k">THEN</span> <span class="s">'Refund'</span>
-        <span class="k">WHEN</span> <span class="s">'WD'</span>  <span class="k">THEN</span> <span class="s">'Withdrawal'</span>
-        <span class="k">WHEN</span> <span class="s">'TRF'</span> <span class="k">THEN</span> <span class="s">'Transfer'</span>
-        <span class="k">ELSE</span> <span class="s">'Other'</span>
-    <span class="k">END</span>                                <span class="k">AS</span> txn_type
-<span class="k">FROM</span> rolling r</pre>
-          </div></div>
-        </div>
-        <div class="sql-block l-gold" id="fin-g">
-          <div class="sql-block-header" onclick="toggleSql('fin-g')">
-            <span class="layer-badge lb-gold">Gold</span>
-            <span class="sql-block-label">fct_account_risk_summary — Daily risk mart for fraud ops</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Daily per-account risk summary: flagged transaction count, risk rate %, total flagged exposure, and velocity score for fraud analyst dashboards.</div>
-<pre><span class="c">-- fct_account_risk_summary.sql  (Gold)</span>
-<span class="k">SELECT</span>
-    txn_date, src_account_id, currency_code,
-    <span class="f">COUNT</span>(*)                              <span class="k">AS</span> total_transactions,
-    <span class="f">SUM</span>(txn_amount_local)                <span class="k">AS</span> total_spend,
-    <span class="f">SUM</span>(is_high_risk::INT)               <span class="k">AS</span> flagged_txn_count,
-    <span class="f">ROUND</span>(<span class="f">SUM</span>(is_high_risk::INT) * <span class="n">100.0</span>
-          / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>)     <span class="k">AS</span> risk_rate_pct,
-    <span class="f">SUM</span>(<span class="k">CASE WHEN</span> is_high_risk
-            <span class="k">THEN</span> txn_amount_local <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) <span class="k">AS</span> flagged_exposure,
-    <span class="f">ROUND</span>(<span class="f">COUNT</span>(*) / <span class="n">24.0</span>, <span class="n">2</span>)           <span class="k">AS</span> txn_velocity_per_hr,
-    <span class="f">SUM</span>(txn_amount_local)
-      - <span class="f">LAG</span>(<span class="f">SUM</span>(txn_amount_local), <span class="n">30</span>)
-        <span class="k">OVER</span> (<span class="k">PARTITION BY</span> src_account_id
-              <span class="k">ORDER BY</span> txn_date)           <span class="k">AS</span> spend_30d_delta
-<span class="k">FROM</span> <span class="t">{{ ref('silver_transactions') }}</span>
-<span class="k">GROUP BY</span> <span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>
-<span class="k">ORDER BY</span> risk_rate_pct <span class="k">DESC</span></pre>
-          </div></div>
-        </div>
-      </div>
-    </div>
+      <div class="tool-row"><span class="tool-pill">Python</span><span class="tool-pill">Faker</span><span class="tool-pill">Pandas</span><span class="tool-pill">Snowflake</span></div>
+    </article>
 
-    <!-- ── RETAIL ── -->
-    <div class="industry-panel" id="panel-retail">
-      <div class="uc-card">
-        <div class="uc-card__icon">🛒</div>
-        <div class="uc-card__body">
-          <div class="uc-card__title">Customer 360 &amp; RFM Segmentation</div>
-          <div class="uc-card__desc">Unify POS and e-commerce orders into customer lifetime value models, RFM segmentation, and inventory-linked sales analytics for merchandising and retention teams.</div>
-          <div class="uc-card__tags">
-            <span class="tag tag--blue">Multi-Source Union</span>
-            <span class="tag tag--blue">Customer LTV</span>
-            <span class="tag tag--green">RFM Segmentation</span>
-            <span class="tag tag--gold">NTILE Scoring</span>
-          </div>
-        </div>
+    <article class="domain-card reveal" id="domain-2">
+      <div class="domain-card__head"><span class="domain-chip">Domain 2</span><h3>Writing Generative AI Code with Gen AI</h3></div>
+      <p class="domain-desc">Generate implementation drafts with prompt constraints and enforce test-driven review gates.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>prompt = "Build parser with schema checks"
+candidate = llm.generate_code(prompt)
+assert "def parse_invoice" in candidate</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT run_id,
+       generated_module,
+       unit_test_pass_rate
+FROM ai_codegen_audit
+ORDER BY created_at DESC;</pre></div>
       </div>
-      <div class="sql-layers">
-        <div class="sql-block l-bronze open" id="ret-b">
-          <div class="sql-block-header" onclick="toggleSql('ret-b')">
-            <span class="layer-badge lb-bronze">Staging</span>
-            <span class="sql-block-label">stg_orders — POS + e-commerce UNION with channel tag</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">UNION ALL POS and Shopify order sources, tag each row with channel origin, normalize discount handling and cast financial fields.</div>
-<pre><span class="c">-- stg_orders.sql  (Staging / Bronze)</span>
-<span class="k">WITH</span>
-pos_src  <span class="k">AS</span> (<span class="k">SELECT</span> *, <span class="s">'POS'</span>  <span class="k">AS</span> order_channel <span class="k">FROM</span> <span class="t">{{ source('pos_system','sales') }}</span>),
-ecom_src <span class="k">AS</span> (<span class="k">SELECT</span> *, <span class="s">'ECOM'</span> <span class="k">AS</span> order_channel <span class="k">FROM</span> <span class="t">{{ source('shopify','orders') }}</span>),
-unioned  <span class="k">AS</span> (<span class="k">SELECT</span> * <span class="k">FROM</span> pos_src <span class="k">UNION ALL SELECT</span> * <span class="k">FROM</span> ecom_src)
-<span class="k">SELECT</span>
-    <span class="f">MD5</span>(order_id || order_channel)         <span class="k">AS</span> order_key,
-    order_id::VARCHAR                       <span class="k">AS</span> src_order_id,
-    customer_id::VARCHAR                    <span class="k">AS</span> src_customer_id,
-    order_channel,
-    order_date::DATE                        <span class="k">AS</span> order_date,
-    gross_amount::NUMERIC(<span class="n">12</span>,<span class="n">2</span>)           <span class="k">AS</span> gross_amount,
-    discount_amount::NUMERIC(<span class="n">10</span>,<span class="n">2</span>)        <span class="k">AS</span> discount_amount,
-    gross_amount - <span class="f">COALESCE</span>(discount_amount, <span class="n">0</span>)  <span class="k">AS</span> net_amount,
-    store_id::VARCHAR                       <span class="k">AS</span> store_id,
-    <span class="f">UPPER</span>(payment_method)                   <span class="k">AS</span> payment_method,
-    <span class="f">CURRENT_TIMESTAMP</span>()                     <span class="k">AS</span> _loaded_at
-<span class="k">FROM</span> unioned
-<span class="k">WHERE</span> order_id    <span class="k">IS NOT NULL</span>
-  <span class="k">AND</span> customer_id <span class="k">IS NOT NULL</span></pre>
-          </div></div>
-        </div>
-        <div class="sql-block l-silver" id="ret-s">
-          <div class="sql-block-header" onclick="toggleSql('ret-s')">
-            <span class="layer-badge lb-silver">Silver</span>
-            <span class="sql-block-label">silver_customer_orders — RFM signals via window functions</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Compute Recency (days since last order), Frequency (order rank), Monetary (cumulative LTV), and first-order flag per customer.</div>
-<pre><span class="c">-- silver_customer_orders.sql  (Silver)</span>
-<span class="k">WITH</span> orders <span class="k">AS</span> (<span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_orders') }}</span>)
-<span class="k">SELECT</span> *,
-    <span class="c">-- Recency</span>
-    <span class="f">DATEDIFF</span>(<span class="s">'day'</span>, order_date,
-        <span class="f">MAX</span>(order_date) <span class="k">OVER</span> (<span class="k">PARTITION BY</span> src_customer_id)
-    )                                      <span class="k">AS</span> days_since_last_order,
-    <span class="c">-- Frequency</span>
-    <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (
-        <span class="k">PARTITION BY</span> src_customer_id
-        <span class="k">ORDER BY</span> order_date
-    )                                      <span class="k">AS</span> customer_order_rank,
-    <span class="c">-- Monetary: cumulative LTV</span>
-    <span class="f">SUM</span>(net_amount) <span class="k">OVER</span> (
-        <span class="k">PARTITION BY</span> src_customer_id
-        <span class="k">ORDER BY</span> order_date
-        <span class="k">ROWS UNBOUNDED PRECEDING</span>
-    )                                      <span class="k">AS</span> cumulative_ltv,
-    <span class="k">CASE WHEN ROW_NUMBER</span>() <span class="k">OVER</span> (
-        <span class="k">PARTITION BY</span> src_customer_id <span class="k">ORDER BY</span> order_date
-    ) = <span class="n">1</span> <span class="k">THEN TRUE ELSE FALSE END</span>       <span class="k">AS</span> is_first_order
-<span class="k">FROM</span> orders</pre>
-          </div></div>
-        </div>
-        <div class="sql-block l-gold" id="ret-g">
-          <div class="sql-block-header" onclick="toggleSql('ret-g')">
-            <span class="layer-badge lb-gold">Gold</span>
-            <span class="sql-block-label">fct_customer_segments — NTILE RFM scoring &amp; segment labels</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Score each RFM dimension with NTILE(5), compute composite score, and classify into Champion / Loyal / Potential / At-Risk / Lost segments.</div>
-<pre><span class="c">-- fct_customer_segments.sql  (Gold)</span>
-<span class="k">WITH</span> summary <span class="k">AS</span> (
-    <span class="k">SELECT</span> src_customer_id,
-        <span class="f">MAX</span>(order_date) <span class="k">AS</span> last_order_date,
-        <span class="f">COUNT</span>(*)        <span class="k">AS</span> total_orders,
-        <span class="f">SUM</span>(net_amount) <span class="k">AS</span> total_ltv,
-        <span class="f">MIN</span>(days_since_last_order) <span class="k">AS</span> recency_days
-    <span class="k">FROM</span> <span class="t">{{ ref('silver_customer_orders') }}</span> <span class="k">GROUP BY</span> <span class="n">1</span>
-),
-scored <span class="k">AS</span> (
-    <span class="k">SELECT</span> *,
-        <span class="f">NTILE</span>(<span class="n">5</span>) <span class="k">OVER</span> (<span class="k">ORDER BY</span> recency_days <span class="k">ASC</span>) <span class="k">AS</span> r_score,
-        <span class="f">NTILE</span>(<span class="n">5</span>) <span class="k">OVER</span> (<span class="k">ORDER BY</span> total_orders  <span class="k">ASC</span>) <span class="k">AS</span> f_score,
-        <span class="f">NTILE</span>(<span class="n">5</span>) <span class="k">OVER</span> (<span class="k">ORDER BY</span> total_ltv     <span class="k">ASC</span>) <span class="k">AS</span> m_score
-    <span class="k">FROM</span> summary
-)
-<span class="k">SELECT</span> *,
-    (r_score + f_score + m_score) / <span class="n">3.0</span>    <span class="k">AS</span> rfm_composite,
-    <span class="k">CASE</span>
-        <span class="k">WHEN</span> r_score >= <span class="n">4</span> <span class="k">AND</span> f_score >= <span class="n">4</span>  <span class="k">THEN</span> <span class="s">'Champion'</span>
-        <span class="k">WHEN</span> f_score >= <span class="n">3</span> <span class="k">AND</span> m_score >= <span class="n">3</span>  <span class="k">THEN</span> <span class="s">'Loyal'</span>
-        <span class="k">WHEN</span> r_score <= <span class="n">2</span> <span class="k">AND</span> f_score >= <span class="n">3</span>  <span class="k">THEN</span> <span class="s">'At-Risk'</span>
-        <span class="k">WHEN</span> r_score = <span class="n">1</span>                      <span class="k">THEN</span> <span class="s">'Lost'</span>
-        <span class="k">ELSE</span> <span class="s">'Potential'</span>
-    <span class="k">END</span>                                     <span class="k">AS</span> customer_segment
-<span class="k">FROM</span> scored <span class="k">ORDER BY</span> rfm_composite <span class="k">DESC</span></pre>
-          </div></div>
-        </div>
-      </div>
-    </div>
+      <div class="tool-row"><span class="tool-pill">OpenAI</span><span class="tool-pill">Unit Tests</span><span class="tool-pill">CI/CD</span></div>
+    </article>
 
-    <!-- ── MANUFACTURING ── -->
-    <div class="industry-panel" id="panel-manufacturing">
-      <div class="uc-card">
-        <div class="uc-card__icon">🏭</div>
-        <div class="uc-card__body">
-          <div class="uc-card__title">Equipment OEE &amp; Production Downtime Analytics</div>
-          <div class="uc-card__desc">Calculate Overall Equipment Effectiveness (OEE), track unplanned downtime root causes, and identify production line bottlenecks from IoT sensor and MES event data.</div>
-          <div class="uc-card__tags">
-            <span class="tag tag--blue">OEE Calculation</span>
-            <span class="tag tag--blue">Shift-Level Grain</span>
-            <span class="tag tag--green">IoT / MES Integration</span>
-            <span class="tag tag--gold">7-Day Rolling Avg</span>
-          </div>
-        </div>
+    <article class="domain-card reveal" id="domain-3">
+      <div class="domain-card__head"><span class="domain-chip">Domain 3</span><h3>Data Parsing and Extraction</h3></div>
+      <p class="domain-desc">Parse documents and logs to extract entities, values, and structured business signals.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>import re
+invoice_id = re.search(r"INV-\\d+", text).group(0)
+amount = float(re.search(r"Total: (\\d+\\.\\d+)", text).group(1))</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT doc_id,
+       extracted:invoice_id::STRING AS invoice_id,
+       extracted:total::NUMBER(12,2) AS total_amount
+FROM parsed_documents;</pre></div>
       </div>
-      <div class="sql-layers">
-        <div class="sql-block l-bronze open" id="mfg-b">
-          <div class="sql-block-header" onclick="toggleSql('mfg-b')">
-            <span class="layer-badge lb-bronze">Staging</span>
-            <span class="sql-block-label">stg_production_events — MES stream with shift tagging</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Ingest high-frequency MES events, parse event types, assign shift names from event hour CASE logic, and cast timestamps to sub-second precision.</div>
-<pre><span class="c">-- stg_production_events.sql  (Staging / Bronze)</span>
-<span class="k">WITH</span> source <span class="k">AS</span> (<span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ source('mes_system','production_events') }}</span>)
-<span class="k">SELECT</span>
-    <span class="f">MD5</span>(event_id)                        <span class="k">AS</span> event_key,
-    event_id::VARCHAR                    <span class="k">AS</span> src_event_id,
-    machine_id::VARCHAR                  <span class="k">AS</span> src_machine_id,
-    line_id::VARCHAR                     <span class="k">AS</span> src_line_id,
-    event_ts::TIMESTAMP_NTZ             <span class="k">AS</span> event_at,
-    event_ts::DATE                      <span class="k">AS</span> event_date,
-    <span class="k">CASE</span>
-        <span class="k">WHEN</span> <span class="f">HOUR</span>(event_ts) <span class="k">BETWEEN</span> <span class="n">6</span>  <span class="k">AND</span> <span class="n">13</span> <span class="k">THEN</span> <span class="s">'Day'</span>
-        <span class="k">WHEN</span> <span class="f">HOUR</span>(event_ts) <span class="k">BETWEEN</span> <span class="n">14</span> <span class="k">AND</span> <span class="n">21</span> <span class="k">THEN</span> <span class="s">'Evening'</span>
-        <span class="k">ELSE</span> <span class="s">'Night'</span>
-    <span class="k">END</span>                                  <span class="k">AS</span> shift_name,
-    <span class="f">UPPER</span>(<span class="f">TRIM</span>(event_type))              <span class="k">AS</span> event_type_raw,
-    units_produced::INT                  <span class="k">AS</span> units_produced,
-    units_rejected::INT                  <span class="k">AS</span> units_rejected,
-    downtime_minutes::NUMERIC(<span class="n">8</span>,<span class="n">2</span>)      <span class="k">AS</span> downtime_minutes,
-    downtime_reason_code::VARCHAR        <span class="k">AS</span> downtime_reason_code,
-    <span class="f">CURRENT_TIMESTAMP</span>()                 <span class="k">AS</span> _loaded_at
-<span class="k">FROM</span> source
-<span class="k">WHERE</span> event_id <span class="k">IS NOT NULL</span> <span class="k">AND</span> machine_id <span class="k">IS NOT NULL</span></pre>
-          </div></div>
-        </div>
-        <div class="sql-block l-silver" id="mfg-s">
-          <div class="sql-block-header" onclick="toggleSql('mfg-s')">
-            <span class="layer-badge lb-silver">Silver</span>
-            <span class="sql-block-label">silver_machine_performance — OEE Availability &amp; Quality</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Aggregate to machine × shift grain, compute planned production minutes, and calculate OEE Availability and Quality components.</div>
-<pre><span class="c">-- silver_machine_performance.sql  (Silver)</span>
-<span class="k">WITH</span>
-events    <span class="k">AS</span> (<span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_production_events') }}</span>),
-shift_agg <span class="k">AS</span> (
-    <span class="k">SELECT</span> src_machine_id, src_line_id, event_date, shift_name,
-        <span class="f">SUM</span>(units_produced)   <span class="k">AS</span> total_produced,
-        <span class="f">SUM</span>(units_rejected)   <span class="k">AS</span> total_rejected,
-        <span class="f">SUM</span>(downtime_minutes) <span class="k">AS</span> total_downtime_min,
-        <span class="n">480</span>                   <span class="k">AS</span> planned_minutes  <span class="c">-- 8-hr shift</span>
-    <span class="k">FROM</span> events
-    <span class="k">GROUP BY</span> <span class="n">1</span>,<span class="n">2</span>,<span class="n">3</span>,<span class="n">4</span>
-),
-oee_calc <span class="k">AS</span> (
-    <span class="k">SELECT</span> *,
-        (planned_minutes - total_downtime_min)
-          / <span class="f">NULLIF</span>(planned_minutes, <span class="n">0</span>) * <span class="n">100</span>  <span class="k">AS</span> availability_pct,
-        (total_produced - total_rejected)
-          / <span class="f">NULLIF</span>(total_produced, <span class="n">0</span>) * <span class="n">100</span>   <span class="k">AS</span> quality_pct
-    <span class="k">FROM</span> shift_agg
-)
-<span class="k">SELECT</span> *,
-    <span class="f">ROUND</span>(availability_pct * quality_pct / <span class="n">100</span>, <span class="n">2</span>) <span class="k">AS</span> oee_score
-<span class="k">FROM</span> oee_calc</pre>
-          </div></div>
-        </div>
-        <div class="sql-block l-gold" id="mfg-g">
-          <div class="sql-block-header" onclick="toggleSql('mfg-g')">
-            <span class="layer-badge lb-gold">Gold</span>
-            <span class="sql-block-label">fct_line_oee_daily — Production KPIs with 7-day rolling avg</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Roll up to daily line-level OEE. 7-day rolling average for trend tracking. FIRST_VALUE identifies the highest-downtime machine each day.</div>
-<pre><span class="c">-- fct_line_oee_daily.sql  (Gold)</span>
-<span class="k">SELECT</span>
-    event_date, src_line_id,
-    <span class="f">AVG</span>(oee_score)                           <span class="k">AS</span> avg_line_oee,
-    <span class="f">MIN</span>(oee_score)                           <span class="k">AS</span> worst_machine_oee,
-    <span class="f">AVG</span>(<span class="f">AVG</span>(oee_score)) <span class="k">OVER</span> (
-        <span class="k">PARTITION BY</span> src_line_id
-        <span class="k">ORDER BY</span> event_date
-        <span class="k">ROWS BETWEEN</span> <span class="n">6</span> <span class="k">PRECEDING AND CURRENT ROW</span>
-    )                                        <span class="k">AS</span> oee_7d_rolling,
-    <span class="f">SUM</span>(total_produced)                     <span class="k">AS</span> daily_units_produced,
-    <span class="f">SUM</span>(total_rejected)                     <span class="k">AS</span> daily_units_rejected,
-    <span class="f">SUM</span>(total_downtime_min)                 <span class="k">AS</span> total_downtime_min,
-    <span class="f">FIRST_VALUE</span>(src_machine_id) <span class="k">OVER</span> (
-        <span class="k">PARTITION BY</span> src_line_id, event_date
-        <span class="k">ORDER BY</span> total_downtime_min <span class="k">DESC</span>
-    )                                        <span class="k">AS</span> highest_downtime_machine
-<span class="k">FROM</span> <span class="t">{{ ref('silver_machine_performance') }}</span>
-<span class="k">GROUP BY</span> event_date, src_line_id, src_machine_id
-<span class="k">ORDER BY</span> event_date <span class="k">DESC</span>, avg_line_oee <span class="k">ASC</span></pre>
-          </div></div>
-        </div>
-      </div>
-    </div>
+      <div class="tool-row"><span class="tool-pill">Regex</span><span class="tool-pill">OCR</span><span class="tool-pill">JSON</span></div>
+    </article>
 
-    <!-- ── HR ── -->
-    <div class="industry-panel" id="panel-hr">
-      <div class="uc-card">
-        <div class="uc-card__icon">👥</div>
-        <div class="uc-card__body">
-          <div class="uc-card__title">Workforce Analytics &amp; Attrition Modeling</div>
-          <div class="uc-card__desc">Analyze headcount trends, turnover rates, compensation equity, and time-to-fill metrics from HRIS and ATS data. Power DEI reporting and attrition early-warning models.</div>
-          <div class="uc-card__tags">
-            <span class="tag tag--blue">Headcount Snapshots</span>
-            <span class="tag tag--blue">Attrition Rate</span>
-            <span class="tag tag--green">PII Hashing</span>
-            <span class="tag tag--gold">Tenure Banding</span>
-          </div>
-        </div>
+    <article class="domain-card reveal" id="domain-4">
+      <div class="domain-card__head"><span class="domain-chip">Domain 4</span><h3>Gen AI Data Engineering Tools</h3></div>
+      <p class="domain-desc">Operationalize orchestration, lineage, and quality controls across Gen AI data systems.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>pipeline = {
+  "orchestrator": "Airflow",
+  "transform": "dbt",
+  "vector_store": "pgvector",
+  "monitoring": "Evidently"
+}</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT tool_name,
+       integration_status,
+       last_health_check
+FROM genai_tool_registry;</pre></div>
       </div>
-      <div class="sql-layers">
-        <div class="sql-block l-bronze open" id="hr-b">
-          <div class="sql-block-header" onclick="toggleSql('hr-b')">
-            <span class="layer-badge lb-bronze">Staging</span>
-            <span class="sql-block-label">stg_employees — HRIS ingest with SHA2 PII hashing</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Ingest employee master records from ADP. Hash PII fields with SHA2-256 for safe downstream use, normalize employment status codes.</div>
-<pre><span class="c">-- stg_employees.sql  (Staging / Bronze)</span>
-<span class="k">WITH</span> source <span class="k">AS</span> (<span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ source('adp','employee_master') }}</span>)
-<span class="k">SELECT</span>
-    <span class="f">MD5</span>(employee_id)                  <span class="k">AS</span> employee_key,
-    employee_id::VARCHAR              <span class="k">AS</span> src_employee_id,
-    <span class="f">SHA2</span>(email_address, <span class="n">256</span>)         <span class="k">AS</span> email_hash,  <span class="c">-- PII-safe</span>
-    department_code::VARCHAR          <span class="k">AS</span> department_code,
-    job_title::VARCHAR                <span class="k">AS</span> job_title,
-    manager_id::VARCHAR               <span class="k">AS</span> manager_id,
-    cost_center::VARCHAR              <span class="k">AS</span> cost_center,
-    location_code::VARCHAR            <span class="k">AS</span> location_code,
-    hire_date::DATE                   <span class="k">AS</span> hire_date,
-    termination_date::DATE            <span class="k">AS</span> termination_date,
-    <span class="f">UPPER</span>(<span class="f">TRIM</span>(employment_status))   <span class="k">AS</span> employment_status_raw,
-    salary_band::VARCHAR              <span class="k">AS</span> salary_band,
-    annual_salary::NUMERIC(<span class="n">12</span>,<span class="n">2</span>)    <span class="k">AS</span> annual_salary,
-    <span class="f">CURRENT_TIMESTAMP</span>()              <span class="k">AS</span> _loaded_at
-<span class="k">FROM</span> source
-<span class="k">WHERE</span> employee_id <span class="k">IS NOT NULL</span></pre>
-          </div></div>
-        </div>
-        <div class="sql-block l-silver" id="hr-s">
-          <div class="sql-block-header" onclick="toggleSql('hr-s')">
-            <span class="layer-badge lb-silver">Silver</span>
-            <span class="sql-block-label">silver_workforce — Tenure bands, active flags, status vocab</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Compute tenure months, apply tenure banding, flag active employees, and standardize employment status to Voluntary / Involuntary / Active.</div>
-<pre><span class="c">-- silver_workforce.sql  (Silver)</span>
-<span class="k">WITH</span> employees <span class="k">AS</span> (<span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_employees') }}</span>)
-<span class="k">SELECT</span>
-    employee_key, src_employee_id, department_code,
-    job_title, cost_center, salary_band, annual_salary,
-    hire_date, termination_date,
-    <span class="k">CASE WHEN</span> termination_date <span class="k">IS NULL</span>
-          <span class="k">OR</span>  termination_date > <span class="f">CURRENT_DATE</span>()
-        <span class="k">THEN TRUE ELSE FALSE END</span>                  <span class="k">AS</span> is_active,
-    <span class="f">DATEDIFF</span>(<span class="s">'month'</span>, hire_date,
-        <span class="f">COALESCE</span>(termination_date, <span class="f">CURRENT_DATE</span>()))  <span class="k">AS</span> tenure_months,
-    <span class="k">CASE</span>
-        <span class="k">WHEN</span> <span class="f">DATEDIFF</span>(<span class="s">'month'</span>,hire_date,<span class="f">CURRENT_DATE</span>()) <  <span class="n">12</span> <span class="k">THEN</span> <span class="s">'0-1 yr'</span>
-        <span class="k">WHEN</span> <span class="f">DATEDIFF</span>(<span class="s">'month'</span>,hire_date,<span class="f">CURRENT_DATE</span>()) <  <span class="n">36</span> <span class="k">THEN</span> <span class="s">'1-3 yrs'</span>
-        <span class="k">WHEN</span> <span class="f">DATEDIFF</span>(<span class="s">'month'</span>,hire_date,<span class="f">CURRENT_DATE</span>()) <  <span class="n">60</span> <span class="k">THEN</span> <span class="s">'3-5 yrs'</span>
-        <span class="k">ELSE</span> <span class="s">'5+ yrs'</span>
-    <span class="k">END</span>                                             <span class="k">AS</span> tenure_band,
-    <span class="k">CASE</span> employment_status_raw
-        <span class="k">WHEN</span> <span class="s">'TERM-VOL'</span>   <span class="k">THEN</span> <span class="s">'Voluntary'</span>
-        <span class="k">WHEN</span> <span class="s">'TERM-INVOL'</span> <span class="k">THEN</span> <span class="s">'Involuntary'</span>
-        <span class="k">WHEN</span> <span class="s">'ACTIVE'</span>    <span class="k">THEN</span> <span class="s">'Active'</span>
-        <span class="k">ELSE</span> <span class="s">'Other'</span>
-    <span class="k">END</span>                                             <span class="k">AS</span> employment_status
-<span class="k">FROM</span> employees</pre>
-          </div></div>
-        </div>
-        <div class="sql-block l-gold" id="hr-g">
-          <div class="sql-block-header" onclick="toggleSql('hr-g')">
-            <span class="layer-badge lb-gold">Gold</span>
-            <span class="sql-block-label">fct_monthly_attrition — Workforce KPI mart with LAG MoM</span>
-            <span class="sql-toggle-icon">▼</span>
-          </div>
-          <div class="sql-body"><div class="sql-body__inner">
-            <div class="sql-desc">Monthly attrition rate, active headcount, and voluntary separation rate per department and tenure band — with LAG for month-over-month comparison.</div>
-<pre><span class="c">-- fct_monthly_attrition.sql  (Gold)</span>
-<span class="k">SELECT</span>
-    <span class="f">DATE_TRUNC</span>(<span class="s">'month'</span>, hire_date)    <span class="k">AS</span> cohort_month,
-    department_code, salary_band, tenure_band,
-    <span class="f">COUNT</span>(*)                           <span class="k">AS</span> total_headcount,
-    <span class="f">SUM</span>(is_active::INT)               <span class="k">AS</span> active_headcount,
-    <span class="f">SUM</span>(<span class="k">CASE WHEN NOT</span> is_active <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>)
-                                       <span class="k">AS</span> separated_headcount,
-    <span class="f">ROUND</span>(<span class="f">SUM</span>(<span class="k">CASE WHEN NOT</span> is_active <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) * <span class="n">100.0</span>
-          / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>)  <span class="k">AS</span> attrition_rate_pct,
-    <span class="f">ROUND</span>(<span class="f">SUM</span>(<span class="k">CASE WHEN</span> employment_status = <span class="s">'Voluntary'</span>
-                <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) * <span class="n">100.0</span>
-          / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>)  <span class="k">AS</span> voluntary_sep_rate_pct,
-    <span class="f">ROUND</span>(<span class="f">AVG</span>(tenure_months), <span class="n">1</span>)    <span class="k">AS</span> avg_tenure_months,
-    <span class="f">ROUND</span>(<span class="f">AVG</span>(annual_salary), <span class="n">0</span>)   <span class="k">AS</span> avg_annual_salary,
-    <span class="f">LAG</span>(<span class="f">SUM</span>(is_active::INT)) <span class="k">OVER</span> (
-        <span class="k">PARTITION BY</span> department_code
-        <span class="k">ORDER BY</span> <span class="f">DATE_TRUNC</span>(<span class="s">'month'</span>, hire_date)
-    )                                  <span class="k">AS</span> prev_month_headcount
-<span class="k">FROM</span> <span class="t">{{ ref('silver_workforce') }}</span>
-<span class="k">GROUP BY</span> <span class="n">1</span>,<span class="n">2</span>,<span class="n">3</span>,<span class="n">4</span>
-<span class="k">ORDER BY</span> cohort_month <span class="k">DESC</span>, attrition_rate_pct <span class="k">DESC</span></pre>
-          </div></div>
-        </div>
-      </div>
-    </div>
+      <div class="tool-row"><span class="tool-pill">dbt</span><span class="tool-pill">Airflow</span><span class="tool-pill">LangChain</span><span class="tool-pill">Databricks</span></div>
+    </article>
 
-  </div><!-- /container -->
+    <article class="domain-card reveal" id="domain-5">
+      <div class="domain-card__head"><span class="domain-chip">Domain 5</span><h3>Data Querying and Analysis</h3></div>
+      <p class="domain-desc">Blend retrieval and SQL analytics to answer operational and executive questions quickly.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>question = "Which region has rising churn?"
+context = retriever.search(question)
+answer = analyst_chain.run(question, context)</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT region,
+       ROUND(AVG(churn_rate), 2) AS avg_churn
+FROM fct_customer_health
+GROUP BY region
+ORDER BY avg_churn DESC;</pre></div>
+      </div>
+      <div class="tool-row"><span class="tool-pill">Vector Search</span><span class="tool-pill">Snowflake SQL</span><span class="tool-pill">Power BI</span></div>
+    </article>
+
+    <article class="domain-card reveal" id="domain-6">
+      <div class="domain-card__head"><span class="domain-chip">Domain 6</span><h3>Data Enrichment, Normalization, and Standardization</h3></div>
+      <p class="domain-desc">Normalize dimensions, map aliases, and enrich records for consistent downstream reporting.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>def normalize_city(value):
+    return value.strip().title().replace("St.", "Saint")
+
+df["city_norm"] = df["city"].apply(normalize_city)</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT c.customer_id,
+       d.standard_industry,
+       d.risk_band
+FROM stg_customers c
+LEFT JOIN dim_industry_dictionary d
+  ON UPPER(c.industry_raw) = d.industry_alias;</pre></div>
+      </div>
+      <div class="tool-row"><span class="tool-pill">Reference Data</span><span class="tool-pill">SCD2</span><span class="tool-pill">Data Quality</span></div>
+    </article>
+
+    <article class="domain-card reveal" id="domain-7">
+      <div class="domain-card__head"><span class="domain-chip">Domain 7</span><h3>Anomaly Detection and Compression</h3></div>
+      <p class="domain-desc">Detect outliers and compress telemetry while retaining useful behavior characteristics.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>z = (series - series.mean()) / series.std()
+flags = series[z.abs() > 3]
+compressed = series.round(2)</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT metric_ts,
+       metric_value,
+       CASE WHEN ABS(z_score) > 3 THEN 1 ELSE 0 END AS is_anomaly
+FROM fct_metric_anomaly_scan;</pre></div>
+      </div>
+      <div class="tool-row"><span class="tool-pill">Statistics</span><span class="tool-pill">Spark</span><span class="tool-pill">Observability</span></div>
+    </article>
+    </div>
+  </div>
 </section>
 
-<!-- ════ SECTION 2: PIPELINE SIMULATOR ════ -->
-<section class="section reveal" id="sim-section">
+<section class="section reveal" id="industries-section">
   <div class="container">
     <div class="section__header">
       <span class="section__num">02 /</span>
-      <h2 class="section__title">Live Pipeline Simulator</h2>
+      <h2 class="section__title">Industry Use Cases</h2>
       <div class="section__line"></div>
     </div>
 
-    <!-- Controls -->
-    <div class="sim-controls reveal reveal-delay-1">
-      <div class="sim-industry-pills" id="sim-pills">
-        <button class="sim-pill active" onclick="simSelectInd('healthcare',this)">🏥 Healthcare</button>
-        <button class="sim-pill" onclick="simSelectInd('finance',this)">💳 Finance</button>
-        <button class="sim-pill" onclick="simSelectInd('retail',this)">🛒 Retail</button>
-        <button class="sim-pill" onclick="simSelectInd('manufacturing',this)">🏭 Manufacturing</button>
-        <button class="sim-pill" onclick="simSelectInd('hr',this)">👥 HR &amp; Payroll</button>
-      </div>
-      <div class="sim-btns">
-        <button class="btn-run" id="run-btn" onclick="runPipeline()">
-          <span class="run-icon">▶</span> Run Pipeline
-        </button>
-        <button class="btn-reset" onclick="hardReset()">↺ Reset</button>
+    <div class="ind-pills reveal reveal-delay-1">
+      <button class="ind-pill active" type="button" onclick="switchIndustry('healthcare', this)"><span class="pill-icon">🏥</span>Healthcare</button>
+      <button class="ind-pill" type="button" onclick="switchIndustry('finance', this)"><span class="pill-icon">💳</span>Finance</button>
+      <button class="ind-pill" type="button" onclick="switchIndustry('retail', this)"><span class="pill-icon">🛒</span>Retail</button>
+      <button class="ind-pill" type="button" onclick="switchIndustry('manufacturing', this)"><span class="pill-icon">🏭</span>Manufacturing</button>
+      <button class="ind-pill" type="button" onclick="switchIndustry('hr', this)"><span class="pill-icon">👥</span>HR &amp; Payroll</button>
+    </div>
+
+    <div class="industry-panel active reveal reveal-delay-2" id="industry-healthcare">
+      <div class="service-card">
+        <p class="service-card__intro">Healthcare pipelines focused on patient journey analytics, revenue cycle visibility, and compliant operational reporting.</p>
+        <div class="service-grid">
+          <div class="service-item"><h3>Primary Focus</h3><p>Patient encounters, readmission risk, no-show analytics, and length-of-stay trends.</p></div>
+          <div class="service-item"><h3>Typical Stack</h3><p>dbt, Snowflake, Power BI, audit-safe transformations, and business-rule validation.</p></div>
+        </div>
       </div>
     </div>
 
-    <!-- Stats bar -->
-    <div class="sim-stats" id="sim-stats">
-      <div class="sim-stat">Rows: <span id="st-rows">—</span></div>
-      <div class="sim-stat">Tests: <span id="st-tests">—</span></div>
-      <div class="sim-stat">Duration: <span id="st-dur">—</span></div>
-      <div class="sim-stat" id="st-status-pill">Status: <span id="st-status">idle</span></div>
+    <div class="industry-panel" id="industry-finance">
+      <div class="service-card">
+        <p class="service-card__intro">Finance solutions centered on transaction monitoring, fraud signals, and risk-scoring analytics.</p>
+        <div class="service-grid">
+          <div class="service-item"><h3>Primary Focus</h3><p>Velocity checks, anomaly detection, rolling spend windows, and flagged exposure tracking.</p></div>
+          <div class="service-item"><h3>Typical Stack</h3><p>Python, Snowflake SQL, orchestration, anomaly logic, and executive risk dashboards.</p></div>
+        </div>
+      </div>
     </div>
 
-    <!-- Stage canvas -->
-    <div class="pipe-canvas reveal reveal-delay-2">
-      <div class="pipe-stages">
-
-        <!-- BRONZE -->
-        <div class="pipe-stage" id="st-bronze">
-          <div class="pipe-stage__head pipe-stage__head--bronze">
-            <div class="stage-indicator" id="ind-bronze"></div>
-            <div class="stage-label lbl-bronze" id="lbl-bronze">Staging · Bronze</div>
-          </div>
-          <div class="pipe-stage__rows">
-            <div class="stage-row"><div class="stage-row__icon">📥</div><div class="stage-row__lbl">source rows</div><div class="stage-row__val" id="v-brows">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">⚡</div><div class="stage-row__lbl">type casts</div><div class="stage-row__val" id="v-bcasts">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">🔑</div><div class="stage-row__lbl">surrogate keys</div><div class="stage-row__val" id="v-bkeys">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">🧪</div><div class="stage-row__lbl">null/unique tests</div><div class="stage-row__val v-green" id="v-btests">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">⏱</div><div class="stage-row__lbl">runtime</div><div class="stage-row__val" id="v-btime">—</div></div>
-          </div>
+    <div class="industry-panel" id="industry-retail">
+      <div class="service-card">
+        <p class="service-card__intro">Retail analytics for customer 360, segmentation, LTV modeling, and omnichannel order behavior.</p>
+        <div class="service-grid">
+          <div class="service-item"><h3>Primary Focus</h3><p>RFM scoring, customer behavior cohorts, order value patterns, and channel attribution.</p></div>
+          <div class="service-item"><h3>Typical Stack</h3><p>POS + ecommerce ingestion, dbt marts, customer segments, and BI-ready reporting layers.</p></div>
         </div>
-
-        <!-- ARROW 1 -->
-        <div class="flow-connector">
-          <div class="flow-line" id="flow1"></div>
-          <div class="flow-caret" id="caret1"></div>
-        </div>
-
-        <!-- SILVER -->
-        <div class="pipe-stage" id="st-silver">
-          <div class="pipe-stage__head pipe-stage__head--silver">
-            <div class="stage-indicator" id="ind-silver"></div>
-            <div class="stage-label lbl-idle" id="lbl-silver">Silver</div>
-          </div>
-          <div class="pipe-stage__rows">
-            <div class="stage-row"><div class="stage-row__icon">✅</div><div class="stage-row__lbl">clean rows</div><div class="stage-row__val" id="v-srows">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">🔗</div><div class="stage-row__lbl">joins resolved</div><div class="stage-row__val" id="v-sjoins">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">🪟</div><div class="stage-row__lbl">window functions</div><div class="stage-row__val" id="v-swindows">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">🚫</div><div class="stage-row__lbl">rows rejected</div><div class="stage-row__val" id="v-srej">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">🧪</div><div class="stage-row__lbl">biz rule tests</div><div class="stage-row__val v-green" id="v-stests">—</div></div>
-          </div>
-        </div>
-
-        <!-- ARROW 2 -->
-        <div class="flow-connector">
-          <div class="flow-line" id="flow2"></div>
-          <div class="flow-caret" id="caret2"></div>
-        </div>
-
-        <!-- GOLD -->
-        <div class="pipe-stage" id="st-gold">
-          <div class="pipe-stage__head pipe-stage__head--gold">
-            <div class="stage-indicator" id="ind-gold"></div>
-            <div class="stage-label lbl-idle" id="lbl-gold">Gold</div>
-          </div>
-          <div class="pipe-stage__rows">
-            <div class="stage-row"><div class="stage-row__icon">📊</div><div class="stage-row__lbl">output rows</div><div class="stage-row__val v-gold" id="v-grows">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">📐</div><div class="stage-row__lbl">aggregations</div><div class="stage-row__val" id="v-gaggs">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">📅</div><div class="stage-row__lbl">time grain</div><div class="stage-row__val" id="v-ggrain">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">🔄</div><div class="stage-row__lbl">BI refresh</div><div class="stage-row__val v-green" id="v-gbi">—</div></div>
-            <div class="stage-row"><div class="stage-row__icon">🏁</div><div class="stage-row__lbl">pipeline status</div><div class="stage-row__val v-green" id="v-gstatus">—</div></div>
-          </div>
-        </div>
-
-      </div><!-- /pipe-stages -->
-    </div><!-- /pipe-canvas -->
-
-    <!-- Console -->
-    <div class="sim-console reveal reveal-delay-3">
-      <div class="sim-console__bar">
-        <div class="console-dots"><span class="cd-r"></span><span class="cd-y"></span><span class="cd-g"></span></div>
-        Pipeline Console
       </div>
-      <div class="sim-console__body" id="console-body">
-        <div class="log-line">
-          <span class="log-ts">0.0s</span>
-          <span class="log-tag t-info">INFO</span>
-          <span class="log-msg">Ready — select an industry above and click <span class="hl">Run Pipeline</span></span>
+    </div>
+
+    <div class="industry-panel" id="industry-manufacturing">
+      <div class="service-card">
+        <p class="service-card__intro">Manufacturing data products for line performance, downtime tracking, and OEE measurement.</p>
+        <div class="service-grid">
+          <div class="service-item"><h3>Primary Focus</h3><p>Shift-level efficiency, downtime root causes, machine health, and quality rate tracking.</p></div>
+          <div class="service-item"><h3>Typical Stack</h3><p>Event streams, shift aggregation, operations KPIs, and anomaly monitoring for production lines.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="industry-panel" id="industry-hr">
+      <div class="service-card">
+        <p class="service-card__intro">HR and payroll analytics for attrition, tenure insights, headcount trends, and workforce health metrics.</p>
+        <div class="service-grid">
+          <div class="service-item"><h3>Primary Focus</h3><p>Attrition trends, tenure banding, voluntary separation metrics, and organizational reporting.</p></div>
+          <div class="service-item"><h3>Typical Stack</h3><p>Protected employee data models, hashed PII pipelines, and monthly HR reporting marts.</p></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════ SECTION 3: GOLD DASHBOARD ════ -->
-<section class="section reveal" id="dash-section">
+<section class="section reveal" id="runner-section">
   <div class="container">
     <div class="section__header">
       <span class="section__num">03 /</span>
-      <h2 class="section__title">Gold Layer Dashboard</h2>
+      <h2 class="section__title">Live Code Runner</h2>
       <div class="section__line"></div>
     </div>
-
-    <div id="dash-placeholder" class="dash-placeholder">
-      <div class="dash-ph__icon">📊</div>
-      <div class="dash-ph__title">Awaiting pipeline run</div>
-      <div class="dash-ph__sub">Run a pipeline above — KPIs and charts will populate here automatically</div>
-    </div>
-
-    <div id="dashboard" class="dashboard" style="display:none">
-      <div class="dash-header">
-        <div class="dash-title" id="dash-title"></div>
-        <div class="dash-meta">
-          <span>Gold Layer</span>
-          <span class="dash-meta-sep">·</span>
-          <span id="dash-ts"></span>
-          <span class="dash-meta-sep">·</span>
-          <span class="dash-meta-ok">✓ All Tests Passed</span>
+    <div class="runner-card">
+      <div class="runner-top">
+        <div id="runner-domain-pills" class="runner-pills"></div>
+        <div class="runner-actions">
+          <button class="resume-btn resume-btn--pdf" id="run-domain-btn" type="button">Run Domain</button>
+          <button class="resume-btn" id="run-all-btn" type="button">Run All</button>
+          <button class="resume-btn" id="reset-runner-btn" type="button">Reset</button>
         </div>
       </div>
-      <div class="kpi-grid" id="kpi-grid"></div>
-      <div class="charts-row">
-        <div class="chart-card">
-          <div class="chart-card__title" id="chart1-title"></div>
-          <div class="chart-wrap"><canvas id="chart1"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-card__title" id="chart2-title"></div>
-          <div class="chart-wrap"><canvas id="chart2"></canvas></div>
-        </div>
+      <div class="runner-grid">
+        <div class="code-card"><div class="code-card__title">Python Technique</div><pre id="runner-python"></pre></div>
+        <div class="code-card"><div class="code-card__title">SQL Technique</div><pre id="runner-sql"></pre></div>
+      </div>
+      <div class="timeline" id="runner-timeline">
+        <div class="timeline-step">Ingest</div>
+        <div class="timeline-step">Transform</div>
+        <div class="timeline-step">Validate</div>
+        <div class="timeline-step">Persist</div>
+        <div class="timeline-step">Evaluate</div>
+      </div>
+      <div class="runner-output">
+        <div class="runner-console" id="runner-console"></div>
+        <div class="runner-metrics" id="runner-metrics"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════ SECTION 5: SKILLS & EXPERIENCE ════ -->
-<section class="section reveal" id="skills-section">
+<section class="section reveal" id="dashboard-section">
   <div class="container">
     <div class="section__header">
       <span class="section__num">04 /</span>
-      <h2 class="section__title">Skills &amp; Experience</h2>
+      <h2 class="section__title">Gold Layer Dashboard</h2>
       <div class="section__line"></div>
     </div>
+    <div class="map-card">
+      <div class="dashboard">
+        <div class="dash-header">
+          <div>
+            <div class="dash-title" id="gold-dash-title">Gold Layer Dashboard</div>
+            <div class="dash-meta">
+              <span>Executive Delivery Layer</span>
+              <span class="dash-meta-sep">·</span>
+              <span id="gold-dash-status">Awaiting domain execution</span>
+              <span class="dash-meta-sep">·</span>
+              <span class="dash-meta-ok">Capability scores active after runner execution</span>
+            </div>
+          </div>
+        </div>
+        <div class="kpi-grid" id="gold-kpi-grid"></div>
+      </div>
 
-    <div class="service-card reveal reveal-delay-1">
-      <p class="service-card__intro">Senior Data Engineer with experience designing end-to-end medallion architecture pipelines, production analytics layers, and cloud data platforms.</p>
+      <div class="service-grid dashboard-kpis">
+        <div class="service-item"><h3>Domain Coverage</h3><p>Track how the 7 capability areas contribute to platform maturity and operating readiness.</p></div>
+        <div class="service-item"><h3>Industry Readiness</h3><p>Use the industry section above to frame these capability scores in healthcare, finance, retail, manufacturing, and HR contexts.</p></div>
+      </div>
+      <div class="summary-row" id="map-summary"></div>
+      <div class="capability-table-wrap"><table class="capability-table" id="capability-table"></table></div>
+      <div class="map-detail" id="map-detail">Select a capability cell after running domains to inspect techniques, tools, and impact.</div>
+    </div>
+  </div>
+</section>
 
+<section class="section reveal" id="skills-section">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__num">05 /</span>
+      <h2 class="section__title">Skills and Experience</h2>
+      <div class="section__line"></div>
+    </div>
+    <div class="service-card">
+      <p class="service-card__intro">Senior Data Engineer focused on production Gen AI and analytics platforms with strong delivery in governance, automation, and measurable business outcomes.</p>
       <div class="service-grid">
-        <div class="service-item">
-          <h3>Core Stack</h3>
-          <p>SQL, Python, dbt Core, Snowflake, Databricks, Airflow, Azure Data Factory, Power BI.</p>
-        </div>
-        <div class="service-item">
-          <h3>Data Engineering</h3>
-          <p>Bronze/Silver/Gold modeling, SCD Type 2, CDC ingestion, orchestration, observability, and testing.</p>
-        </div>
-        <div class="service-item">
-          <h3>Business Domains</h3>
-          <p>Healthcare, Finance, Retail, Manufacturing, and HR/Payroll analytics use cases.</p>
-        </div>
-        <div class="service-item">
-          <h3>Delivery Style</h3>
-          <p>Production-first mindset focused on performance, quality gates, and stakeholder-ready reporting.</p>
-        </div>
+        <div class="service-item"><h3>Core Stack</h3><p>Python, SQL, dbt Core, Snowflake, Databricks, Airflow, Azure Data Factory, Power BI.</p></div>
+        <div class="service-item"><h3>Engineering Focus</h3><p>Data contracts, quality gates, orchestration, observability, and reusable pipeline architecture.</p></div>
+        <div class="service-item"><h3>Gen AI Readiness</h3><p>Prompt workflows, retrieval chains, governance controls, and domain adaptation patterns.</p></div>
+        <div class="service-item"><h3>Delivery Style</h3><p>Fast prototyping with production controls: test coverage, lineage, and cost-aware operations.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer__inner">
       <div class="footer__name">Dawit Adane</div>
       <div class="footer__links">
         <a href="https://www.linkedin.com/in/dawit1221" target="_blank">linkedin.com/in/dawit1221</a>
-        <span class="footer__sep">·</span>
+        <span class="footer__sep">.</span>
         <span>Senior Data Engineer</span>
-        <span class="footer__sep">·</span>
+        <span class="footer__sep">.</span>
         <span>Dallas, TX</span>
       </div>
-      <div class="footer__stack">dbt Core · Snowflake · Azure DevOps · Python · SQL · Databricks · Airflow</div>
+      <div class="footer__stack">Gen AI . Data Engineering . dbt . Snowflake . Databricks . Airflow</div>
     </div>
   </div>
 </footer>
 
-<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
 <script src="app.js"></script>
-
 </body>
 </html>
