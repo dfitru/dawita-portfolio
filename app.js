@@ -484,3 +484,44 @@ function buildDashboard(p) {
 
   setTimeout(() => dash.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
 }
+
+/* ─── 12. NAV TAB ACTIVE STATE ─────────────────────────── */
+const pageSections = [
+  'sql-section',
+  'sim-section',
+  'dash-section',
+  'skills-section',
+  'consulting-section',
+  'mentoring-section',
+  'resume-section'
+];
+const navTabMap = {
+  'sql-section': document.querySelector('.nav__tab[href="#sql-section"]'),
+  'sim-section': document.querySelector('.nav__tab[href="#sim-section"]'),
+  'dash-section': document.querySelector('.nav__tab[href="#dash-section"]'),
+  'skills-section': document.querySelector('.nav__tab[href="#skills-section"]'),
+  'consulting-section': document.querySelector('.nav__tab[href="#consulting-section"]'),
+  'mentoring-section': document.querySelector('.nav__tab[href="#mentoring-section"]'),
+  'resume-section': document.querySelector('.nav__tab[href="#resume-section"]')
+};
+
+function setActiveNavTab(sectionId) {
+  document.querySelectorAll('.nav__tab').forEach(tab => tab.classList.remove('is-active'));
+  const tab = navTabMap[sectionId];
+  if (tab) tab.classList.add('is-active');
+}
+
+const navObserver = new IntersectionObserver(entries => {
+  const visible = entries
+    .filter(entry => entry.isIntersecting)
+    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  if (visible) setActiveNavTab(visible.target.id);
+}, {
+  threshold: [0.2, 0.45, 0.7],
+  rootMargin: '-20% 0px -60% 0px'
+});
+
+pageSections.forEach(id => {
+  const sectionEl = document.getElementById(id);
+  if (sectionEl) navObserver.observe(sectionEl);
+});

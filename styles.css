@@ -159,6 +159,7 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   width: 100%;
 }
 .nav__brand {
@@ -184,6 +185,57 @@ a { color: inherit; }
   font-size: 11px;
   color: var(--txt-3);
   letter-spacing: 0.06em;
+}
+
+.nav__tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  margin-right: 14px;
+}
+
+.nav__tab {
+  text-decoration: none;
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--txt-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 11px;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.nav__tab:hover {
+  color: var(--txt);
+  border-color: var(--border-hi);
+  background: var(--bg-hover);
+}
+
+.nav__tab.is-active {
+  color: var(--txt);
+  border-color: var(--border-hi);
+  background: var(--bg-raised);
+}
+
+.nav__tab--resume {
+  color: var(--gold);
+  border-color: rgba(242,201,76,0.35);
+  background: rgba(242,201,76,0.08);
+}
+
+.nav__tab--consulting {
+  color: #7ec7ff;
+  border-color: rgba(126,199,255,0.35);
+  background: rgba(126,199,255,0.09);
+}
+
+.nav__tab--mentoring {
+  color: #7ddfb0;
+  border-color: rgba(125,223,176,0.35);
+  background: rgba(125,223,176,0.08);
 }
 .pulse {
   width: 6px; height: 6px;
@@ -1009,6 +1061,151 @@ pre {
 .chart-wrap { position: relative; height: clamp(160px, 22vw, 210px); }
 
 /* ════════════════════════════════════════════
+   RESUME SECTION
+════════════════════════════════════════════ */
+.resume-card {
+  background: linear-gradient(180deg, rgba(14,16,24,0.96), rgba(10,12,19,0.96));
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius);
+  padding: clamp(16px, 2.5vw, 24px);
+}
+
+.resume-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.resume-card__title {
+  font-family: var(--f-display);
+  font-size: clamp(18px, 2.4vw, 24px);
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+.resume-card__sub {
+  margin-top: 8px;
+  max-width: 64ch;
+  font-size: clamp(13px, 1.5vw, 15px);
+  color: var(--txt-2);
+}
+
+.resume-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.resume-btn {
+  text-decoration: none;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--txt);
+  background: var(--bg-card);
+  border: 1px solid var(--border-md);
+  border-radius: 999px;
+  padding: 10px 14px;
+  transition: transform 0.2s var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.resume-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--border-hi);
+  background: var(--bg-raised);
+}
+
+.resume-btn--pdf {
+  color: var(--gold);
+  border-color: rgba(242,201,76,0.35);
+  background: rgba(242,201,76,0.09);
+}
+
+.resume-viewer-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #0a0c12;
+}
+
+.resume-viewer {
+  width: 100%;
+  height: clamp(520px, 72vh, 980px);
+  border: 0;
+  display: block;
+}
+
+/* ════════════════════════════════════════════
+   SKILLS / CONSULTING / MENTORING
+════════════════════════════════════════════ */
+.service-card {
+  background: linear-gradient(180deg, rgba(14,16,24,0.94), rgba(10,12,19,0.94));
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius);
+  padding: clamp(16px, 2.5vw, 24px);
+}
+
+.service-card__intro {
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: var(--txt-2);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.service-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.service-item h3 {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.service-item p {
+  color: var(--txt-2);
+  font-size: clamp(12.5px, 1.4vw, 14px);
+  line-height: 1.55;
+}
+
+.service-list {
+  display: grid;
+  gap: 8px;
+}
+
+.service-list__row {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: clamp(12.5px, 1.4vw, 14px);
+  color: var(--txt);
+}
+
+.service-cta {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ════════════════════════════════════════════
    FOOTER
 ════════════════════════════════════════════ */
 .footer {
@@ -1053,6 +1250,28 @@ pre {
    RESPONSIVE OVERRIDES
 ════════════════════════════════════════════ */
 @media (max-width: 768px) {
+  .nav__tabs {
+    width: 100%;
+    justify-content: flex-start;
+    margin: 0;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .nav__inner {
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  .resume-card__top {
+    flex-direction: column;
+  }
+  .resume-actions {
+    justify-content: flex-start;
+  }
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
   .uc-card { flex-direction: column; gap: 12px; }
   .pipe-stages {
     grid-template-columns: 1fr;
@@ -1082,6 +1301,13 @@ pre {
   .nav__right span { display: none; }
 }
 @media (max-width: 480px) {
+  .nav__tab {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+  .resume-viewer {
+    height: 68vh;
+  }
   .hero__layers { gap: 8px; }
   .layer-card { min-width: 80px; padding: 12px 14px; }
   .layer-arrow { display: none; }
