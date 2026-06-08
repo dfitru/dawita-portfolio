@@ -490,19 +490,13 @@ const pageSections = [
   'sql-section',
   'sim-section',
   'dash-section',
-  'skills-section',
-  'consulting-section',
-  'mentoring-section',
-  'resume-section'
+  'skills-section'
 ];
 const navTabMap = {
   'sql-section': document.querySelector('.nav__tab[href="#sql-section"]'),
   'sim-section': document.querySelector('.nav__tab[href="#sim-section"]'),
   'dash-section': document.querySelector('.nav__tab[href="#dash-section"]'),
-  'skills-section': document.querySelector('.nav__tab[href="#skills-section"]'),
-  'consulting-section': document.querySelector('.nav__tab[href="#consulting-section"]'),
-  'mentoring-section': document.querySelector('.nav__tab[href="#mentoring-section"]'),
-  'resume-section': document.querySelector('.nav__tab[href="#resume-section"]')
+  'skills-section': document.querySelector('.nav__tab[href="#skills-section"]')
 };
 
 function setActiveNavTab(sectionId) {

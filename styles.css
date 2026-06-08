@@ -195,6 +195,14 @@ a { color: inherit; }
   margin-right: 14px;
 }
 
+.nav__separator {
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(180deg, transparent, var(--border-hi), transparent);
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
 .nav__tab {
   text-decoration: none;
   font-family: var(--f-mono);
@@ -1301,6 +1309,9 @@ pre {
   .nav__right span { display: none; }
 }
 @media (max-width: 480px) {
+  .nav__separator {
+    height: 14px;
+  }
   .nav__tab {
     font-size: 10px;
     padding: 6px 10px;
