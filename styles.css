@@ -1347,9 +1347,34 @@ pre {
 
 .domain-card__head {
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+}
+
+.domain-card__head-main {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.domain-toggle {
+  border: 1px solid var(--border-md);
+  border-radius: 999px;
+  background: var(--bg-card);
+  color: var(--txt-2);
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  transition: all var(--dur) var(--ease);
+}
+
+.domain-toggle:hover {
+  color: var(--txt);
+  border-color: var(--border-hi);
+  background: var(--bg-raised);
 }
 
 .domain-card__head h3 {
@@ -1373,6 +1398,122 @@ pre {
 .domain-desc {
   color: var(--txt-2);
   margin-bottom: 10px;
+}
+
+.domain-card__body {
+  display: none;
+}
+
+.domain-card__body.is-open {
+  display: block;
+}
+
+.industry-sql {
+  margin-top: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.sql-patterns-head h3 {
+  font-family: var(--f-display);
+  font-size: clamp(16px, 2vw, 20px);
+  margin-bottom: 4px;
+}
+
+.sql-patterns-head p {
+  color: var(--txt-2);
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.sql-patterns-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sql-pattern {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+
+.sql-pattern__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-raised);
+  border: 0;
+  color: var(--txt);
+}
+
+.sql-pattern__badge {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 999px;
+  border: 1px solid;
+  padding: 3px 7px;
+}
+
+.sql-pattern__badge.bronze {
+  color: var(--bronze);
+  border-color: rgba(212,136,74,0.35);
+  background: var(--bronze-dim);
+}
+
+.sql-pattern__badge.silver {
+  color: var(--silver);
+  border-color: rgba(160,174,192,0.35);
+  background: var(--silver-dim);
+}
+
+.sql-pattern__badge.gold {
+  color: var(--gold);
+  border-color: rgba(242,201,76,0.35);
+  background: var(--gold-dim);
+}
+
+.sql-pattern__title {
+  flex: 1;
+  text-align: left;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--txt-2);
+}
+
+.sql-pattern__chev {
+  color: var(--txt-3);
+  transition: transform var(--dur) var(--ease);
+}
+
+.sql-pattern__body {
+  display: none;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.sql-pattern.open .sql-pattern__body {
+  display: block;
+}
+
+.sql-pattern.open .sql-pattern__chev {
+  transform: rotate(180deg);
+}
+
+.sql-pattern__body p {
+  color: var(--txt-2);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.sql-pattern__body pre {
+  margin: 0;
+  max-height: 180px;
 }
 
 .domain-grid {
@@ -1638,6 +1779,11 @@ pre {
   .runner-grid,
   .runner-output {
     grid-template-columns: 1fr;
+  }
+
+  .domain-card__head {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .summary-row {

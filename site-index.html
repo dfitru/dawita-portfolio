@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industry Portfolio — Dawit Adane · Data Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ═══════════════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════════════ */
+:root {
+  --bg:      #07080f;
+  --bg-2:    #0d0f1c;
+  --bg-3:    #131726;
+  --bg-4:    #191e30;
+  --surface: #1f253a;
+  --b0: rgba(255,255,255,0.04);
+  --b1: rgba(255,255,255,0.08);
+  --b2: rgba(255,255,255,0.13);
+  --b3: rgba(255,255,255,0.20);
+  --t1: #edf0fa;  --t2: #7b8499;  --t3: #3e4760;  --t4: #222840;
+
+  /* 5 industry accents */
+  --hc:   #38c9f0;  --hc-d: rgba(56,201,240,0.10);  --hc-g: rgba(56,201,240,0.22);
+  --fin:  #34d399;  --fin-d:rgba(52,211,153,0.10);  --fin-g:rgba(52,211,153,0.22);
+  --ins:  #a78bfa;  --ins-d:rgba(167,139,250,0.10); --ins-g:rgba(167,139,250,0.22);
+  --hr:   #f59e0b;  --hr-d: rgba(245,158,11,0.10);  --hr-g: rgba(245,158,11,0.22);
+  --htl:  #f472b6;  --htl-d:rgba(244,114,182,0.10); --htl-g:rgba(244,114,182,0.22);
+
+  --gold: #f5c842;  --gold-d:rgba(245,200,66,0.10); --gold-g:rgba(245,200,66,0.22);
+  --green:#3ed98f;  --red:#f07474;
+
+  --f-display:'Plus Jakarta Sans',sans-serif;
+  --f-serif:'Instrument Serif',Georgia,serif;
+  --f-mono:'DM Mono','Fira Code',monospace;
+  --f-body:'Plus Jakarta Sans',system-ui,sans-serif;
+
+  --s1:clamp(4px,0.6vw,8px);    --s2:clamp(8px,1.2vw,14px);
+  --s3:clamp(14px,2vw,22px);    --s4:clamp(22px,3.5vw,40px);
+  --s5:clamp(36px,5.5vw,64px);  --s6:clamp(56px,8vw,100px);
+  --max:1160px;  --r:10px;  --r-lg:16px;  --pill:100px;
+  --ease:cubic-bezier(.22,1,.36,1);  --dur:.30s;  --durs:.58s;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-body);background:var(--bg);color:var(--t1);
+  line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  animation:page-in .45s var(--ease) both}
+@keyframes page-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg-4);border-radius:2px}
+::selection{background:rgba(167,139,250,.25);color:var(--t1)}
+
+/* ═══════════════════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(20px);
+  transition:opacity var(--durs) var(--ease),transform var(--durs) var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.rv1{transition-delay:.06s}.rv2{transition-delay:.12s}
+.rv3{transition-delay:.18s}.rv4{transition-delay:.24s}
+
+/* ═══════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════ */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 clamp(16px,5vw,48px)}
+.section{padding:var(--s5) 0}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(10px,1.5vw,16px)}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(8px,1.2vw,14px)}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:clamp(8px,1.2vw,12px)}
+
+/* ═══════════════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════════════ */
+.nav{position:sticky;top:0;z-index:500;height:58px;
+  background:rgba(7,8,15,.9);backdrop-filter:blur(24px) saturate(1.6);
+  -webkit-backdrop-filter:blur(24px) saturate(1.6);border-bottom:1px solid var(--b1)}
+.nav__inner{max-width:var(--max);margin:0 auto;padding:0 clamp(16px,5vw,48px);
+  height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav__brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.nav__name{font-family:var(--f-display);font-size:clamp(13px,1.8vw,16px);font-weight:700;
+  letter-spacing:-.02em}
+.nav__role{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--t3);padding:3px 10px;border:1px solid var(--b1);border-radius:var(--pill)}
+.nav__links{display:flex;align-items:center;gap:2px}
+.nav__link{display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:var(--pill);
+  font-size:clamp(12px,1.4vw,14px);font-weight:500;color:var(--t2);
+  transition:color var(--dur) var(--ease),background var(--dur) var(--ease);white-space:nowrap}
+.nav__link:hover{color:var(--t1);background:var(--b1)}
+.nav__link.active{color:var(--t1);background:var(--b2)}
+.nav__link.active::after{content:'';display:block;width:4px;height:4px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 6px var(--gold-g);margin-left:4px}
+.nav__cta{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;
+  border-radius:var(--pill);border:1px solid var(--b2);font-size:13px;font-weight:600;
+  color:var(--t1);background:var(--b1);transition:all var(--dur) var(--ease);white-space:nowrap;flex-shrink:0}
+.nav__cta:hover{background:var(--b2);border-color:var(--b3);transform:translateY(-1px)}
+.nav__ham{display:none;flex-direction:column;gap:4px;padding:8px;cursor:pointer}
+.nav__ham span{width:20px;height:2px;background:var(--t2);border-radius:1px;transition:all var(--dur)}
+@media(max-width:640px){
+  .nav__links,.nav__role{display:none}
+  .nav__ham{display:flex}
+  .nav__cta{display:none}
+  .nav.open .nav__links{display:flex;flex-direction:column;position:absolute;
+    top:58px;left:0;right:0;background:rgba(7,8,15,.97);border-bottom:1px solid var(--b1);
+    padding:12px 16px 16px;align-items:flex-start;gap:4px}
+}
+
+/* ═══════════════════════════════════════════════════════
+   SEPARATORS
+═══════════════════════════════════════════════════════ */
+.sep{position:relative;height:1px;
+  background:linear-gradient(90deg,transparent 0%,var(--b2) 20%,var(--sep-color,var(--gold)) 50%,var(--b2) 80%,transparent 100%);
+  margin:var(--s5) 0}
+.sep::after{content:'';position:absolute;top:-3px;left:50%;transform:translateX(-50%);
+  width:6px;height:6px;border-radius:50%;background:var(--sep-color,var(--gold));
+  box-shadow:0 0 12px var(--sep-glow,var(--gold-g))}
+.sep-label{display:flex;align-items:center;gap:16px;margin:var(--s4) 0}
+.sep-label__line{flex:1;height:1px}
+.sep-label__line:first-child{background:linear-gradient(90deg,var(--b2),transparent)}
+.sep-label__line:last-child{background:linear-gradient(90deg,transparent,var(--b2))}
+.sep-label__text{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--t3);padding:4px 14px;border:1px solid var(--b1);border-radius:var(--pill);white-space:nowrap}
+.sec-hd{display:flex;align-items:baseline;gap:14px;margin-bottom:var(--s4)}
+.sec-hd__num{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;color:var(--t3);flex-shrink:0}
+.sec-hd__title{font-family:var(--f-display);font-size:clamp(18px,3vw,28px);font-weight:700;letter-spacing:-.025em}
+.sec-hd__rule{flex:1;height:1px;background:linear-gradient(90deg,var(--b2),transparent);margin-left:6px}
+
+/* ═══════════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════════ */
+.hero{position:relative;padding:var(--s6) 0 var(--s5);overflow:hidden}
+.hero__bg{position:absolute;inset:0;pointer-events:none;z-index:0}
+.hero__bg::before{content:'';position:absolute;top:-20%;left:-8%;width:50vw;height:50vw;
+  border-radius:50%;background:radial-gradient(circle,rgba(56,201,240,.06) 0%,transparent 60%);filter:blur(60px);
+  animation:orb1 14s ease-in-out infinite alternate}
+.hero__bg::after{content:'';position:absolute;bottom:-10%;right:0;width:40vw;height:40vw;
+  border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.05) 0%,transparent 60%);filter:blur(60px);
+  animation:orb1 18s ease-in-out infinite alternate-reverse}
+@keyframes orb1{from{transform:translate(0,0) scale(1)}to{transform:translate(40px,30px) scale(1.1)}}
+.hero__dots{position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:36px 36px;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,black 10%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,black 10%,transparent 80%);
+  pointer-events:none}
+.hero__content{position:relative;z-index:1}
+.hero__kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);
+  font-size:clamp(10px,1.1vw,11.5px);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-d);border:1px solid rgba(245,200,66,.2);
+  padding:5px 14px;border-radius:var(--pill);margin-bottom:var(--s3)}
+.hero__kicker::before{content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 8px var(--gold-g)}
+.hero__h1{font-family:var(--f-display);font-size:clamp(34px,6.5vw,78px);font-weight:800;
+  line-height:1.0;letter-spacing:-.03em;margin-bottom:var(--s3)}
+.hero__h1 em{font-family:var(--f-serif);font-style:italic;font-weight:400;
+  background:linear-gradient(110deg,var(--hc) 0%,var(--ins) 50%,var(--htl) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero__sub{font-size:clamp(15px,2vw,18px);color:var(--t2);max-width:54ch;line-height:1.7;margin-bottom:var(--s4)}
+
+/* Industry selector chips */
+.ind-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ind-chip{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:var(--pill);
+  border:1px solid;font-size:clamp(12px,1.4vw,14px);font-weight:600;cursor:pointer;white-space:nowrap;
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),opacity .2s}
+.ind-chip:hover{transform:translateY(-2px)}
+.ind-chip.active{opacity:1 !important}
+.ind-chip.dimmed{opacity:.3}
+.ind-chip__dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* ═══════════════════════════════════════════════════════
+   INDUSTRY TABS
+═══════════════════════════════════════════════════════ */
+.ind-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:var(--s3)}
+.ind-tab{display:flex;align-items:center;gap:8px;padding:9px 18px;border-radius:var(--pill);
+  border:1px solid var(--b2);background:var(--bg-2);color:var(--t2);
+  font-size:clamp(12px,1.4vw,14px);font-weight:600;cursor:pointer;white-space:nowrap;
+  transition:all var(--dur) var(--ease)}
+.ind-tab:hover{background:var(--bg-3);color:var(--t1);transform:translateY(-1px)}
+.ind-tab.active{background:var(--bg-3);border-color:var(--b3);color:var(--t1)}
+.ind-tab__dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;flex-shrink:0}
+
+/* Industry panel container */
+.ind-panel{display:none}
+.ind-panel.active{display:block;animation:panel-in .35s var(--ease) both}
+@keyframes panel-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ═══════════════════════════════════════════════════════
+   INDUSTRY HEADER CARD
+═══════════════════════════════════════════════════════ */
+.ind-card{background:var(--bg-2);border:1px solid var(--b1);border-radius:var(--r-lg);
+  padding:var(--s3) clamp(20px,3vw,36px);margin-bottom:var(--s3);
+  display:grid;grid-template-columns:auto 1fr;gap:var(--s3);align-items:start;
+  transition:border-color var(--dur) var(--ease);position:relative;overflow:hidden}
+.ind-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--ind-accent,var(--gold))}
+.ind-card:hover{border-color:var(--b2)}
+.ind-card__num{font-family:var(--f-display);font-size:clamp(40px,7vw,72px);font-weight:800;
+  line-height:1;opacity:.06;letter-spacing:-.04em;align-self:center;user-select:none}
+.ind-card__title{font-family:var(--f-display);font-size:clamp(16px,2.4vw,22px);
+  font-weight:800;letter-spacing:-.02em;margin-bottom:6px;color:var(--ind-accent,var(--t1))}
+.ind-card__desc{font-size:clamp(13px,1.5vw,15px);color:var(--t2);line-height:1.65;max-width:68ch;margin-bottom:12px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--f-mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+  padding:3px 9px;border-radius:4px;border:1px solid var(--b1);color:var(--t2)}
+
+/* ═══════════════════════════════════════════════════════
+   SQL CODE ACCORDION
+═══════════════════════════════════════════════════════ */
+.sql-blocks{display:flex;flex-direction:column;gap:8px}
+.sql-block{border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;
+  transition:border-color var(--dur) var(--ease)}
+.sql-block:hover{border-color:var(--b2)}
+.sql-block.open{border-color:var(--b3)}
+.sql-block__hd{display:flex;align-items:center;gap:10px;padding:12px 18px;cursor:pointer;
+  background:var(--bg-2);user-select:none;transition:background var(--dur) var(--ease)}
+.sql-block__hd:hover{background:var(--bg-3)}
+.sql-badge{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 9px;border-radius:var(--pill);font-weight:600;flex-shrink:0;border:1px solid}
+.sql-label{font-family:var(--f-mono);font-size:clamp(11px,1.3vw,12.5px);color:var(--t2);
+  flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sql-chevron{font-size:10px;color:var(--t3);flex-shrink:0;
+  transition:transform var(--dur) var(--ease),color var(--dur) var(--ease)}
+.sql-block.open .sql-chevron{transform:rotate(180deg);color:var(--t2)}
+.sql-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s var(--ease)}
+.sql-block.open .sql-body{grid-template-rows:1fr}
+.sql-body__inner{overflow:hidden}
+.sql-desc{padding:10px 18px;font-size:13px;color:var(--t2);line-height:1.55;
+  background:var(--bg);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1)}
+pre{padding:20px 18px;overflow-x:auto;font-family:var(--f-mono);
+  font-size:clamp(11px,1.3vw,12.5px);line-height:1.8;color:#b4c4d8;background:#03040a;tab-size:2}
+.k{color:#7eb8f7}.fn{color:#6dd3a8}.st{color:#f2c94c}.cm{color:#3a4560;font-style:italic}
+.nm{color:#c4a8e8}.tp{color:#f9a84d}.dc{color:#38bdf8}
+
+/* ═══════════════════════════════════════════════════════
+   PIPELINE SIMULATOR
+═══════════════════════════════════════════════════════ */
+.sim-bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;
+  padding:14px 20px;background:var(--bg-3);border-bottom:1px solid var(--b1)}
+.sim-bar__dots{display:flex;gap:5px}
+.sim-bar__dots span{width:10px;height:10px;border-radius:50%}
+.d-r{background:rgba(248,113,113,.7)}.d-y{background:rgba(250,204,21,.7)}.d-g{background:rgba(52,211,153,.7)}
+.sim-bar__file{font-family:var(--f-mono);font-size:11px;color:var(--t3);letter-spacing:.08em;flex:1}
+.sim-sel{font-family:var(--f-mono);font-size:11px;background:var(--bg-2);border:1px solid var(--b3);
+  color:var(--t1);padding:6px 12px;border-radius:6px;cursor:pointer;appearance:none}
+.btn-run{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;border-radius:var(--pill);
+  background:linear-gradient(135deg,var(--gold),#e6b73c);color:#07080f;font-size:12px;font-weight:700;
+  cursor:pointer;transition:all var(--dur) var(--ease);box-shadow:0 4px 16px var(--gold-g)}
+.btn-run:hover{transform:translateY(-1px);box-shadow:0 6px 24px var(--gold-g)}
+.btn-run:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-reset{padding:8px 14px;border-radius:var(--pill);border:1px solid var(--b2);color:var(--t2);
+  font-size:12px;cursor:pointer;transition:all var(--dur) var(--ease)}
+.btn-reset:hover{background:var(--b1);color:var(--t1)}
+
+/* Stage canvas */
+.stage-canvas{background:var(--bg-2);padding:clamp(16px,2.5vw,28px)}
+.stages{display:grid;grid-template-columns:1fr 32px 1fr 32px 1fr;align-items:start;gap:0}
+@media(max-width:700px){
+  .stages{grid-template-columns:1fr}
+  .flow-conn{flex-direction:row;padding:6px 0;margin:0;align-self:auto}
+  .flow-line{width:40px;height:2px}
+  .flow-caret{border-left:6px solid var(--b1);border-top:5px solid transparent;border-bottom:5px solid transparent;border-right:none;width:0;height:0}
+}
+.stage{background:var(--bg-3);border:1px solid var(--b1);border-radius:var(--r);
+  overflow:hidden;transition:all .35s var(--ease)}
+.stage.st-run{border-color:rgba(91,141,238,.4);box-shadow:0 0 20px rgba(91,141,238,.08)}
+.stage.st-done{border-color:var(--s-color,var(--gold));box-shadow:0 0 20px var(--s-glow,var(--gold-g))}
+.stage__hd{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--b1)}
+.stage__dot{width:8px;height:8px;border-radius:50%;background:var(--t3);flex-shrink:0;
+  transition:all .35s var(--ease)}
+.stage__dot.running{background:#5b8dee;box-shadow:0 0 0 3px rgba(91,141,238,.2);
+  animation:dot-pulse .9s ease-in-out infinite}
+.stage__dot.done{background:var(--s-color,var(--gold));box-shadow:0 0 10px var(--s-glow,var(--gold-g))}
+@keyframes dot-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:.7}}
+.stage__name{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:500;color:var(--t3);transition:color .3s}
+.stage__name.active{color:var(--s-color,var(--gold))}
+.stage__rows{padding:4px 0}
+.st-row{display:flex;align-items:center;gap:8px;padding:7px 16px;
+  border-bottom:1px solid rgba(255,255,255,.03);font-family:var(--f-mono);font-size:11px}
+.st-row:last-child{border-bottom:none}
+.st-row__icon{font-size:12px;flex-shrink:0;width:16px;text-align:center}
+.st-row__lbl{font-size:11px;color:var(--t3);flex:1}
+.st-row__val{font-family:var(--f-mono);font-size:11px;font-weight:500;color:var(--t2);
+  transition:color .3s}
+.st-row__val.g{color:var(--green)}.st-row__val.a{color:var(--gold)}
+.st-row__val.blink{animation:blink 1s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.flow-conn{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:0 4px;align-self:center;margin-top:24px;gap:0}
+.flow-line{width:2px;height:36px;background:var(--b1);position:relative;overflow:hidden;border-radius:1px}
+.flow-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;
+  background:linear-gradient(180deg,transparent,var(--green),transparent);
+  transition:top 0s}
+.flow-line.flowing::after{animation:flow-d .7s var(--ease) forwards}
+@keyframes flow-d{from{top:-100%}to{top:100%}}
+.flow-line.done::after{background:var(--green);top:0;height:100%;animation:none}
+.flow-caret{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;
+  border-top:7px solid var(--b1);transition:border-top-color .3s}
+.flow-caret.lit{border-top-color:var(--green)}
+
+/* Console */
+.sim-console{border-top:1px solid var(--b1)}
+.console-hd{background:var(--bg-3);padding:9px 18px;display:flex;align-items:center;gap:10px;
+  font-family:var(--f-mono);font-size:11px;color:var(--t3);letter-spacing:.06em;border-bottom:1px solid var(--b1)}
+.console-body{background:#03040a;padding:12px 16px;height:clamp(140px,18vw,180px);
+  overflow-y:auto;display:flex;flex-direction:column;gap:4px;scrollbar-width:thin}
+.log-line{display:flex;align-items:baseline;gap:8px;font-family:var(--f-mono);
+  font-size:clamp(10.5px,1.2vw,12px);line-height:1.5;animation:log-in .25s var(--ease) both}
+@keyframes log-in{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+.log-ts{color:var(--t3);min-width:34px;flex-shrink:0;font-size:10px}
+.log-tag{font-size:9px;letter-spacing:.08em;padding:1px 6px;border-radius:3px;
+  min-width:42px;text-align:center;font-weight:600;flex-shrink:0}
+.lt-ok{background:rgba(62,217,143,.12);color:#3ed98f}
+.lt-info{background:rgba(56,201,240,.12);color:#38c9f0}
+.lt-warn{background:rgba(245,200,66,.12);color:#f5c842}
+.lt-run{background:rgba(212,136,74,.12);color:#cd7f32}
+.log-msg{color:#7a899e}.log-msg .hl{color:var(--gold)}
+
+/* ═══════════════════════════════════════════════════════
+   GOLD DASHBOARD
+═══════════════════════════════════════════════════════ */
+.dash-placeholder{text-align:center;padding:var(--s5) var(--s3);
+  border:1px dashed var(--b3);border-radius:var(--r-lg);background:var(--bg-2)}
+.dash-ph__icon{font-size:42px;opacity:.4;margin-bottom:14px}
+.dash-ph__title{font-family:var(--f-display);font-size:clamp(16px,2.5vw,20px);color:var(--t2);margin-bottom:8px}
+.dash-ph__sub{font-size:14px;color:var(--t3)}
+.dashboard{animation:panel-in .5s var(--ease) both}
+.dash-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:var(--s3)}
+.dash-title{font-family:var(--f-display);font-size:clamp(18px,2.8vw,24px);font-weight:700;letter-spacing:-.02em}
+.dash-meta{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;color:var(--t3)}
+.dash-meta-ok{color:var(--green)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,1.2vw,14px);margin-bottom:var(--s3)}
+@media(max-width:700px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:380px){.kpi-row{grid-template-columns:1fr}}
+.kpi{background:var(--bg-2);border:1px solid var(--b1);border-radius:var(--r);
+  padding:clamp(14px,2vw,20px);transition:all var(--dur) var(--ease)}
+.kpi:hover{border-color:var(--b2);transform:translateY(-2px)}
+.kpi__lbl{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.kpi__val{font-family:var(--f-display);font-size:clamp(22px,3.5vw,30px);font-weight:800;
+  line-height:1;letter-spacing:-.025em;margin-bottom:6px}
+.kpi__delta{font-family:var(--f-mono);font-size:11px}
+.kpi__delta.up{color:var(--green)}.kpi__delta.dn{color:var(--red)}
+.charts-row{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(8px,1.5vw,16px)}
+@media(max-width:640px){.charts-row{grid-template-columns:1fr}}
+.chart-card{background:var(--bg-2);border:1px solid var(--b1);border-radius:var(--r);padding:clamp(14px,2vw,20px)}
+.chart-card__title{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:14px}
+.chart-wrap{position:relative;height:clamp(160px,22vw,210px)}
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER & BUTTONS
+═══════════════════════════════════════════════════════ */
+.footer{border-top:1px solid var(--b1);padding:var(--s4) 0;margin-top:var(--s5)}
+.footer__inner{max-width:var(--max);margin:0 auto;padding:0 clamp(16px,5vw,48px);
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:var(--s3)}
+@media(max-width:560px){.footer__inner{grid-template-columns:1fr;text-align:center}}
+.footer__name{font-family:var(--f-display);font-size:clamp(15px,2vw,18px);font-weight:700;letter-spacing:-.02em;margin-bottom:4px}
+.footer__meta{font-size:12px;color:var(--t3);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.footer__meta a{color:var(--t2);transition:color var(--dur)}.footer__meta a:hover{color:var(--gold)}
+.footer__stack{font-family:var(--f-mono);font-size:10px;color:var(--t4);letter-spacing:.08em;text-align:right;line-height:1.8}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:clamp(9px,1.2vw,12px) clamp(18px,2.5vw,28px);
+  border-radius:var(--pill);font-size:clamp(13px,1.4vw,15px);font-weight:600;cursor:pointer;
+  transition:all var(--dur) var(--ease);white-space:nowrap}
+.btn--primary{background:var(--gold);color:#07080f;border:1px solid transparent;box-shadow:0 4px 20px var(--gold-g)}
+.btn--primary:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 8px 32px var(--gold-g)}
+.btn--ghost{background:transparent;color:var(--t1);border:1px solid var(--b2)}
+.btn--ghost:hover{background:var(--b1);border-color:var(--b3);transform:translateY(-1px)}
+</style>
+</head>
+<body>
+
+<!-- ════ NAV ════ -->
+<nav class="nav" id="main-nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="site-index.html">
+      <div class="nav__name">Dawit Adane</div>
+      <div class="nav__role">Senior Data Engineer · Dallas TX</div>
+    </a>
+    <div class="nav__links">
+      <a class="nav__link active" href="site-index.html">⚡ Portfolio</a>
+      <a class="nav__link" href="gen-ai.html">🤖 Gen AI</a>
+      <a class="nav__link" href="site-consulting.html">🧠 Consulting</a>
+      <a class="nav__link" href="site-mentoring.html">🌱 Mentoring</a>
+      <a class="nav__link" href="site-resume.html">📄 Resume</a>
+    </div>
+    <a class="nav__cta" href="https://www.linkedin.com/in/dawit1221" target="_blank">Connect ↗</a>
+    <button class="nav__ham" onclick="document.getElementById('main-nav').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ════ HERO ════ -->
+<div class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__dots"></div>
+  <div class="hero__content wrap reveal">
+    <div class="hero__kicker">Industry Data Engineering Portfolio</div>
+    <h1 class="hero__h1">
+      5 Industries.<br>
+      <em>Real pipelines. Live dashboards.</em>
+    </h1>
+    <p class="hero__sub">Production SQL patterns, Bronze→Silver→Gold transformations, live pipeline simulation, and interactive Chart.js analytics dashboards — across Healthcare, Finance, Insurance, HR, and Hospitality.</p>
+    <div class="ind-chips">
+      <button class="ind-chip active" data-target="healthcare"
+        style="color:var(--hc);border-color:rgba(56,201,240,.25);background:rgba(56,201,240,.08)">
+        <span class="ind-chip__dot" style="background:var(--hc)"></span>🏥 Healthcare
+      </button>
+      <button class="ind-chip" data-target="finance"
+        style="color:var(--fin);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.08)">
+        <span class="ind-chip__dot" style="background:var(--fin)"></span>💳 Finance
+      </button>
+      <button class="ind-chip" data-target="insurance"
+        style="color:var(--ins);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.08)">
+        <span class="ind-chip__dot" style="background:var(--ins)"></span>🛡️ Insurance
+      </button>
+      <button class="ind-chip" data-target="hr"
+        style="color:var(--hr);border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.08)">
+        <span class="ind-chip__dot" style="background:var(--hr)"></span>👥 HR &amp; Payroll
+      </button>
+      <button class="ind-chip" data-target="hotel"
+        style="color:var(--htl);border-color:rgba(244,114,182,.25);background:rgba(244,114,182,.08)">
+        <span class="ind-chip__dot" style="background:var(--htl)"></span>🏨 Hotels &amp; Guests
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ════ SECTION 01 · SQL LIBRARY ════ -->
+<div class="sep-label reveal"><div class="sep-label__line"></div><div class="sep-label__text">01 / Industry SQL Library</div><div class="sep-label__line"></div></div>
+
+<section class="section" id="sql-section">
+  <div class="sec-hd reveal">
+    <span class="sec-hd__num">01 /</span>
+    <h2 class="sec-hd__title">Industry SQL Patterns</h2>
+    <div class="sec-hd__rule"></div>
+  </div>
+
+  <div class="ind-tabs reveal rv1">
+    <button class="ind-tab active" data-id="healthcare" onclick="switchInd('healthcare',this)">
+      <span class="ind-tab__dot" style="background:var(--hc)"></span>🏥 Healthcare
+    </button>
+    <button class="ind-tab" data-id="finance" onclick="switchInd('finance',this)">
+      <span class="ind-tab__dot" style="background:var(--fin)"></span>💳 Finance
+    </button>
+    <button class="ind-tab" data-id="insurance" onclick="switchInd('insurance',this)">
+      <span class="ind-tab__dot" style="background:var(--ins)"></span>🛡️ Insurance
+    </button>
+    <button class="ind-tab" data-id="hr" onclick="switchInd('hr',this)">
+      <span class="ind-tab__dot" style="background:var(--hr)"></span>👥 HR
+    </button>
+    <button class="ind-tab" data-id="hotel" onclick="switchInd('hotel',this)">
+      <span class="ind-tab__dot" style="background:var(--htl)"></span>🏨 Hotels
+    </button>
+  </div>
+
+  <div class="ind-panel active" id="panel-healthcare">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:var(--s3);align-items:center;margin-bottom:20px">
+      <div style="font-family:var(--f-display);font-size:clamp(48px,8vw,80px);font-weight:800;line-height:1;opacity:.05;letter-spacing:-.04em;user-select:none">01</div>
+    </div>
+          <div class="ind-card" style="--ind-accent:var(--hc)">
+        <div class="ind-card__icon" style="font-size:32px;line-height:1;flex-shrink:0">🏥</div>
+        <div class="ind-card__body">
+          <div class="ind-card__title">Patient Journey &amp; Clinical Operations Analytics</div>
+          <div class="ind-card__desc">Track patient encounters, appointment compliance, clinical outcomes and operational throughput across care sites. Power staffing models, compliance reporting, and revenue cycle visibility.</div>
+          <div class="tags">
+            <span class="tag" style="color:var(--hc);border-color:rgba(56,201,240,.25);background:rgba(56,201,240,.12)">Patient Encounters</span>
+            <span class="tag" style="color:var(--hc);border-color:rgba(56,201,240,.25);background:rgba(56,201,240,.12)">Revenue Cycle</span>
+            <span class="tag" style="color:var(--hc);border-color:rgba(56,201,240,.25);background:rgba(56,201,240,.12)">Readmission Flags</span>
+            <span class="tag" style="color:var(--green);border-color:rgba(62,217,143,.25);background:rgba(62,217,143,.1)">HIPAA-aware Design</span>
+            <span class="tag" style="color:var(--gold);border-color:rgba(245,200,66,.25);background:rgba(245,200,66,.1)">SCD Type 2</span>
+          </div>
+        </div>
+      </div>
+      <div class="sql-blocks">
+        <div class="sql-block l-bronze open" id="hc-b">
+          <div class="sql-block__hd" onclick="toggleCode('hc-b')">
+            <span class="layer-badge lb-bronze">Staging</span>
+            <span class="sql-label">stg_patient_encounters — Raw EHR ingest with type casting</span>
+            <span class="sql-chevron">▼</span>
+          </div>
+          <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+            <div class="sql-desc">Ingest raw encounter data from EHR. Generate MD5 surrogate keys, cast all types, and preserve source row for audit trail.</div>
+<pre><span class="c">-- stg_patient_encounters.sql  (Staging / Bronze)</span>
+<span class="k">WITH</span> source <span class="k">AS</span> (
+    <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ source('ehr_raw','encounters') }}</span>
+),
+staged <span class="k">AS</span> (
+    <span class="k">SELECT</span>
+        <span class="f">MD5</span>(encounter_id || patient_id)    <span class="k">AS</span> encounter_key,
+        encounter_id::VARCHAR              <span class="k">AS</span> src_encounter_id,
+        patient_id::VARCHAR               <span class="k">AS</span> src_patient_id,
+        provider_id::VARCHAR              <span class="k">AS</span> src_provider_id,
+        facility_code::VARCHAR            <span class="k">AS</span> src_facility_code,
+        encounter_date::DATE              <span class="k">AS</span> encounter_date,
+        admission_ts::TIMESTAMP_NTZ       <span class="k">AS</span> admission_at,
+        discharge_ts::TIMESTAMP_NTZ       <span class="k">AS</span> discharge_at,
+        <span class="f">UPPER</span>(<span class="f">TRIM</span>(encounter_status))     <span class="k">AS</span> encounter_status_raw,
+        billed_amount::NUMERIC(<span class="n">12</span>,<span class="n">2</span>)     <span class="k">AS</span> billed_amount,
+        insurance_code::VARCHAR           <span class="k">AS</span> insurance_code,
+        <span class="f">CURRENT_TIMESTAMP</span>()               <span class="k">AS</span> _loaded_at,
+        _source_file
+    <span class="k">FROM</span> source
+    <span class="k">WHERE</span> encounter_id <span class="k">IS NOT NULL</span>
+      <span class="k">AND</span> patient_id    <span class="k">IS NOT NULL</span>
+)
+<span class="k">SELECT</span> * <span class="k">FROM</span> staged</pre>
+          </div></div></div>
+        </div>
+        <div class="sql-block l-silver" id="hc-s">
+          <div class="sql-block__hd" onclick="toggleCode('hc-s')">
+            <span class="layer-badge lb-silver">Silver</span>
+            <span class="sql-label">silver_encounters — Conformed with readmission flags &amp; LOS</span>
+            <span class="sql-chevron">▼</span>
+          </div>
+          <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+            <div class="sql-desc">Apply business rules, standardize status vocabulary, calculate length-of-stay, and flag 30-day readmissions via LAG window function.</div>
+<pre><span class="c">-- silver_encounters.sql  (Silver)</span>
+<span class="k">WITH</span> staged    <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_patient_encounters') }}</span> ),
+     facilities <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_facilities') }}</span> )
+<span class="k">SELECT</span>
+    e.encounter_key, e.src_encounter_id, e.src_patient_id,
+    <span class="k">CASE</span> e.encounter_status_raw
+        <span class="k">WHEN</span> <span class="s">'COMP'</span>  <span class="k">THEN</span> <span class="s">'Completed'</span>
+        <span class="k">WHEN</span> <span class="s">'CANC'</span>  <span class="k">THEN</span> <span class="s">'Cancelled'</span>
+        <span class="k">WHEN</span> <span class="s">'NOSHO'</span> <span class="k">THEN</span> <span class="s">'No-Show'</span>
+        <span class="k">WHEN</span> <span class="s">'SCHED'</span> <span class="k">THEN</span> <span class="s">'Scheduled'</span>
+        <span class="k">ELSE</span> <span class="s">'Unknown'</span>
+    <span class="k">END</span>                                          <span class="k">AS</span> encounter_status,
+    <span class="f">DATEDIFF</span>(<span class="s">'hour'</span>, e.admission_at,
+        <span class="f">COALESCE</span>(e.discharge_at, <span class="f">CURRENT_TIMESTAMP</span>()))  <span class="k">AS</span> los_hours,
+    <span class="k">CASE WHEN</span>
+        <span class="f">LAG</span>(e.encounter_date)
+          <span class="k">OVER</span> (<span class="k">PARTITION BY</span> e.src_patient_id
+                <span class="k">ORDER BY</span> e.encounter_date)
+        >= <span class="f">DATEADD</span>(<span class="s">'day'</span>, -<span class="n">30</span>, e.encounter_date)
+    <span class="k">THEN TRUE ELSE FALSE END</span>                     <span class="k">AS</span> is_readmission,
+    f.facility_name, f.region,
+    e.billed_amount, e.encounter_date, e._loaded_at
+<span class="k">FROM</span> staged e
+<span class="k">LEFT JOIN</span> facilities f <span class="k">ON</span> e.src_facility_code = f.facility_code
+<span class="k">WHERE</span> e.billed_amount >= <span class="n">0</span>
+  <span class="k">AND</span> e.encounter_date >= <span class="s">'2020-01-01'</span></pre>
+          </div></div></div>
+        </div>
+        <div class="sql-block l-gold" id="hc-g">
+          <div class="sql-block__hd" onclick="toggleCode('hc-g')">
+            <span class="layer-badge lb-gold">Gold</span>
+            <span class="sql-label">fct_monthly_clinical_ops — KPI mart for BI reporting</span>
+            <span class="sql-chevron">▼</span>
+          </div>
+          <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+            <div class="sql-desc">Aggregate to monthly grain: no-show rate, readmission rate, avg LOS, revenue per encounter — all windowed for prior-month LAG comparison.</div>
+<pre><span class="c">-- fct_monthly_clinical_ops.sql  (Gold)</span>
+<span class="k">SELECT</span>
+    <span class="f">DATE_TRUNC</span>(<span class="s">'month'</span>, encounter_date)  <span class="k">AS</span> report_month,
+    region, facility_name,
+    <span class="f">COUNT</span>(*)                             <span class="k">AS</span> total_encounters,
+    <span class="f">COUNT</span>(<span class="k">DISTINCT</span> src_patient_id)       <span class="k">AS</span> unique_patients,
+    <span class="f">ROUND</span>(<span class="f">SUM</span>(<span class="k">CASE WHEN</span> encounter_status = <span class="s">'No-Show'</span>
+                <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) * <span class="n">100.0</span>
+          / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>)    <span class="k">AS</span> no_show_rate_pct,
+    <span class="f">ROUND</span>(<span class="f">SUM</span>(is_readmission::INT) * <span class="n">100.0</span>
+          / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>)    <span class="k">AS</span> readmission_rate_pct,
+    <span class="f">ROUND</span>(<span class="f">AVG</span>(los_hours), <span class="n">1</span>)           <span class="k">AS</span> avg_los_hours,
+    <span class="f">SUM</span>(billed_amount)                  <span class="k">AS</span> total_billed,
+    <span class="f">LAG</span>(<span class="f">COUNT</span>(*)) <span class="k">OVER</span> (
+        <span class="k">PARTITION BY</span> facility_name
+        <span class="k">ORDER BY</span> <span class="f">DATE_TRUNC</span>(<span class="s">'month'</span>, encounter_date)
+    )                                   <span class="k">AS</span> prev_month_encounters
+<span class="k">FROM</span> <span class="t">{{ ref('silver_encounters') }}</span>
+<span class="k">GROUP BY</span> <span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>
+<span class="k">ORDER BY</span> report_month <span class="k">DESC</span>, total_encounters <span class="k">DESC</span></pre>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+
+<div class="industry-panel"
+  </div>
+
+  <div class="ind-panel " id="panel-finance">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:var(--s3);align-items:center;margin-bottom:20px">
+      <div style="font-family:var(--f-display);font-size:clamp(48px,8vw,80px);font-weight:800;line-height:1;opacity:.05;letter-spacing:-.04em;user-select:none">02</div>
+    </div>
+          <div class="ind-card" style="--ind-accent:var(--fin)">
+        <div class="ind-card__icon" style="font-size:32px;line-height:1;flex-shrink:0">💳</div>
+        <div class="ind-card__body">
+          <div class="ind-card__title">Transaction Risk &amp; Fraud Detection Analytics</div>
+          <div class="ind-card__desc">Monitor transaction volumes, detect anomalies, calculate rolling risk scores, and surface suspicious account behavior for compliance and fraud operations teams.</div>
+          <div class="tags">
+            <span class="tag" style="color:var(--fin);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.12)">Transaction Monitoring</span>
+            <span class="tag" style="color:var(--fin);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.12)">Rolling Aggregates</span>
+            <span class="tag" style="color:var(--green);border-color:rgba(62,217,143,.25);background:rgba(62,217,143,.1)">Z-Score Anomaly</span>
+            <span class="tag" style="color:var(--gold);border-color:rgba(245,200,66,.25);background:rgba(245,200,66,.1)">Risk Scoring</span>
+          </div>
+        </div>
+      </div>
+      <div class="sql-blocks">
+        <div class="sql-block l-bronze open" id="fin-b">
+          <div class="sql-block__hd" onclick="toggleCode('fin-b')">
+            <span class="layer-badge lb-bronze">Staging</span>
+            <span class="sql-label">stg_transactions — Ledger ingest with ROW_NUMBER dedup</span>
+            <span class="sql-chevron">▼</span>
+          </div>
+          <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+            <div class="sql-desc">Deduplicate on source transaction ID via ROW_NUMBER, normalize currency, and preserve full audit lineage.</div>
+<pre><span class="c">-- stg_transactions.sql  (Staging / Bronze)</span>
+<span class="k">WITH</span> source  <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ source('core_banking','transactions') }}</span> ),
+     deduped <span class="k">AS</span> (
+         <span class="k">SELECT</span> *,
+             <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (
+                 <span class="k">PARTITION BY</span> transaction_id
+                 <span class="k">ORDER BY</span> processed_at <span class="k">DESC</span>
+             ) <span class="k">AS</span> rn
+         <span class="k">FROM</span> source
+     )
+<span class="k">SELECT</span>
+    <span class="f">MD5</span>(transaction_id)         <span class="k">AS</span> txn_key,
+    transaction_id::VARCHAR      <span class="k">AS</span> src_transaction_id,
+    account_id::VARCHAR          <span class="k">AS</span> src_account_id,
+    merchant_id::VARCHAR         <span class="k">AS</span> src_merchant_id,
+    processed_at::TIMESTAMP_NTZ <span class="k">AS</span> processed_at,
+    transaction_date::DATE       <span class="k">AS</span> txn_date,
+    amount::NUMERIC(<span class="n">14</span>,<span class="n">2</span>)       <span class="k">AS</span> txn_amount_local,
+    currency_code::VARCHAR(<span class="n">3</span>)   <span class="k">AS</span> currency_code,
+    <span class="f">UPPER</span>(<span class="f">TRIM</span>(txn_type))       <span class="k">AS</span> txn_type_raw,
+    <span class="f">CURRENT_TIMESTAMP</span>()         <span class="k">AS</span> _loaded_at
+<span class="k">FROM</span> deduped
+<span class="k">WHERE</span> rn = <span class="n">1</span> <span class="k">AND</span> amount > <span class="n">0</span> <span class="k">AND</span> transaction_id <span class="k">IS NOT NULL</span></pre>
+          </div></div></div>
+        </div>
+        <div class="sql-block l-silver" id="fin-s">
+          <div class="sql-block__hd" onclick="toggleCode('fin-s')">
+            <span class="layer-badge lb-silver">Silver</span>
+            <span class="sql-label">silver_transactions — Rolling 7d spend &amp; z-score risk flags</span>
+            <span class="sql-chevron">▼</span>
+          </div>
+          <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+            <div class="sql-desc">Compute rolling 7-day spend, daily velocity counts, z-score anomaly signals, and business rule risk flags per account.</div>
+<pre><span class="c">-- silver_transactions.sql  (Silver)</span>
+<span class="k">WITH</span> txns <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_transactions') }}</span> ),
+rolling <span class="k">AS</span> (
+    <span class="k">SELECT</span> *,
+        <span class="f">SUM</span>(txn_amount_local) <span class="k">OVER</span> (
+            <span class="k">PARTITION BY</span> src_account_id <span class="k">ORDER BY</span> txn_date
+            <span class="k">ROWS BETWEEN</span> <span class="n">6</span> <span class="k">PRECEDING AND CURRENT ROW</span>
+        )                              <span class="k">AS</span> rolling_7d_spend,
+        <span class="f">COUNT</span>(*) <span class="k">OVER</span> (
+            <span class="k">PARTITION BY</span> src_account_id, txn_date
+        )                              <span class="k">AS</span> daily_txn_count,
+        (txn_amount_local - <span class="f">AVG</span>(txn_amount_local) <span class="k">OVER</span>
+            (<span class="k">PARTITION BY</span> src_account_id))
+        / <span class="f">NULLIF</span>(<span class="f">STDDEV</span>(txn_amount_local) <span class="k">OVER</span>
+            (<span class="k">PARTITION BY</span> src_account_id), <span class="n">0</span>)  <span class="k">AS</span> amount_z_score
+    <span class="k">FROM</span> txns
+)
+<span class="k">SELECT</span> r.*,
+    <span class="k">CASE</span>
+        <span class="k">WHEN</span> r.rolling_7d_spend > <span class="n">10000</span>  <span class="k">THEN TRUE</span>
+        <span class="k">WHEN</span> r.daily_txn_count  > <span class="n">20</span>     <span class="k">THEN TRUE</span>
+        <span class="k">WHEN</span> r.amount_z_score   > <span class="n">3</span>      <span class="k">THEN TRUE</span>
+        <span class="k">ELSE FALSE</span>
+    <span class="k">END</span>                                <span class="k">AS</span> is_high_risk,
+    <span class="k">CASE</span> r.txn_type_raw
+        <span class="k">WHEN</span> <span class="s">'PUR'</span> <span class="k">THEN</span> <span class="s">'Purchase'</span>
+        <span class="k">WHEN</span> <span class="s">'REF'</span> <span class="k">THEN</span> <span class="s">'Refund'</span>
+        <span class="k">WHEN</span> <span class="s">'WD'</span>  <span class="k">THEN</span> <span class="s">'Withdrawal'</span>
+        <span class="k">WHEN</span> <span class="s">'TRF'</span> <span class="k">THEN</span> <span class="s">'Transfer'</span>
+        <span class="k">ELSE</span> <span class="s">'Other'</span>
+    <span class="k">END</span>                                <span class="k">AS</span> txn_type
+<span class="k">FROM</span> rolling r</pre>
+          </div></div></div>
+        </div>
+        <div class="sql-block l-gold" id="fin-g">
+          <div class="sql-block__hd" onclick="toggleCode('fin-g')">
+            <span class="layer-badge lb-gold">Gold</span>
+            <span class="sql-label">fct_account_risk_summary — Daily risk mart for fraud ops</span>
+            <span class="sql-chevron">▼</span>
+          </div>
+          <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+            <div class="sql-desc">Daily per-account risk summary: flagged transaction count, risk rate %, total flagged exposure, and velocity score for fraud analyst dashboards.</div>
+<pre><span class="c">-- fct_account_risk_summary.sql  (Gold)</span>
+<span class="k">SELECT</span>
+    txn_date, src_account_id, currency_code,
+    <span class="f">COUNT</span>(*)                              <span class="k">AS</span> total_transactions,
+    <span class="f">SUM</span>(txn_amount_local)                <span class="k">AS</span> total_spend,
+    <span class="f">SUM</span>(is_high_risk::INT)               <span class="k">AS</span> flagged_txn_count,
+    <span class="f">ROUND</span>(<span class="f">SUM</span>(is_high_risk::INT) * <span class="n">100.0</span>
+          / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>)     <span class="k">AS</span> risk_rate_pct,
+    <span class="f">SUM</span>(<span class="k">CASE WHEN</span> is_high_risk
+            <span class="k">THEN</span> txn_amount_local <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) <span class="k">AS</span> flagged_exposure,
+    <span class="f">ROUND</span>(<span class="f">COUNT</span>(*) / <span class="n">24.0</span>, <span class="n">2</span>)           <span class="k">AS</span> txn_velocity_per_hr,
+    <span class="f">SUM</span>(txn_amount_local)
+      - <span class="f">LAG</span>(<span class="f">SUM</span>(txn_amount_local), <span class="n">30</span>)
+        <span class="k">OVER</span> (<span class="k">PARTITION BY</span> src_account_id
+              <span class="k">ORDER BY</span> txn_date)           <span class="k">AS</span> spend_30d_delta
+<span class="k">FROM</span> <span class="t">{{ ref('silver_transactions') }}</span>
+<span class="k">GROUP BY</span> <span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>
+<span class="k">ORDER BY</span> risk_rate_pct <span class="k">DESC</span></pre>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+
+<div class="industry-panel"
+  </div>
+
+  <div class="ind-panel " id="panel-insurance">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:var(--s3);align-items:center;margin-bottom:20px">
+      <div style="font-family:var(--f-display);font-size:clamp(48px,8vw,80px);font-weight:800;line-height:1;opacity:.05;letter-spacing:-.04em;user-select:none">03</div>
+    </div>
+      <div class="ind-card" style="--ind-accent:var(--ins)">
+    <div class="ind-card__icon" style="font-size:32px;line-height:1;flex-shrink:0">🛡️</div>
+    <div class="ind-card__body">
+      <div class="ind-card__title">Insurance Claims &amp; Risk Analytics</div>
+      <div class="ind-card__desc">Unify claims, policy, underwriting, and actuarial data into a single analytics layer. Power loss-ratio dashboards, fraud detection models, and regulatory NAIC reporting pipelines.</div>
+      <div class="tags">
+        <span class="tag" style="color:var(--ins);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.12)">Claims Processing</span>
+        <span class="tag" style="color:var(--ins);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.12)">Loss Ratio</span>
+        <span class="tag" style="color:var(--ins);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.12)">Underwriting Risk</span>
+        <span class="tag" style="color:var(--green);border-color:rgba(62,217,143,.25);background:rgba(62,217,143,.1)">Fraud Signals</span>
+        <span class="tag" style="color:var(--gold);border-color:rgba(245,200,66,.25);background:rgba(245,200,66,.1)">NAIC Compliance</span>
+      </div>
+    </div>
+  </div>
+  <div class="sql-blocks">
+    <div class="sql-block l-bronze open" id="ins-b">
+      <div class="sql-block__hd" onclick="toggleCode('ins-b')">
+        <span class="layer-badge lb-bronze">Staging</span>
+        <span class="sql-label">stg_claims — Raw claims ingest with policy join keys and type casting</span>
+        <span class="sql-chevron">▼</span>
+      </div>
+      <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+        <div class="sql-desc">Ingest raw claims data from the claims management system. Cast financial fields, normalize claim status codes, generate surrogate keys, and preserve audit lineage.</div>
+<pre><span class="c">-- stg_claims.sql  (Staging / Bronze)</span>
+<span class="k">WITH</span> source <span class="k">AS</span> (
+    <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ source('claims_system','claims') }}</span>
+),
+staged <span class="k">AS</span> (
+    <span class="k">SELECT</span>
+        <span class="f">MD5</span>(claim_id || policy_id)         <span class="k">AS</span> claim_key,
+        claim_id::VARCHAR                  <span class="k">AS</span> src_claim_id,
+        policy_id::VARCHAR                 <span class="k">AS</span> src_policy_id,
+        claimant_id::VARCHAR               <span class="k">AS</span> src_claimant_id,
+        adjuster_id::VARCHAR               <span class="k">AS</span> src_adjuster_id,
+
+        date_of_loss::DATE                 <span class="k">AS</span> date_of_loss,
+        claim_open_dt::DATE                <span class="k">AS</span> claim_open_date,
+        claim_close_dt::DATE               <span class="k">AS</span> claim_close_date,
+
+        <span class="c">-- Normalize claim status vocabulary</span>
+        <span class="f">UPPER</span>(<span class="f">TRIM</span>(claim_status))          <span class="k">AS</span> claim_status_raw,
+
+        <span class="c">-- Financial amounts</span>
+        reported_amount::NUMERIC(<span class="n">14</span>,<span class="n">2</span>)    <span class="k">AS</span> reported_amount,
+        paid_amount::NUMERIC(<span class="n">14</span>,<span class="n">2</span>)       <span class="k">AS</span> paid_amount,
+        reserved_amount::NUMERIC(<span class="n">14</span>,<span class="n">2</span>)   <span class="k">AS</span> reserved_amount,
+
+        line_of_business::VARCHAR          <span class="k">AS</span> line_of_business,
+        coverage_type::VARCHAR             <span class="k">AS</span> coverage_type,
+        state_code::VARCHAR(<span class="n">2</span>)            <span class="k">AS</span> state_code,
+
+        <span class="f">CURRENT_TIMESTAMP</span>()               <span class="k">AS</span> _loaded_at
+    <span class="k">FROM</span> source
+    <span class="k">WHERE</span> claim_id  <span class="k">IS NOT NULL</span>
+      <span class="k">AND</span> policy_id <span class="k">IS NOT NULL</span>
+      <span class="k">AND</span> reported_amount >= <span class="n">0</span>
+)
+<span class="k">SELECT</span> * <span class="k">FROM</span> staged</pre>
+      </div></div>
+    </div>
+
+    <div class="sql-block l-silver" id="ins-s">
+      <div class="sql-block__hd" onclick="toggleCode('ins-s')">
+        <span class="layer-badge lb-silver">Silver</span>
+        <span class="sql-label">silver_claims — Enriched with development lag, fraud flags, and loss ratios</span>
+        <span class="sql-chevron">▼</span>
+      </div>
+      <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+        <div class="sql-desc">Apply business rules, calculate claim development lag, compute running paid-to-incurred ratios, join policy premium data, and flag high-velocity claims as fraud signals.</div>
+<pre><span class="c">-- silver_claims.sql  (Silver)</span>
+<span class="k">WITH</span>
+claims  <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_claims') }}</span>         ),
+policies <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_policies') }}</span>        ),
+premiums <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_earned_premiums') }}</span>   )
+<span class="k">SELECT</span>
+    c.claim_key, c.src_claim_id, c.src_policy_id,
+    c.date_of_loss, c.claim_open_date, c.claim_close_date,
+
+    <span class="c">-- Status vocabulary</span>
+    <span class="k">CASE</span> c.claim_status_raw
+        <span class="k">WHEN</span> <span class="s">'OPN'</span>   <span class="k">THEN</span> <span class="s">'Open'</span>
+        <span class="k">WHEN</span> <span class="s">'CLO'</span>   <span class="k">THEN</span> <span class="s">'Closed'</span>
+        <span class="k">WHEN</span> <span class="s">'PEND'</span>  <span class="k">THEN</span> <span class="s">'Pending'</span>
+        <span class="k">WHEN</span> <span class="s">'LITIG'</span> <span class="k">THEN</span> <span class="s">'In Litigation'</span>
+        <span class="k">ELSE</span> <span class="s">'Unknown'</span>
+    <span class="k">END</span>                                     <span class="k">AS</span> claim_status,
+
+    <span class="c">-- Claim development lag in days</span>
+    <span class="f">DATEDIFF</span>(<span class="s">'day'</span>, c.date_of_loss,
+             c.claim_open_date)              <span class="k">AS</span> report_lag_days,
+
+    <span class="c">-- Loss development: paid / incurred</span>
+    c.paid_amount,
+    c.reported_amount                        <span class="k">AS</span> incurred_amount,
+    <span class="f">ROUND</span>(c.paid_amount / <span class="f">NULLIF</span>(c.reported_amount,<span class="n">0</span>),<span class="n">4</span>)
+                                             <span class="k">AS</span> paid_to_incurred_ratio,
+
+    <span class="c">-- Fraud signal: multiple claims same policy 30d window</span>
+    <span class="f">COUNT</span>(*) <span class="k">OVER</span> (
+        <span class="k">PARTITION BY</span> c.src_policy_id
+        <span class="k">ORDER BY</span> c.date_of_loss
+        <span class="k">ROWS BETWEEN</span> <span class="n">29</span> <span class="k">PRECEDING AND CURRENT ROW</span>
+    )                                        <span class="k">AS</span> claims_30d_window,
+
+    <span class="k">CASE WHEN</span>
+        <span class="f">COUNT</span>(*) <span class="k">OVER</span> (
+            <span class="k">PARTITION BY</span> c.src_policy_id
+            <span class="k">ORDER BY</span> c.date_of_loss
+            <span class="k">ROWS BETWEEN</span> <span class="n">29</span> <span class="k">PRECEDING AND CURRENT ROW</span>
+        ) > <span class="n">3</span>
+    <span class="k">THEN TRUE ELSE FALSE END</span>                <span class="k">AS</span> is_high_frequency_flag,
+
+    p.annual_premium, p.coverage_limit,
+    p.underwriting_tier
+
+<span class="k">FROM</span> claims c
+<span class="k">LEFT JOIN</span> policies p <span class="k">ON</span> c.src_policy_id = p.policy_id
+<span class="k">WHERE</span> c.paid_amount <= p.coverage_limit</pre>
+      </div></div>
+    </div>
+
+    <div class="sql-block l-gold" id="ins-g">
+      <div class="sql-block__hd" onclick="toggleCode('ins-g')">
+        <span class="layer-badge lb-gold">Gold</span>
+        <span class="sql-label">fct_monthly_loss_ratio — Actuarial KPI mart by LOB and state</span>
+        <span class="sql-chevron">▼</span>
+      </div>
+      <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+        <div class="sql-desc">Aggregate to monthly grain by line of business and state. Produces loss ratio, average claim severity, frequency, and lag — ready for actuarial dashboards and NAIC filings.</div>
+<pre><span class="c">-- fct_monthly_loss_ratio.sql  (Gold)</span>
+<span class="k">SELECT</span>
+    <span class="f">DATE_TRUNC</span>(<span class="s">'month'</span>, date_of_loss)   <span class="k">AS</span> loss_month,
+    line_of_business,
+    state_code,
+    underwriting_tier,
+
+    <span class="c">-- Volume</span>
+    <span class="f">COUNT</span>(*)                             <span class="k">AS</span> total_claims,
+    <span class="f">COUNT</span>(<span class="k">DISTINCT</span> src_policy_id)        <span class="k">AS</span> unique_policies,
+
+    <span class="c">-- Loss ratio = total paid / earned premium</span>
+    <span class="f">SUM</span>(paid_amount)                     <span class="k">AS</span> total_paid_losses,
+    <span class="f">SUM</span>(annual_premium) / <span class="n">12.0</span>          <span class="k">AS</span> earned_premium_month,
+    <span class="f">ROUND</span>(
+        <span class="f">SUM</span>(paid_amount) * <span class="n">100.0</span>
+        / <span class="f">NULLIF</span>(<span class="f">SUM</span>(annual_premium) / <span class="n">12.0</span>, <span class="n">0</span>), <span class="n">2</span>
+    )                                    <span class="k">AS</span> loss_ratio_pct,
+
+    <span class="c">-- Severity and frequency</span>
+    <span class="f">AVG</span>(paid_amount)                     <span class="k">AS</span> avg_claim_severity,
+    <span class="f">AVG</span>(report_lag_days)                 <span class="k">AS</span> avg_report_lag_days,
+
+    <span class="c">-- Fraud signal rate</span>
+    <span class="f">ROUND</span>(
+        <span class="f">SUM</span>(is_high_frequency_flag::INT) * <span class="n">100.0</span>
+        / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>
+    )                                    <span class="k">AS</span> high_freq_flag_rate_pct,
+
+    <span class="c">-- Prior month MoM trend</span>
+    <span class="f">LAG</span>(<span class="f">SUM</span>(paid_amount)) <span class="k">OVER</span> (
+        <span class="k">PARTITION BY</span> line_of_business, state_code
+        <span class="k">ORDER BY</span> <span class="f">DATE_TRUNC</span>(<span class="s">'month'</span>, date_of_loss)
+    )                                    <span class="k">AS</span> prev_month_paid_losses
+
+<span class="k">FROM</span> <span class="t">{{ ref('silver_claims') }}</span>
+<span class="k">GROUP BY</span> <span class="n">1</span>,<span class="n">2</span>,<span class="n">3</span>,<span class="n">4</span>
+<span class="k">ORDER BY</span> loss_month <span class="k">DESC</span>, loss_ratio_pct <span class="k">DESC</span></pre>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<div class="industry-panel"
+  </div>
+
+  <div class="ind-panel " id="panel-hr">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:var(--s3);align-items:center;margin-bottom:20px">
+      <div style="font-family:var(--f-display);font-size:clamp(48px,8vw,80px);font-weight:800;line-height:1;opacity:.05;letter-spacing:-.04em;user-select:none">04</div>
+    </div>
+          <div class="ind-card" style="--ind-accent:var(--hr)">
+        <div class="ind-card__icon" style="font-size:32px;line-height:1;flex-shrink:0">👥</div>
+        <div class="ind-card__body">
+          <div class="ind-card__title">Workforce Analytics &amp; Attrition Modeling</div>
+          <div class="ind-card__desc">Analyze headcount trends, turnover rates, compensation equity, and time-to-fill metrics from HRIS and ATS data. Power DEI reporting and attrition early-warning models.</div>
+          <div class="tags">
+            <span class="tag" style="color:var(--hr);border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.12)">Headcount Snapshots</span>
+            <span class="tag" style="color:var(--hr);border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.12)">Attrition Rate</span>
+            <span class="tag" style="color:var(--green);border-color:rgba(62,217,143,.25);background:rgba(62,217,143,.1)">PII Hashing</span>
+            <span class="tag" style="color:var(--gold);border-color:rgba(245,200,66,.25);background:rgba(245,200,66,.1)">Tenure Banding</span>
+          </div>
+        </div>
+      </div>
+      <div class="sql-blocks">
+        <div class="sql-block l-bronze open" id="hr-b">
+          <div class="sql-block__hd" onclick="toggleCode('hr-b')">
+            <span class="layer-badge lb-bronze">Staging</span>
+            <span class="sql-label">stg_employees — HRIS ingest with SHA2 PII hashing</span>
+            <span class="sql-chevron">▼</span>
+          </div>
+          <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+            <div class="sql-desc">Ingest employee master records from ADP. Hash PII fields with SHA2-256 for safe downstream use, normalize employment status codes.</div>
+<pre><span class="c">-- stg_employees.sql  (Staging / Bronze)</span>
+<span class="k">WITH</span> source <span class="k">AS</span> (<span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ source('adp','employee_master') }}</span>)
+<span class="k">SELECT</span>
+    <span class="f">MD5</span>(employee_id)                  <span class="k">AS</span> employee_key,
+    employee_id::VARCHAR              <span class="k">AS</span> src_employee_id,
+    <span class="f">SHA2</span>(email_address, <span class="n">256</span>)         <span class="k">AS</span> email_hash,  <span class="c">-- PII-safe</span>
+    department_code::VARCHAR          <span class="k">AS</span> department_code,
+    job_title::VARCHAR                <span class="k">AS</span> job_title,
+    manager_id::VARCHAR               <span class="k">AS</span> manager_id,
+    cost_center::VARCHAR              <span class="k">AS</span> cost_center,
+    location_code::VARCHAR            <span class="k">AS</span> location_code,
+    hire_date::DATE                   <span class="k">AS</span> hire_date,
+    termination_date::DATE            <span class="k">AS</span> termination_date,
+    <span class="f">UPPER</span>(<span class="f">TRIM</span>(employment_status))   <span class="k">AS</span> employment_status_raw,
+    salary_band::VARCHAR              <span class="k">AS</span> salary_band,
+    annual_salary::NUMERIC(<span class="n">12</span>,<span class="n">2</span>)    <span class="k">AS</span> annual_salary,
+    <span class="f">CURRENT_TIMESTAMP</span>()              <span class="k">AS</span> _loaded_at
+<span class="k">FROM</span> source
+<span class="k">WHERE</span> employee_id <span class="k">IS NOT NULL</span></pre>
+          </div></div></div>
+        </div>
+        <div class="sql-block l-silver" id="hr-s">
+          <div class="sql-block__hd" onclick="toggleCode('hr-s')">
+            <span class="layer-badge lb-silver">Silver</span>
+            <span class="sql-label">silver_workforce — Tenure bands, active flags, status vocab</span>
+            <span class="sql-chevron">▼</span>
+          </div>
+          <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+            <div class="sql-desc">Compute tenure months, apply tenure banding, flag active employees, and standardize employment status to Voluntary / Involuntary / Active.</div>
+<pre><span class="c">-- silver_workforce.sql  (Silver)</span>
+<span class="k">WITH</span> employees <span class="k">AS</span> (<span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_employees') }}</span>)
+<span class="k">SELECT</span>
+    employee_key, src_employee_id, department_code,
+    job_title, cost_center, salary_band, annual_salary,
+    hire_date, termination_date,
+    <span class="k">CASE WHEN</span> termination_date <span class="k">IS NULL</span>
+          <span class="k">OR</span>  termination_date > <span class="f">CURRENT_DATE</span>()
+        <span class="k">THEN TRUE ELSE FALSE END</span>                  <span class="k">AS</span> is_active,
+    <span class="f">DATEDIFF</span>(<span class="s">'month'</span>, hire_date,
+        <span class="f">COALESCE</span>(termination_date, <span class="f">CURRENT_DATE</span>()))  <span class="k">AS</span> tenure_months,
+    <span class="k">CASE</span>
+        <span class="k">WHEN</span> <span class="f">DATEDIFF</span>(<span class="s">'month'</span>,hire_date,<span class="f">CURRENT_DATE</span>()) <  <span class="n">12</span> <span class="k">THEN</span> <span class="s">'0-1 yr'</span>
+        <span class="k">WHEN</span> <span class="f">DATEDIFF</span>(<span class="s">'month'</span>,hire_date,<span class="f">CURRENT_DATE</span>()) <  <span class="n">36</span> <span class="k">THEN</span> <span class="s">'1-3 yrs'</span>
+        <span class="k">WHEN</span> <span class="f">DATEDIFF</span>(<span class="s">'month'</span>,hire_date,<span class="f">CURRENT_DATE</span>()) <  <span class="n">60</span> <span class="k">THEN</span> <span class="s">'3-5 yrs'</span>
+        <span class="k">ELSE</span> <span class="s">'5+ yrs'</span>
+    <span class="k">END</span>                                             <span class="k">AS</span> tenure_band,
+    <span class="k">CASE</span> employment_status_raw
+        <span class="k">WHEN</span> <span class="s">'TERM-VOL'</span>   <span class="k">THEN</span> <span class="s">'Voluntary'</span>
+        <span class="k">WHEN</span> <span class="s">'TERM-INVOL'</span> <span class="k">THEN</span> <span class="s">'Involuntary'</span>
+        <span class="k">WHEN</span> <span class="s">'ACTIVE'</span>    <span class="k">THEN</span> <span class="s">'Active'</span>
+        <span class="k">ELSE</span> <span class="s">'Other'</span>
+    <span class="k">END</span>                                             <span class="k">AS</span> employment_status
+<span class="k">FROM</span> employees</pre>
+          </div></div></div>
+        </div>
+        <div class="sql-block l-gold" id="hr-g">
+          <div class="sql-block__hd" onclick="toggleCode('hr-g')">
+            <span class="layer-badge lb-gold">Gold</span>
+            <span class="sql-label">fct_monthly_attrition — Workforce KPI mart with LAG MoM</span>
+            <span class="sql-chevron">▼</span>
+          </div>
+          <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+            <div class="sql-desc">Monthly attrition rate, active headcount, and voluntary separation rate per department and tenure band — with LAG for month-over-month comparison.</div>
+<pre><span class="c">-- fct_monthly_attrition.sql  (Gold)</span>
+<span class="k">SELECT</span>
+    <span class="f">DATE_TRUNC</span>(<span class="s">'month'</span>, hire_date)    <span class="k">AS</span> cohort_month,
+    department_code, salary_band, tenure_band,
+    <span class="f">COUNT</span>(*)                           <span class="k">AS</span> total_headcount,
+    <span class="f">SUM</span>(is_active::INT)               <span class="k">AS</span> active_headcount,
+    <span class="f">SUM</span>(<span class="k">CASE WHEN NOT</span> is_active <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>)
+                                       <span class="k">AS</span> separated_headcount,
+    <span class="f">ROUND</span>(<span class="f">SUM</span>(<span class="k">CASE WHEN NOT</span> is_active <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) * <span class="n">100.0</span>
+          / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>)  <span class="k">AS</span> attrition_rate_pct,
+    <span class="f">ROUND</span>(<span class="f">SUM</span>(<span class="k">CASE WHEN</span> employment_status = <span class="s">'Voluntary'</span>
+                <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) * <span class="n">100.0</span>
+          / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">2</span>)  <span class="k">AS</span> voluntary_sep_rate_pct,
+    <span class="f">ROUND</span>(<span class="f">AVG</span>(tenure_months), <span class="n">1</span>)    <span class="k">AS</span> avg_tenure_months,
+    <span class="f">ROUND</span>(<span class="f">AVG</span>(annual_salary), <span class="n">0</span>)   <span class="k">AS</span> avg_annual_salary,
+    <span class="f">LAG</span>(<span class="f">SUM</span>(is_active::INT)) <span class="k">OVER</span> (
+        <span class="k">PARTITION BY</span> department_code
+        <span class="k">ORDER BY</span> <span class="f">DATE_TRUNC</span>(<span class="s">'month'</span>, hire_date)
+    )                                  <span class="k">AS</span> prev_month_headcount
+<span class="k">FROM</span> <span class="t">{{ ref('silver_workforce') }}</span>
+<span class="k">GROUP BY</span> <span class="n">1</span>,<span class="n">2</span>,<span class="n">3</span>,<span class="n">4</span>
+<span class="k">ORDER BY</span> cohort_month <span class="k">DESC</span>, attrition_rate_pct <span class="k">DESC</span></pre>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+
+<div class="industry-panel"
+  </div>
+
+  <div class="ind-panel " id="panel-hotel">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:var(--s3);align-items:center;margin-bottom:20px">
+      <div style="font-family:var(--f-display);font-size:clamp(48px,8vw,80px);font-weight:800;line-height:1;opacity:.05;letter-spacing:-.04em;user-select:none">05</div>
+    </div>
+      <div class="ind-card" style="--ind-accent:var(--htl)">
+    <div class="ind-card__icon" style="font-size:32px;line-height:1;flex-shrink:0">🏨</div>
+    <div class="ind-card__body">
+      <div class="ind-card__title">Hotel &amp; Guest Experience Analytics</div>
+      <div class="ind-card__desc">Unify PMS, booking, F&amp;B, loyalty, and review data into guest-360 profiles. Drive RevPAR optimization, personalized upsell models, churn prediction, and real-time guest satisfaction tracking.</div>
+      <div class="tags">
+        <span class="tag" style="color:var(--htl);border-color:rgba(244,114,182,.25);background:rgba(244,114,182,.12)">RevPAR / ADR</span>
+        <span class="tag" style="color:var(--htl);border-color:rgba(244,114,182,.25);background:rgba(244,114,182,.12)">Guest 360</span>
+        <span class="tag" style="color:var(--htl);border-color:rgba(244,114,182,.25);background:rgba(244,114,182,.12)">Booking Analytics</span>
+        <span class="tag" style="color:var(--green);border-color:rgba(62,217,143,.25);background:rgba(62,217,143,.1)">Loyalty Scoring</span>
+        <span class="tag" style="color:var(--gold);border-color:rgba(245,200,66,.25);background:rgba(245,200,66,.1)">Churn Prediction</span>
+      </div>
+    </div>
+  </div>
+  <div class="sql-blocks">
+    <div class="sql-block l-bronze open" id="hot-b">
+      <div class="sql-block__hd" onclick="toggleCode('hot-b')">
+        <span class="layer-badge lb-bronze">Staging</span>
+        <span class="sql-label">stg_reservations — PMS reservation ingest with channel and rate normalization</span>
+        <span class="sql-chevron">▼</span>
+      </div>
+      <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+        <div class="sql-desc">Ingest raw reservation data from the Property Management System (PMS). Normalize booking channels, rate codes, room types, and cast all date/financial fields for downstream analytics.</div>
+<pre><span class="c">-- stg_reservations.sql  (Staging / Bronze)</span>
+<span class="k">WITH</span> source <span class="k">AS</span> (
+    <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ source('pms_opera','reservations') }}</span>
+),
+staged <span class="k">AS</span> (
+    <span class="k">SELECT</span>
+        <span class="f">MD5</span>(reservation_id || property_id)  <span class="k">AS</span> reservation_key,
+        reservation_id::VARCHAR             <span class="k">AS</span> src_reservation_id,
+        guest_profile_id::VARCHAR           <span class="k">AS</span> src_guest_id,
+        property_id::VARCHAR                <span class="k">AS</span> src_property_id,
+
+        <span class="c">-- Stay dates</span>
+        checkin_date::DATE                  <span class="k">AS</span> checkin_date,
+        checkout_date::DATE                 <span class="k">AS</span> checkout_date,
+        booking_date::DATE                  <span class="k">AS</span> booking_date,
+
+        <span class="c">-- Room and rate</span>
+        room_type_code::VARCHAR             <span class="k">AS</span> room_type_code,
+        rate_code::VARCHAR                  <span class="k">AS</span> rate_code,
+        daily_rate::NUMERIC(<span class="n">10</span>,<span class="n">2</span>)         <span class="k">AS</span> daily_rate_usd,
+        total_revenue::NUMERIC(<span class="n">12</span>,<span class="n">2</span>)      <span class="k">AS</span> total_revenue_usd,
+
+        <span class="c">-- Booking channel normalization</span>
+        <span class="f">UPPER</span>(<span class="f">TRIM</span>(booking_channel))       <span class="k">AS</span> booking_channel_raw,
+        <span class="f">UPPER</span>(<span class="f">TRIM</span>(reservation_status))    <span class="k">AS</span> reservation_status_raw,
+
+        adults_count::INT                   <span class="k">AS</span> adults_count,
+        children_count::INT                 <span class="k">AS</span> children_count,
+        loyalty_tier::VARCHAR               <span class="k">AS</span> loyalty_tier,
+
+        <span class="f">CURRENT_TIMESTAMP</span>()                <span class="k">AS</span> _loaded_at
+    <span class="k">FROM</span> source
+    <span class="k">WHERE</span> reservation_id <span class="k">IS NOT NULL</span>
+      <span class="k">AND</span> checkin_date   <span class="k">IS NOT NULL</span>
+      <span class="k">AND</span> daily_rate_usd  > <span class="n">0</span>
+)
+<span class="k">SELECT</span> * <span class="k">FROM</span> staged</pre>
+      </div></div>
+    </div>
+
+    <div class="sql-block l-silver" id="hot-s">
+      <div class="sql-block__hd" onclick="toggleCode('hot-s')">
+        <span class="layer-badge lb-silver">Silver</span>
+        <span class="sql-label">silver_guest_stays — Guest 360 with LOS, lead time, and repeat-visit signals</span>
+        <span class="sql-chevron">▼</span>
+      </div>
+      <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+        <div class="sql-desc">Compute length of stay, booking lead time, repeat-guest flags, revenue per available room (RevPAR) contribution, and channel mix — all partitioned per guest profile.</div>
+<pre><span class="c">-- silver_guest_stays.sql  (Silver)</span>
+<span class="k">WITH</span>
+reservations <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_reservations') }}</span>  ),
+room_inv     <span class="k">AS</span> ( <span class="k">SELECT</span> * <span class="k">FROM</span> <span class="t">{{ ref('stg_room_inventory') }}</span> )
+<span class="k">SELECT</span>
+    r.reservation_key, r.src_guest_id, r.src_property_id,
+    r.checkin_date, r.checkout_date, r.booking_date,
+    r.daily_rate_usd, r.total_revenue_usd,
+    r.room_type_code, r.loyalty_tier,
+
+    <span class="c">-- Length of stay</span>
+    <span class="f">DATEDIFF</span>(<span class="s">'day'</span>, r.checkin_date, r.checkout_date)
+                                           <span class="k">AS</span> length_of_stay_nights,
+
+    <span class="c">-- Booking lead time (days before arrival)</span>
+    <span class="f">DATEDIFF</span>(<span class="s">'day'</span>, r.booking_date, r.checkin_date)
+                                           <span class="k">AS</span> booking_lead_days,
+
+    <span class="c">-- Booking channel vocabulary</span>
+    <span class="k">CASE</span> r.booking_channel_raw
+        <span class="k">WHEN</span> <span class="s">'OTA'</span>    <span class="k">THEN</span> <span class="s">'Online Travel Agency'</span>
+        <span class="k">WHEN</span> <span class="s">'DIRECT'</span> <span class="k">THEN</span> <span class="s">'Direct (Hotel Website)'</span>
+        <span class="k">WHEN</span> <span class="s">'GDS'</span>    <span class="k">THEN</span> <span class="s">'Global Distrib. System'</span>
+        <span class="k">WHEN</span> <span class="s">'CORP'</span>   <span class="k">THEN</span> <span class="s">'Corporate Contract'</span>
+        <span class="k">ELSE</span> <span class="s">'Other'</span>
+    <span class="k">END</span>                                    <span class="k">AS</span> booking_channel,
+
+    <span class="c">-- Repeat guest flag</span>
+    <span class="k">CASE WHEN</span>
+        <span class="f">ROW_NUMBER</span>() <span class="k">OVER</span> (
+            <span class="k">PARTITION BY</span> r.src_guest_id
+            <span class="k">ORDER BY</span> r.checkin_date
+        ) > <span class="n">1</span>
+    <span class="k">THEN TRUE ELSE FALSE END</span>              <span class="k">AS</span> is_repeat_guest,
+
+    <span class="c">-- Cumulative guest lifetime value</span>
+    <span class="f">SUM</span>(r.total_revenue_usd) <span class="k">OVER</span> (
+        <span class="k">PARTITION BY</span> r.src_guest_id
+        <span class="k">ORDER BY</span> r.checkin_date
+        <span class="k">ROWS UNBOUNDED PRECEDING</span>
+    )                                      <span class="k">AS</span> cumulative_guest_ltv,
+
+    inv.total_rooms_available
+
+<span class="k">FROM</span> reservations r
+<span class="k">LEFT JOIN</span> room_inv inv
+    <span class="k">ON</span> r.src_property_id = inv.property_id
+    <span class="k">AND</span> r.checkin_date    = inv.inventory_date
+<span class="k">WHERE</span> r.reservation_status_raw <span class="k">IN</span> (<span class="s">'CHECKIN'</span>,<span class="s">'CHECKOUT'</span>,<span class="s">'CONFIRMED'</span>)</pre>
+      </div></div>
+    </div>
+
+    <div class="sql-block l-gold" id="hot-g">
+      <div class="sql-block__hd" onclick="toggleCode('hot-g')">
+        <span class="layer-badge lb-gold">Gold</span>
+        <span class="sql-label">fct_daily_revpar — Revenue KPI mart: ADR, Occupancy, RevPAR by property</span>
+        <span class="sql-chevron">▼</span>
+      </div>
+      <div class="sql-body"><div class="sql-body__inner"><div class="sql-body__inner">
+        <div class="sql-desc">Daily property-level revenue analytics: Average Daily Rate (ADR), Occupancy %, RevPAR, and rolling 7-day trend. The standard KPI set for hotel GM dashboards and revenue management systems.</div>
+<pre><span class="c">-- fct_daily_revpar.sql  (Gold)</span>
+<span class="k">SELECT</span>
+    checkin_date                               <span class="k">AS</span> stay_date,
+    src_property_id,
+    room_type_code,
+
+    <span class="c">-- Volume</span>
+    <span class="f">COUNT</span>(*)                                   <span class="k">AS</span> total_reservations,
+    <span class="f">SUM</span>(length_of_stay_nights)                 <span class="k">AS</span> total_room_nights,
+    <span class="f">MAX</span>(total_rooms_available)                 <span class="k">AS</span> rooms_available,
+
+    <span class="c">-- Core revenue metrics</span>
+    <span class="f">ROUND</span>(<span class="f">SUM</span>(total_revenue_usd)
+          / <span class="f">NULLIF</span>(<span class="f">SUM</span>(length_of_stay_nights), <span class="n">0</span>), <span class="n">2</span>)
+                                               <span class="k">AS</span> adr_usd,
+
+    <span class="f">ROUND</span>(<span class="f">COUNT</span>(*) * <span class="n">100.0</span>
+          / <span class="f">NULLIF</span>(<span class="f">MAX</span>(total_rooms_available), <span class="n">0</span>), <span class="n">1</span>)
+                                               <span class="k">AS</span> occupancy_pct,
+
+    <span class="c">-- RevPAR = ADR × Occupancy rate</span>
+    <span class="f">ROUND</span>(
+        (<span class="f">SUM</span>(total_revenue_usd)
+         / <span class="f">NULLIF</span>(<span class="f">SUM</span>(length_of_stay_nights), <span class="n">0</span>))
+        * (<span class="f">COUNT</span>(*) / <span class="f">NULLIF</span>(<span class="f">MAX</span>(total_rooms_available), <span class="n">0</span>)),
+        <span class="n">2</span>
+    )                                          <span class="k">AS</span> revpar_usd,
+
+    <span class="c">-- 7-day rolling RevPAR trend</span>
+    <span class="f">AVG</span>(
+        <span class="f">SUM</span>(total_revenue_usd)
+        / <span class="f">NULLIF</span>(<span class="f">MAX</span>(total_rooms_available), <span class="n">0</span>)
+    ) <span class="k">OVER</span> (
+        <span class="k">PARTITION BY</span> src_property_id, room_type_code
+        <span class="k">ORDER BY</span> checkin_date
+        <span class="k">ROWS BETWEEN</span> <span class="n">6</span> <span class="k">PRECEDING AND CURRENT ROW</span>
+    )                                          <span class="k">AS</span> revpar_7d_rolling,
+
+    <span class="c">-- Channel mix (% direct bookings)</span>
+    <span class="f">ROUND</span>(
+        <span class="f">SUM</span>(<span class="k">CASE WHEN</span> booking_channel = <span class="s">'Direct (Hotel Website)'</span>
+                <span class="k">THEN</span> <span class="n">1</span> <span class="k">ELSE</span> <span class="n">0</span> <span class="k">END</span>) * <span class="n">100.0</span>
+        / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">1</span>
+    )                                          <span class="k">AS</span> direct_booking_pct,
+
+    <span class="c">-- Repeat guest rate</span>
+    <span class="f">ROUND</span>(
+        <span class="f">SUM</span>(is_repeat_guest::INT) * <span class="n">100.0</span>
+        / <span class="f">NULLIF</span>(<span class="f">COUNT</span>(*), <span class="n">0</span>), <span class="n">1</span>
+    )                                          <span class="k">AS</span> repeat_guest_rate_pct
+
+<span class="k">FROM</span> <span class="t">{{ ref('silver_guest_stays') }}</span>
+<span class="k">GROUP BY</span> <span class="n">1</span>,<span class="n">2</span>,<span class="n">3</span>
+<span class="k">ORDER BY</span> stay_date <span class="k">DESC</span>, revpar_usd <span class="k">DESC</span></pre>
+      </div></div>
+    </div>
+  </div>
+</div>
+  </div>
+
+</section>
+
+<!-- ════ SEPARATOR ════ -->
+<div class="sep reveal" style="--sep-color:var(--fin);--sep-glow:var(--fin-g)"></div>
+<div class="sep-label reveal"><div class="sep-label__line"></div><div class="sep-label__text">02 / Live Pipeline Simulator</div><div class="sep-label__line"></div></div>
+
+<!-- ════ SECTION 02 · PIPELINE SIMULATOR ════ -->
+<section class="section" id="sim-section">
+  <div class="sec-hd reveal">
+    <span class="sec-hd__num">02 /</span>
+    <h2 class="sec-hd__title">Live Pipeline Simulator</h2>
+    <div class="sec-hd__rule"></div>
+  </div>
+
+  <div class="reveal rv1" style="background:var(--bg-2);border:1px solid var(--b2);border-radius:var(--r-lg);overflow:hidden">
+
+    <!-- Sim bar -->
+    <div class="sim-bar">
+      <div class="sim-bar__dots"><span class="d-r"></span><span class="d-y"></span><span class="d-g"></span></div>
+      <div class="sim-bar__file" id="sim-filename">healthcare_pipeline.sql</div>
+      <select class="sim-sel" onchange="simSelectInd(this.value)" id="sim-select">
+        <option value="healthcare">🏥 Healthcare — Clinical Ops</option>
+        <option value="finance">💳 Finance — Transaction Risk</option>
+        <option value="insurance">🛡️ Insurance — Claims Pipeline</option>
+        <option value="hr">👥 HR — Workforce Attrition</option>
+        <option value="hotel">🏨 Hotels — Guest Analytics</option>
+      </select>
+      <button class="btn-run" id="run-btn" onclick="runPipeline()">▶ Run Pipeline</button>
+      <button class="btn-reset" onclick="resetSim()">↺ Reset</button>
+    </div>
+
+    <!-- Stat strip -->
+    <div style="display:flex;gap:0;border-bottom:1px solid var(--b1)">
+      <div style="flex:1;padding:10px 18px;border-right:1px solid var(--b1);font-family:var(--f-mono);font-size:11px;color:var(--t2)">
+        Records: <span id="st-rows" style="color:var(--t1)">—</span>
+      </div>
+      <div style="flex:1;padding:10px 18px;border-right:1px solid var(--b1);font-family:var(--f-mono);font-size:11px;color:var(--t2)">
+        Tests: <span id="st-tests" style="color:var(--t1)">—</span>
+      </div>
+      <div style="flex:1;padding:10px 18px;border-right:1px solid var(--b1);font-family:var(--f-mono);font-size:11px;color:var(--t2)">
+        Duration: <span id="st-dur" style="color:var(--t1)">—</span>
+      </div>
+      <div style="flex:1;padding:10px 18px;font-family:var(--f-mono);font-size:11px;color:var(--t2)">
+        Status: <span id="st-status" style="color:var(--t1)">idle</span>
+      </div>
+    </div>
+
+    <!-- Stage canvas -->
+    <div class="stage-canvas">
+      <div class="stages">
+        <!-- STAGING / BRONZE -->
+        <div class="stage" id="st-bronze" style="--s-color:var(--hc);--s-glow:var(--hc-g)">
+          <div class="stage__hd" style="background:rgba(56,201,240,.06)">
+            <div class="stage__dot" id="dot-bronze"></div>
+            <div class="stage__name" id="lbl-bronze">STAGING · BRONZE</div>
+          </div>
+          <div class="stage__rows">
+            <div class="st-row"><div class="st-row__icon">📥</div><div class="st-row__lbl">source rows</div><div class="st-row__val" id="v-brows">—</div></div>
+            <div class="st-row"><div class="st-row__icon">⚡</div><div class="st-row__lbl">type casts</div><div class="st-row__val" id="v-bcasts">—</div></div>
+            <div class="st-row"><div class="st-row__icon">🔑</div><div class="st-row__lbl">surrogate keys</div><div class="st-row__val" id="v-bkeys">—</div></div>
+            <div class="st-row"><div class="st-row__icon">🧪</div><div class="st-row__lbl">staging tests</div><div class="st-row__val g" id="v-btests">—</div></div>
+            <div class="st-row"><div class="st-row__icon">⏱</div><div class="st-row__lbl">runtime</div><div class="st-row__val" id="v-btime">—</div></div>
+          </div>
+        </div>
+
+        <!-- ARROW 1 -->
+        <div class="flow-conn">
+          <div class="flow-line" id="flow1"></div>
+          <div class="flow-caret" id="caret1"></div>
+        </div>
+
+        <!-- SILVER -->
+        <div class="stage" id="st-silver" style="--s-color:var(--ins);--s-glow:var(--ins-g)">
+          <div class="stage__hd" style="background:rgba(167,139,250,.06)">
+            <div class="stage__dot" id="dot-silver"></div>
+            <div class="stage__name" id="lbl-silver" style="color:var(--t3)">SILVER</div>
+          </div>
+          <div class="stage__rows">
+            <div class="st-row"><div class="st-row__icon">✅</div><div class="st-row__lbl">clean rows</div><div class="st-row__val" id="v-srows">—</div></div>
+            <div class="st-row"><div class="st-row__icon">🔗</div><div class="st-row__lbl">joins resolved</div><div class="st-row__val" id="v-sjoins">—</div></div>
+            <div class="st-row"><div class="st-row__icon">🪟</div><div class="st-row__lbl">window fns</div><div class="st-row__val" id="v-swindows">—</div></div>
+            <div class="st-row"><div class="st-row__icon">🚫</div><div class="st-row__lbl">rows rejected</div><div class="st-row__val" id="v-srej">—</div></div>
+            <div class="st-row"><div class="st-row__icon">🧪</div><div class="st-row__lbl">biz rule tests</div><div class="st-row__val g" id="v-stests">—</div></div>
+          </div>
+        </div>
+
+        <!-- ARROW 2 -->
+        <div class="flow-conn">
+          <div class="flow-line" id="flow2"></div>
+          <div class="flow-caret" id="caret2"></div>
+        </div>
+
+        <!-- GOLD -->
+        <div class="stage" id="st-gold" style="--s-color:var(--gold);--s-glow:var(--gold-g)">
+          <div class="stage__hd" style="background:rgba(245,200,66,.06)">
+            <div class="stage__dot" id="dot-gold"></div>
+            <div class="stage__name" id="lbl-gold" style="color:var(--t3)">GOLD · ANALYTICS</div>
+          </div>
+          <div class="stage__rows">
+            <div class="st-row"><div class="st-row__icon">📊</div><div class="st-row__lbl">output rows</div><div class="st-row__val a" id="v-grows">—</div></div>
+            <div class="st-row"><div class="st-row__icon">📐</div><div class="st-row__lbl">aggregations</div><div class="st-row__val" id="v-gaggs">—</div></div>
+            <div class="st-row"><div class="st-row__icon">📅</div><div class="st-row__lbl">time grain</div><div class="st-row__val" id="v-ggrain">—</div></div>
+            <div class="st-row"><div class="st-row__icon">🔄</div><div class="st-row__lbl">BI refresh</div><div class="st-row__val g" id="v-gbi">—</div></div>
+            <div class="st-row"><div class="st-row__icon">🏁</div><div class="st-row__lbl">status</div><div class="st-row__val g" id="v-gstatus">—</div></div>
+          </div>
+        </div>
+
+      </div><!-- /stages -->
+    </div><!-- /stage-canvas -->
+
+    <!-- Console -->
+    <div class="sim-console">
+      <div class="console-hd">
+        <div class="sim-bar__dots"><span class="d-r"></span><span class="d-y"></span><span class="d-g"></span></div>
+        Pipeline Console
+      </div>
+      <div class="console-body" id="console-body">
+        <div class="log-line">
+          <span class="log-ts">0.0s</span>
+          <span class="log-tag lt-info">INFO</span>
+          <span class="log-msg">Ready — select an industry and click <span class="hl">Run Pipeline</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SEPARATOR ════ -->
+<div class="sep reveal" style="--sep-color:var(--gold);--sep-glow:var(--gold-g)"></div>
+<div class="sep-label reveal"><div class="sep-label__line"></div><div class="sep-label__text">03 / Gold Layer Dashboard</div><div class="sep-label__line"></div></div>
+
+<!-- ════ SECTION 03 · GOLD DASHBOARD ════ -->
+<section class="section" id="dash-section">
+  <div class="sec-hd reveal">
+    <span class="sec-hd__num">03 /</span>
+    <h2 class="sec-hd__title">Gold Layer Analytics Dashboard</h2>
+    <div class="sec-hd__rule"></div>
+  </div>
+
+  <div id="dash-placeholder" class="dash-placeholder reveal rv1">
+    <div class="dash-ph__icon">📊</div>
+    <div class="dash-ph__title">Run a pipeline to generate the Gold Layer dashboard</div>
+    <div class="dash-ph__sub">KPIs and interactive Chart.js charts will appear here automatically after a successful pipeline run</div>
+  </div>
+
+  <div id="dashboard" class="dashboard" style="display:none">
+    <div class="dash-header">
+      <div class="dash-title" id="dash-title"></div>
+      <div class="dash-meta">
+        <span>Gold Layer</span> · <span id="dash-ts"></span> · <span class="dash-meta-ok">✓ All Tests Passed</span>
+      </div>
+    </div>
+    <div class="kpi-row" id="kpi-row"></div>
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-card__title" id="c1-title">Primary Trend</div>
+        <div class="chart-wrap"><canvas id="chart1"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card__title" id="c2-title">Distribution</div>
+        <div class="chart-wrap"><canvas id="chart2"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<!-- ════ FOOTER ════ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <div class="footer__name">Dawit Adane</div>
+      <div class="footer__meta">
+        <a href="https://www.linkedin.com/in/dawit1221" target="_blank">linkedin.com/in/dawit1221</a>
+        <span>·</span><span>Senior Data Engineer</span><span>·</span><span>Dallas, TX</span>
+      </div>
+    </div>
+    <div class="footer__stack">dbt Core · Snowflake · Azure DevOps<br>Airflow · Python · SQL · Gen AI</div>
+  </div>
+</footer>
+<script>
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════ */
+new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('in');} });
+},{threshold:.07,rootMargin:'0px 0px -32px 0px'})
+.observe = (() => {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); } });
+  },{threshold:.07,rootMargin:'0px 0px -32px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  return obs.observe.bind(obs);
+})();
+
+/* ═══════════════════════════════════════════
+   INDUSTRY TAB SWITCHER
+═══════════════════════════════════════════ */
+function switchInd(id, el) {
+  document.querySelectorAll('.ind-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ind-tab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('panel-' + id);
+  if (panel) {
+    panel.classList.add('active');
+    const first = panel.querySelector('.sql-block');
+    if (first && !first.classList.contains('open')) first.classList.add('open');
+  }
+  if (el) el.classList.add('active');
+  // Also sync the sim select
+  const sel = document.getElementById('sim-select');
+  if (sel) sel.value = id;
+  simSelectInd(id);
+}
+
+/* ═══════════════════════════════════════════
+   SQL ACCORDION
+═══════════════════════════════════════════ */
+function toggleCode(id) {
+  const b = document.getElementById(id);
+  if (b) b.classList.toggle('open');
+}
+
+/* ═══════════════════════════════════════════
+   HERO CHIP CLICKS
+═══════════════════════════════════════════ */
+document.querySelectorAll('.ind-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const target = chip.dataset.target;
+    document.querySelectorAll('.ind-chip').forEach(c => c.classList.remove('active','dimmed'));
+    chip.classList.add('active');
+    document.getElementById('sql-section')?.scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(() => {
+      const tab = document.querySelector(`.ind-tab[data-id="${target}"]`);
+      if (tab) switchInd(target, tab);
+    }, 450);
+  });
+});
+
+/* ═══════════════════════════════════════════
+   PIPELINE DATA — 5 INDUSTRIES
+═══════════════════════════════════════════ */
+const PIPELINES = {
+  healthcare: {
+    label: '🏥 Healthcare — Clinical Operations',
+    file: 'clinical_ops_pipeline.sql',
+    bronze: { rows:'284,391', casts:'23', keys:'284,391', tests:'14 passed', time:'4.2s' },
+    silver: { rows:'281,004', joins:'6', windows:'11', rej:'3,387', tests:'8 passed' },
+    gold:   { rows:'36 months', aggs:'7', grain:'Monthly', bi:'Triggered', status:'✓ Complete' },
+    kpis: [
+      {l:'Total Encounters',   v:'281,004', delta:'↑ 3.2% MoM',  dir:'up',  color:'#38c9f0'},
+      {l:'No-Show Rate',       v:'8.4%',    delta:'↓ 1.1pp',     dir:'up',  color:'#3ed98f'},
+      {l:'Avg LOS (hours)',    v:'6.2h',    delta:'↓ 0.4h',      dir:'up',  color:'#a78bfa'},
+      {l:'Total Billed',       v:'$18.7M',  delta:'↑ $1.2M',     dir:'up',  color:'#f5c842'},
+    ],
+    c1:{title:'Monthly Encounter Volume', type:'bar',
+      labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      data:[7200,7450,7800,7600,7844,8100,8050,7900,8200,8350,8500,8750],
+      color:'rgba(56,201,240,0.75)', border:'#38c9f0'},
+    c2:{title:'Encounter Status Mix', type:'doughnut',
+      labels:['Completed','No-Show','Cancelled','Scheduled'],
+      data:[71,8,10,11],
+      colors:['#38c9f0','#f87171','#f5c842','#a78bfa']},
+    logs:[
+      ['RUN','Connecting to Snowflake — HEALTHCARE_PROD · schema: CRIO_RAW'],
+      ['RUN','Executing <span class="hl">stg_patient_encounters</span>'],
+      ['INFO','Source: ehr_raw.encounters — <span class="hl">284,391 rows</span>'],
+      ['INFO','Applying 23 type casts: encounter_date::DATE, admit_ts::TIMESTAMP_NTZ ...'],
+      ['INFO','Generating MD5 surrogate keys on encounter_id + patient_id'],
+      ['OK','14 staging null/unique tests → all passed'],
+      ['INFO','Advancing to Silver — applying HIPAA field exclusions'],
+      ['INFO','Computing 30-day LAG() readmission windows per patient'],
+      ['INFO','Resolving DATEDIFF LOS from admission_at → discharge_at'],
+      ['WARN','3,387 rows rejected — negative billed_amount or missing encounter_date'],
+      ['OK','8 silver business rule tests → all passed'],
+      ['INFO','Building Gold — fct_monthly_clinical_ops aggregation'],
+      ['INFO','Computing no_show_rate_pct, readmission_rate_pct, avg_los_hours with LAG MoM'],
+      ['OK','Gold layer complete — <span class="hl">36 months × 7 metrics</span>'],
+      ['OK','Power BI REST API dataset refresh triggered ✓'],
+    ]
+  },
+  finance: {
+    label: '💳 Finance — Transaction Risk & Fraud',
+    file: 'transaction_risk_pipeline.sql',
+    bronze: { rows:'1,842,003', casts:'18', keys:'1,842,003', tests:'12 passed', time:'6.8s' },
+    silver: { rows:'1,840,190', joins:'4', windows:'9', rej:'1,813', tests:'11 passed' },
+    gold:   { rows:'180 days', aggs:'9', grain:'Daily', bi:'Triggered', status:'✓ Complete' },
+    kpis: [
+      {l:'Total Transactions',  v:'1.84M',  delta:'↑ 5.8% vs yesterday', dir:'up',  color:'#34d399'},
+      {l:'Risk Rate',           v:'2.1%',   delta:'↓ 0.3pp vs 7d avg',   dir:'up',  color:'#38c9f0'},
+      {l:'Flagged Exposure',    v:'$4.3M',  delta:'↑ 14% MoM',           dir:'dn',  color:'#f87171'},
+      {l:'Avg Txn Amount',      v:'$127',   delta:'↑ $8 vs prior week',   dir:'up',  color:'#f5c842'},
+    ],
+    c1:{title:'Daily Transaction Volume (14d)', type:'bar',
+      labels:['D-14','D-13','D-12','D-11','D-10','D-9','D-8','D-7','D-6','D-5','D-4','D-3','D-2','D-1'],
+      data:[128000,141000,135000,152000,168000,89000,143000,155000,161000,148000,172000,138000,159000,167000],
+      color:'rgba(52,211,153,0.75)', border:'#34d399'},
+    c2:{title:'Transaction Type Split', type:'doughnut',
+      labels:['Purchase','Transfer','Withdrawal','Refund'],
+      data:[62,19,13,6],
+      colors:['#34d399','#f5c842','#38c9f0','#a78bfa']},
+    logs:[
+      ['RUN','Connecting to Snowflake — FINANCE_PROD · schema: PAYMENTS_RAW'],
+      ['RUN','Executing <span class="hl">stg_transactions</span>'],
+      ['INFO','Source: core_banking.transactions — <span class="hl">1,842,003 rows</span>'],
+      ['INFO','ROW_NUMBER() dedup on (account_id, txn_ts, amount) — 0 duplicates'],
+      ['INFO','Type casting: txn_ts::TIMESTAMP_NTZ, amount::NUMERIC(14,2)'],
+      ['OK','12 staging tests passed — 0 duplicate transaction keys'],
+      ['INFO','Silver — computing 7-day rolling SUM per account'],
+      ['INFO','Calculating z-scores via STDDEV_SAMP() per account partition'],
+      ['INFO','Flagging high-risk: z_score>3 OR velocity_per_hr>20 OR rolling_7d>$10k'],
+      ['WARN','1,813 rows rejected — null account_id or zero-amount anomalies'],
+      ['OK','11 silver tests → all passed'],
+      ['INFO','Building Gold — fct_account_risk_summary'],
+      ['INFO','Aggregating risk_rate_pct, flagged_exposure, 30d spend delta per account'],
+      ['OK','Gold layer complete — <span class="hl">180 days × 9 risk metrics</span>'],
+      ['OK','Fraud ops dashboard refresh triggered ✓'],
+    ]
+  },
+  insurance: {
+    label: '🛡️ Insurance — Claims Analytics',
+    file: 'claims_pipeline.sql',
+    bronze: { rows:'492,810', casts:'21', keys:'492,810', tests:'10 passed', time:'3.4s' },
+    silver: { rows:'489,240', joins:'7', windows:'8', rej:'3,570', tests:'9 passed' },
+    gold:   { rows:'24 months', aggs:'8', grain:'Monthly', bi:'Triggered', status:'✓ Complete' },
+    kpis: [
+      {l:'Claims Processed',   v:'489,240', delta:'↑ 4.1% MoM',    dir:'up', color:'#a78bfa'},
+      {l:'Loss Ratio',         v:'68.4%',   delta:'↓ 2.1pp vs Q1', dir:'up', color:'#3ed98f'},
+      {l:'Avg Claim ($)',      v:'$4,820',  delta:'↑ $140 MoM',    dir:'dn', color:'#f5c842'},
+      {l:'Fraud Flag Rate',    v:'1.8%',    delta:'↓ 0.4pp',        dir:'up', color:'#38c9f0'},
+    ],
+    c1:{title:'Monthly Claims Volume & Loss Ratio', type:'bar',
+      labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      data:[38000,41200,39800,44100,42500,40800,45200,43100,46800,44500,48200,47100],
+      color:'rgba(167,139,250,0.75)', border:'#a78bfa'},
+    c2:{title:'Claims by Line of Business', type:'doughnut',
+      labels:['Auto','Home','Life','Health','Commercial'],
+      data:[38,24,14,18,6],
+      colors:['#a78bfa','#38c9f0','#34d399','#f5c842','#f87171']},
+    logs:[
+      ['RUN','Connecting to Snowflake — INSURANCE_PROD · schema: CLAIMS_RAW'],
+      ['RUN','Executing <span class="hl">stg_claims</span>'],
+      ['INFO','Source: claims_system.raw_claims — <span class="hl">492,810 rows</span>'],
+      ['INFO','Normalizing claim_status codes: OPEN/CLOSED/PENDING/DENIED'],
+      ['INFO','Generating claim_key via MD5(claim_id || policy_id || loss_date)'],
+      ['OK','10 staging null/unique/referential tests → all passed'],
+      ['INFO','Silver — joining policy dimension and agent hierarchy'],
+      ['INFO','Computing days_to_close via DATEDIFF(report_date, close_date)'],
+      ['INFO','Flagging fraud indicators: velocity, amount z-score, blacklist match'],
+      ['WARN','3,570 rows rejected — invalid policy_id or pre-cutoff loss_date'],
+      ['OK','9 silver tests → all passed'],
+      ['INFO','Building Gold — fct_monthly_claims_kpis'],
+      ['INFO','Computing loss_ratio_pct, avg_claim_amount, fraud_flag_rate with LAG'],
+      ['OK','Gold layer complete — <span class="hl">24 months × 8 metrics</span>'],
+      ['OK','Actuarial dashboard refresh triggered ✓'],
+    ]
+  },
+  hr: {
+    label: '👥 HR & Payroll — Workforce Analytics',
+    file: 'workforce_pipeline.sql',
+    bronze: { rows:'14,820', casts:'17', keys:'14,820', tests:'11 passed', time:'1.4s' },
+    silver: { rows:'14,820', joins:'4', windows:'5', rej:'0', tests:'8 passed' },
+    gold:   { rows:'24 months', aggs:'6', grain:'Monthly', bi:'Triggered', status:'✓ Complete' },
+    kpis: [
+      {l:'Active Headcount',   v:'13,940', delta:'↑ 120 MoM',    dir:'up', color:'#f59e0b'},
+      {l:'Monthly Attrition',  v:'2.1%',   delta:'↓ 0.3pp',       dir:'up', color:'#3ed98f'},
+      {l:'Avg Tenure (mos)',   v:'28.4',   delta:'↑ 1.2mo YoY',   dir:'up', color:'#38c9f0'},
+      {l:'Avg Salary',         v:'$87K',   delta:'↑ 3.2% vs last', dir:'up', color:'#a78bfa'},
+    ],
+    c1:{title:'Monthly Attrition Rate %', type:'bar',
+      labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      data:[2.8,2.6,2.4,2.5,2.3,2.2,2.4,2.3,2.1,2.0,2.2,2.1],
+      color:'rgba(245,158,11,0.75)', border:'#f59e0b'},
+    c2:{title:'Attrition by Tenure Band', type:'doughnut',
+      labels:['0–1 yr','1–3 yr','3–5 yr','5–10 yr','10+ yr'],
+      data:[42,31,16,8,3],
+      colors:['#f87171','#f59e0b','#f5c842','#34d399','#38c9f0']},
+    logs:[
+      ['RUN','Connecting to Snowflake — HR_PROD · schema: ADP_RAW'],
+      ['RUN','Executing <span class="hl">stg_employees</span>'],
+      ['INFO','Source: adp.employee_master — <span class="hl">14,820 records</span>'],
+      ['INFO','SHA2-hashing PII: email, ssn, full_name → 256-bit digests'],
+      ['INFO','Computing salary_band, tenure start/end date casts'],
+      ['OK','11 staging tests passed — employee_id unique, hire_date non-null'],
+      ['INFO','Silver — flagging is_active, computing tenure_months'],
+      ['INFO','DATEDIFF(hire_date, COALESCE(term_date, CURRENT_DATE)) per employee'],
+      ['INFO','Assigning tenure bands: <1yr | 1-3yr | 3-5yr | 5-10yr | 10+yr'],
+      ['OK','0 rows rejected — all records passed validation'],
+      ['OK','8 silver tests → tenure positive, active flag valid ✓'],
+      ['INFO','Building Gold — fct_monthly_attrition per dept × tenure band'],
+      ['INFO','Computing attrition_rate_pct, voluntary_sep_rate_pct, LAG MoM'],
+      ['OK','Gold layer complete — <span class="hl">24 months × 6 workforce metrics</span>'],
+      ['OK','People ops dashboard refresh triggered ✓'],
+    ]
+  },
+  hotel: {
+    label: '🏨 Hotels & Guests — Hospitality Analytics',
+    file: 'guest_analytics_pipeline.sql',
+    bronze: { rows:'628,440', casts:'24', keys:'628,440', tests:'13 passed', time:'4.8s' },
+    silver: { rows:'624,110', joins:'8', windows:'10', rej:'4,330', tests:'10 passed' },
+    gold:   { rows:'36 months', aggs:'11', grain:'Monthly/Property', bi:'Triggered', status:'✓ Complete' },
+    kpis: [
+      {l:'Total Room Nights',  v:'624,110', delta:'↑ 6.8% vs last yr', dir:'up', color:'#f472b6'},
+      {l:'Avg Daily Rate',     v:'$189',    delta:'↑ $12 vs LY',        dir:'up', color:'#f5c842'},
+      {l:'Occupancy Rate',     v:'71.4%',   delta:'↑ 3.2pp vs LY',      dir:'up', color:'#34d399'},
+      {l:'RevPAR',             v:'$134.9',  delta:'↑ $9.4 vs LY',       dir:'up', color:'#38c9f0'},
+    ],
+    c1:{title:'Monthly RevPAR by Property Type', type:'bar',
+      labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      data:[112,108,128,138,142,158,168,174,155,148,138,145],
+      color:'rgba(244,114,182,0.75)', border:'#f472b6'},
+    c2:{title:'Guest Segment Distribution', type:'doughnut',
+      labels:['Leisure','Business','Group','Extended Stay'],
+      data:[48,28,16,8],
+      colors:['#f472b6','#38c9f0','#f5c842','#34d399']},
+    logs:[
+      ['RUN','Connecting to Snowflake — HOSPITALITY_PROD · schema: PMS_RAW'],
+      ['RUN','Executing <span class="hl">stg_reservations</span>'],
+      ['INFO','Source: pms_system.reservations — <span class="hl">628,440 rows</span>'],
+      ['INFO','Normalizing channel codes: OTA/DIRECT/GDS/VOICE/CORP'],
+      ['INFO','Computing nights_stayed via DATEDIFF(check_in_date, check_out_date)'],
+      ['INFO','Generating reservation_key: MD5(reservation_id || property_id || check_in)'],
+      ['OK','13 staging tests passed — reservation_id unique, dates valid'],
+      ['INFO','Silver — joining property dimension, rate plan codes, loyalty tier'],
+      ['INFO','Computing ADR = total_revenue / nights, RevPAR = ADR × occupancy_rate'],
+      ['INFO','RFM scoring guests: recency(days since last stay), frequency, monetary(LTV)'],
+      ['INFO','Flagging VIP guests: loyalty_tier IN (Gold, Platinum) OR total_nights > 20'],
+      ['WARN','4,330 rows rejected — cancelled reservations or missing check_out_date'],
+      ['OK','10 silver tests → all passed'],
+      ['INFO','Building Gold — fct_monthly_property_kpis with YoY LAG comparisons'],
+      ['INFO','Computing occupancy_rate, ADR, RevPAR, guest_sat_score, NPS per property'],
+      ['OK','Gold layer complete — <span class="hl">36 months × 11 hospitality metrics</span>'],
+      ['OK','Revenue management dashboard refresh triggered ✓'],
+    ]
+  }
+};
+
+/* ═══════════════════════════════════════════
+   SIMULATOR STATE & HELPERS
+═══════════════════════════════════════════ */
+let currentInd = 'healthcare';
+let isRunning = false;
+let pipeStart = null;
+let chart1 = null, chart2 = null;
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+function sv(id, v) { const e = document.getElementById(id); if(e) e.textContent = v; }
+function sc(id, cls) { const e = document.getElementById(id); if(e) e.className = cls; }
+
+function simSelectInd(id) {
+  currentInd = id;
+  const p = PIPELINES[id];
+  const fname = document.getElementById('sim-filename');
+  if (fname) fname.textContent = p.file;
+}
+
+function appendLog(tag, msg) {
+  const body = document.getElementById('console-body');
+  if (!body) return;
+  const el = document.tooted = ((Date.now() - (pipeStart||Date.now()))/1000).toFixed(1);
+  const ts = ((Date.now() - (pipeStart||Date.now()))/1000).toFixed(1);
+  const cls = {OK:'lt-ok',INFO:'lt-info',WARN:'lt-warn',RUN:'lt-run'}[tag]||'lt-info';
+  const line = document.createElement('div');
+  line.className = 'log-line';
+  line.innerHTML = `<span class="log-ts">${ts}s</span><span class="log-tag ${cls}">${tag}</span><span class="log-msg">${msg}</span>`;
+  body.appendChild(line);
+  body.scrollTop = body.scrollHeight;
+}
+
+function animateFlow(fId, cId) {
+  const fl = document.getElementById(fId);
+  const ca = document.getElementById(cId);
+  if (fl) fl.classList.add('flowing');
+  setTimeout(() => {
+    if (fl) { fl.classList.remove('flowing'); fl.classList.add('done'); }
+    if (ca) ca.classList.add('lit');
+  }, 750);
+}
+
+function clearStages() {
+  ['bronze','silver','gold'].forEach(s => {
+    const dot = document.getElementById('dot-'+s);
+    const lbl = document.getElementById('lbl-'+s);
+    if (dot) dot.className = 'stage__dot';
+    if (lbl && s !== 'bronze') { lbl.style.color = 'var(--t3)'; }
+    const st = document.getElementById('st-'+s);
+    if (st) st.className = 'stage' + (s==='bronze' ? ' ' : '');
+  });
+  ['v-brows','v-bcasts','v-bkeys','v-btests','v-btime',
+   'v-srows','v-sjoins','v-swindows','v-srej','v-stests',
+   'v-grows','v-gaggs','v-ggrain','v-gbi','v-gstatus'].forEach(id => sv(id, '—'));
+  ['flow1','flow2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.className = 'flow-line';
+  });
+  ['caret1','caret2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.className = 'flow-caret';
+  });
+}
+
+/* ═══════════════════════════════════════════
+   RUN PIPELINE
+═══════════════════════════════════════════ */
+async function runPipeline() {
+  if (isRunning) return;
+  isRunning = true;
+  pipeStart = Date.now();
+  const btn = document.getElementById('run-btn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '⏳ Running…'; }
+  document.getElementById('console-body').innerHTML = '';
+  clearStages();
+  sv('st-status','running'); sv('st-rows','—'); sv('st-tests','—'); sv('st-dur','—');
+
+  const p = PIPELINES[currentInd];
+  const delay = 480;
+
+  // ── BRONZE ──
+  document.getElementById('dot-bronze').className = 'stage__dot running';
+  document.getElementById('st-bronze').classList.add('st-run');
+  for (let i = 0; i < 6; i++) { await sleep(i===0?60:delay); appendLog(p.logs[i][0], p.logs[i][1]); }
+  sv('v-brows', p.bronze.rows); sv('v-bcasts', p.bronze.casts);
+  sv('v-bkeys', p.bronze.keys); sv('v-btests', p.bronze.tests); sv('v-btime', p.bronze.time);
+  document.getElementById('dot-bronze').className = 'stage__dot done';
+  document.getElementById('st-bronze').classList.remove('st-run');
+  document.getElementById('st-bronze').classList.add('st-done');
+  animateFlow('flow1','caret1');
+
+  // ── SILVER ──
+  await sleep(380);
+  document.getElementById('dot-silver').className = 'stage__dot running';
+  document.getElementById('lbl-silver').style.color = 'var(--ins)';
+  document.getElementById('st-silver').classList.add('st-run');
+  for (let i = 6; i < 11; i++) { await sleep(delay); appendLog(p.logs[i][0], p.logs[i][1]); }
+  sv('v-srows', p.silver.rows); sv('v-sjoins', p.silver.joins);
+  sv('v-swindows', p.silver.windows); sv('v-srej', p.silver.rej); sv('v-stests', p.silver.tests);
+  document.getElementById('dot-silver').className = 'stage__dot done';
+  document.getElementById('st-silver').classList.remove('st-run');
+  document.getElementById('st-silver').classList.add('st-done');
+  animateFlow('flow2','caret2');
+
+  // ── GOLD ──
+  await sleep(380);
+  document.getElementById('dot-gold').className = 'stage__dot running';
+  document.getElementById('lbl-gold').style.color = 'var(--gold)';
+  document.getElementById('st-gold').classList.add('st-run');
+  for (let i = 11; i < p.logs.length; i++) { await sleep(delay); appendLog(p.logs[i][0], p.logs[i][1]); }
+  sv('v-grows', p.gold.rows); sv('v-gaggs', p.gold.aggs);
+  sv('v-ggrain', p.gold.grain); sv('v-gbi', p.gold.bi); sv('v-gstatus', p.gold.status);
+  document.getElementById('dot-gold').className = 'stage__dot done';
+  document.getElementById('st-gold').classList.remove('st-run');
+  document.getElementById('st-gold').classList.add('st-done');
+
+  const elapsed = ((Date.now()-pipeStart)/1000).toFixed(1);
+  sv('st-rows', p.bronze.rows); sv('st-tests','All passed'); sv('st-dur', elapsed+'s'); sv('st-status','✓ Success');
+
+  // ── DASHBOARD ──
+  await sleep(400);
+  buildDashboard(p);
+
+  if (btn) { btn.disabled=false; btn.innerHTML='▶ Run Pipeline'; }
+  isRunning = false; pipeStart = null;
+}
+
+function resetSim() {
+  if (isRunning) return;
+  document.getElementById('console-body').innerHTML =
+    '<div class="log-line"><span class="log-ts">0.0s</span><span class="log-tag lt-info">INFO</span><span class="log-msg">Ready — select an industry and click <span class="hl">Run Pipeline</span></span></div>';
+  clearStages();
+  sv('st-status','idle'); sv('st-rows','—'); sv('st-tests','—'); sv('st-dur','—');
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('dash-placeholder').style.display = '';
+  if (chart1) { chart1.destroy(); chart1 = null; }
+  if (chart2) { chart2.destroy(); chart2 = null; }
+}
+
+/* ═══════════════════════════════════════════
+   BUILD GOLD DASHBOARD
+═══════════════════════════════════════════ */
+const CHART_OPTS = {
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      backgroundColor:'#131726', titleColor:'#edf0fa', bodyColor:'#7b8499',
+      padding:10, cornerRadius:6,
+      borderColor:'rgba(255,255,255,0.08)', borderWidth:1,
+      titleFont:{family:"'DM Mono',monospace",size:11},
+      bodyFont:{family:"'DM Mono',monospace",size:11}
+    }
+  },
+  scales: {
+    x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#3e4760',font:{family:"'DM Mono',monospace",size:10}}},
+    y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#3e4760',font:{family:"'DM Mono',monospace",size:10}}}
+  },
+  animation:{duration:700,easing:'easeOutQuart'}
+};
+
+function buildDashboard(p) {
+  document.getElementById('dash-placeholder').style.display = 'none';
+  const dash = document.getElementById('dashboard');
+  dash.style.display = 'block';
+  document.getElementById('dash-title').textContent = p.label;
+  document.getElementById('dash-ts').textContent = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+
+  // KPIs
+  document.getElementById('kpi-row').innerHTML = p.kpis.map(k => `
+    <div class="kpi">
+      <div class="kpi__lbl">${k.l}</div>
+      <div class="kpi__val" style="color:${k.color}">${k.v}</div>
+      <div class="kpi__delta ${k.dir}">${k.delta}</div>
+    </div>`).join('');
+
+  // Chart 1 — Bar
+  document.getElementById('c1-title').textContent = p.c1.title;
+  if (chart1) chart1.destroy();
+  chart1 = new Chart(document.getElementById('chart1').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: p.c1.labels,
+      datasets:[{data:p.c1.data, backgroundColor:p.c1.color, borderColor:p.c1.border, borderWidth:1.5, borderRadius:4}]
+    },
+    options:{...CHART_OPTS,responsive:true,maintainAspectRatio:false}
+  });
+
+  // Chart 2 — Doughnut
+  document.getElementById('c2-title').textContent = p.c2.title;
+  if (chart2) chart2.destroy();
+  chart2 = new Chart(document.getElementById('chart2').getContext('2d'), {
+    type:'doughnut',
+    data:{labels:p.c2.labels,datasets:[{data:p.c2.data,backgroundColor:p.c2.colors,borderColor:'#0d0f1c',borderWidth:2}]},
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'64%',
+      animation:{duration:700,easing:'easeOutQuart'},
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{color:'#7b8499',font:{family:"'DM Mono',monospace",size:10},padding:12,boxWidth:10,boxHeight:10}},
+        tooltip:CHART_OPTS.plugins.tooltip
+      },
+      scales:{}
+    }
+  });
+
+  setTimeout(() => dash.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Reveal observer
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('in');} });
+  },{threshold:.07,rootMargin:'0px 0px -32px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Open first SQL block in active panel
+  const active = document.querySelector('.ind-panel.active');
+  if (active) {
+    const first = active.querySelector('.sql-block');
+    if (first) first.classList.add('open');
+  }
+
+  // Init sim
+  simSelectInd('healthcare');
+});
+</script>
+</body>
+</html>

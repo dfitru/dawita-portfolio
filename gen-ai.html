@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gen AI Data Engineering Runtime - Dawit Adane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,400&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="container" style="padding-top:0;padding-bottom:0;width:100%;">
+    <div class="nav__inner">
+      <div class="nav__brand">Dawit Adane<em>/ Gen AI Data Engineering Runtime</em></div>
+      <div class="nav__tabs" aria-label="Portfolio Sections">
+        <a class="nav__tab is-active" href="#domains-overview">Domains</a>
+        <a class="nav__tab" href="#industries-section">SQL Patterns</a>
+        <a class="nav__tab" href="#runner-section">Pipeline</a>
+        <a class="nav__tab" href="#dashboard-section">Analytics</a>
+        <a class="nav__tab" href="#skills-section">Skills</a>
+        <span class="nav__separator" aria-hidden="true"></span>
+        <a class="nav__tab nav__tab--consulting" href="consulting.html">Consulting</a>
+        <span class="nav__separator" aria-hidden="true"></span>
+        <a class="nav__tab nav__tab--mentoring" href="mentoring.html">Mentoring</a>
+        <span class="nav__separator" aria-hidden="true"></span>
+        <a class="nav__tab nav__tab--resume" href="resume.html">Resume</a>
+      </div>
+      <div class="nav__right"><div class="pulse"></div><span>Interactive Runtime Portfolio</span></div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero__mesh"></div>
+  <div class="hero__grid"></div>
+  <div class="container">
+    <div class="hero__inner">
+      <div class="hero__eyebrow">Domain-First Architecture</div>
+      <h1 class="hero__h1">7 Gen AI and Data Engineering Domains</h1>
+      <p class="hero__sub">Each section shows practical Python and SQL techniques, interactive demo behavior, and tool stack cards. The live runner executes domains in sequence and feeds the capability map.</p>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="domains-overview">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="section__num">01 /</span>
+      <h2 class="section__title">Domain Sections</h2>
+      <div class="section__line"></div>
+    </div>
+
+    <div id="domain-cards">
+
+    <article class="domain-card reveal" id="domain-1">
+      <div class="domain-card__head"><span class="domain-chip">Domain 1</span><h3>Data Generation and Augmentation</h3></div>
+      <p class="domain-desc">Generate synthetic records and augment sparse labels for robust model and analytics pipelines.</p>
+      <div class="domain-grid">
+        <div class="code-card">
+          <div class="code-card__title">Python</div>
+<pre>import pandas as pd
+from faker import Faker
+
+fake = Faker()
+rows = [{"customer_id": f"C{n:04}", "region": fake.state_abbr(),
+         "ticket_text": fake.sentence(), "label": "support"}
+        for n in range(1, 6)]
+df = pd.DataFrame(rows)</pre>
+        </div>
+        <div class="code-card">
+          <div class="code-card__title">SQL</div>
+<pre>SELECT customer_id,
+       region,
+       ticket_text,
+       label,
+       CURRENT_TIMESTAMP AS generated_at
+FROM synthetic_support_seed;</pre>
+        </div>
+      </div>
+      <div class="tool-row"><span class="tool-pill">Python</span><span class="tool-pill">Faker</span><span class="tool-pill">Pandas</span><span class="tool-pill">Snowflake</span></div>
+    </article>
+
+    <article class="domain-card reveal" id="domain-2">
+      <div class="domain-card__head"><span class="domain-chip">Domain 2</span><h3>Writing Generative AI Code with Gen AI</h3></div>
+      <p class="domain-desc">Generate implementation drafts with prompt constraints and enforce test-driven review gates.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>prompt = "Build parser with schema checks"
+candidate = llm.generate_code(prompt)
+assert "def parse_invoice" in candidate</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT run_id,
+       generated_module,
+       unit_test_pass_rate
+FROM ai_codegen_audit
+ORDER BY created_at DESC;</pre></div>
+      </div>
+      <div class="tool-row"><span class="tool-pill">OpenAI</span><span class="tool-pill">Unit Tests</span><span class="tool-pill">CI/CD</span></div>
+    </article>
+
+    <article class="domain-card reveal" id="domain-3">
+      <div class="domain-card__head"><span class="domain-chip">Domain 3</span><h3>Data Parsing and Extraction</h3></div>
+      <p class="domain-desc">Parse documents and logs to extract entities, values, and structured business signals.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>import re
+invoice_id = re.search(r"INV-\\d+", text).group(0)
+amount = float(re.search(r"Total: (\\d+\\.\\d+)", text).group(1))</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT doc_id,
+       extracted:invoice_id::STRING AS invoice_id,
+       extracted:total::NUMBER(12,2) AS total_amount
+FROM parsed_documents;</pre></div>
+      </div>
+      <div class="tool-row"><span class="tool-pill">Regex</span><span class="tool-pill">OCR</span><span class="tool-pill">JSON</span></div>
+    </article>
+
+    <article class="domain-card reveal" id="domain-4">
+      <div class="domain-card__head"><span class="domain-chip">Domain 4</span><h3>Gen AI Data Engineering Tools</h3></div>
+      <p class="domain-desc">Operationalize orchestration, lineage, and quality controls across Gen AI data systems.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>pipeline = {
+  "orchestrator": "Airflow",
+  "transform": "dbt",
+  "vector_store": "pgvector",
+  "monitoring": "Evidently"
+}</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT tool_name,
+       integration_status,
+       last_health_check
+FROM genai_tool_registry;</pre></div>
+      </div>
+      <div class="tool-row"><span class="tool-pill">dbt</span><span class="tool-pill">Airflow</span><span class="tool-pill">LangChain</span><span class="tool-pill">Databricks</span></div>
+    </article>
+
+    <article class="domain-card reveal" id="domain-5">
+      <div class="domain-card__head"><span class="domain-chip">Domain 5</span><h3>Data Querying and Analysis</h3></div>
+      <p class="domain-desc">Blend retrieval and SQL analytics to answer operational and executive questions quickly.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>question = "Which region has rising churn?"
+context = retriever.search(question)
+answer = analyst_chain.run(question, context)</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT region,
+       ROUND(AVG(churn_rate), 2) AS avg_churn
+FROM fct_customer_health
+GROUP BY region
+ORDER BY avg_churn DESC;</pre></div>
+      </div>
+      <div class="tool-row"><span class="tool-pill">Vector Search</span><span class="tool-pill">Snowflake SQL</span><span class="tool-pill">Power BI</span></div>
+    </article>
+
+    <article class="domain-card reveal" id="domain-6">
+      <div class="domain-card__head"><span class="domain-chip">Domain 6</span><h3>Data Enrichment, Normalization, and Standardization</h3></div>
+      <p class="domain-desc">Normalize dimensions, map aliases, and enrich records for consistent downstream reporting.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>def normalize_city(value):
+    return value.strip().title().replace("St.", "Saint")
+
+df["city_norm"] = df["city"].apply(normalize_city)</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT c.customer_id,
+       d.standard_industry,
+       d.risk_band
+FROM stg_customers c
+LEFT JOIN dim_industry_dictionary d
+  ON UPPER(c.industry_raw) = d.industry_alias;</pre></div>
+      </div>
+      <div class="tool-row"><span class="tool-pill">Reference Data</span><span class="tool-pill">SCD2</span><span class="tool-pill">Data Quality</span></div>
+    </article>
+
+    <article class="domain-card reveal" id="domain-7">
+      <div class="domain-card__head"><span class="domain-chip">Domain 7</span><h3>Anomaly Detection and Compression</h3></div>
+      <p class="domain-desc">Detect outliers and compress telemetry while retaining useful behavior characteristics.</p>
+      <div class="domain-grid">
+        <div class="code-card"><div class="code-card__title">Python</div><pre>z = (series - series.mean()) / series.std()
+flags = series[z.abs() > 3]
+compressed = series.round(2)</pre></div>
+        <div class="code-card"><div class="code-card__title">SQL</div><pre>SELECT metric_ts,
+       metric_value,
+       CASE WHEN ABS(z_score) > 3 THEN 1 ELSE 0 END AS is_anomaly
+FROM fct_metric_anomaly_scan;</pre></div>
+      </div>
+      <div class="tool-row"><span class="tool-pill">Statistics</span><span class="tool-pill">Spark</span><span class="tool-pill">Observability</span></div>
+    </article>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="industries-section">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__num">02 /</span>
+      <h2 class="section__title">Industry SQL Patterns</h2>
+      <div class="section__line"></div>
+    </div>
+
+    <div class="ind-pills reveal reveal-delay-1">
+      <button class="ind-pill active" type="button" onclick="switchIndustry('healthcare', this)"><span class="pill-icon">🏥</span>Healthcare</button>
+      <button class="ind-pill" type="button" onclick="switchIndustry('finance', this)"><span class="pill-icon">💳</span>Finance</button>
+      <button class="ind-pill" type="button" onclick="switchIndustry('retail', this)"><span class="pill-icon">🛒</span>Retail</button>
+      <button class="ind-pill" type="button" onclick="switchIndustry('manufacturing', this)"><span class="pill-icon">🏭</span>Manufacturing</button>
+      <button class="ind-pill" type="button" onclick="switchIndustry('hr', this)"><span class="pill-icon">👥</span>HR &amp; Payroll</button>
+    </div>
+
+    <div class="industry-panel active reveal reveal-delay-2" id="industry-healthcare">
+      <div class="service-card">
+        <p class="service-card__intro">Healthcare pipelines focused on patient journey analytics, revenue cycle visibility, and compliant operational reporting.</p>
+        <div class="service-grid">
+          <div class="service-item"><h3>Primary Focus</h3><p>Patient encounters, readmission risk, no-show analytics, and length-of-stay trends.</p></div>
+          <div class="service-item"><h3>Typical Stack</h3><p>dbt, Snowflake, Power BI, audit-safe transformations, and business-rule validation.</p></div>
+        </div>
+        <div class="industry-sql" data-industry-sql="healthcare"></div>
+      </div>
+    </div>
+
+    <div class="industry-panel" id="industry-finance">
+      <div class="service-card">
+        <p class="service-card__intro">Finance solutions centered on transaction monitoring, fraud signals, and risk-scoring analytics.</p>
+        <div class="service-grid">
+          <div class="service-item"><h3>Primary Focus</h3><p>Velocity checks, anomaly detection, rolling spend windows, and flagged exposure tracking.</p></div>
+          <div class="service-item"><h3>Typical Stack</h3><p>Python, Snowflake SQL, orchestration, anomaly logic, and executive risk dashboards.</p></div>
+        </div>
+        <div class="industry-sql" data-industry-sql="finance"></div>
+      </div>
+    </div>
+
+    <div class="industry-panel" id="industry-retail">
+      <div class="service-card">
+        <p class="service-card__intro">Retail analytics for customer 360, segmentation, LTV modeling, and omnichannel order behavior.</p>
+        <div class="service-grid">
+          <div class="service-item"><h3>Primary Focus</h3><p>RFM scoring, customer behavior cohorts, order value patterns, and channel attribution.</p></div>
+          <div class="service-item"><h3>Typical Stack</h3><p>POS + ecommerce ingestion, dbt marts, customer segments, and BI-ready reporting layers.</p></div>
+        </div>
+        <div class="industry-sql" data-industry-sql="retail"></div>
+      </div>
+    </div>
+
+    <div class="industry-panel" id="industry-manufacturing">
+      <div class="service-card">
+        <p class="service-card__intro">Manufacturing data products for line performance, downtime tracking, and OEE measurement.</p>
+        <div class="service-grid">
+          <div class="service-item"><h3>Primary Focus</h3><p>Shift-level efficiency, downtime root causes, machine health, and quality rate tracking.</p></div>
+          <div class="service-item"><h3>Typical Stack</h3><p>Event streams, shift aggregation, operations KPIs, and anomaly monitoring for production lines.</p></div>
+        </div>
+        <div class="industry-sql" data-industry-sql="manufacturing"></div>
+      </div>
+    </div>
+
+    <div class="industry-panel" id="industry-hr">
+      <div class="service-card">
+        <p class="service-card__intro">HR and payroll analytics for attrition, tenure insights, headcount trends, and workforce health metrics.</p>
+        <div class="service-grid">
+          <div class="service-item"><h3>Primary Focus</h3><p>Attrition trends, tenure banding, voluntary separation metrics, and organizational reporting.</p></div>
+          <div class="service-item"><h3>Typical Stack</h3><p>Protected employee data models, hashed PII pipelines, and monthly HR reporting marts.</p></div>
+        </div>
+        <div class="industry-sql" data-industry-sql="hr"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="runner-section">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__num">03 /</span>
+      <h2 class="section__title">Live Pipeline Simulator</h2>
+      <div class="section__line"></div>
+    </div>
+    <div class="runner-card">
+      <div class="runner-top">
+        <div id="runner-domain-pills" class="runner-pills"></div>
+        <div class="runner-actions">
+          <button class="resume-btn resume-btn--pdf" id="run-domain-btn" type="button">Run Domain</button>
+          <button class="resume-btn" id="run-all-btn" type="button">Run All</button>
+          <button class="resume-btn" id="reset-runner-btn" type="button">Reset</button>
+        </div>
+      </div>
+      <div class="runner-grid">
+        <div class="code-card"><div class="code-card__title">Python Technique</div><pre id="runner-python"></pre></div>
+        <div class="code-card"><div class="code-card__title">SQL Technique</div><pre id="runner-sql"></pre></div>
+      </div>
+      <div class="timeline" id="runner-timeline">
+        <div class="timeline-step">Ingest</div>
+        <div class="timeline-step">Transform</div>
+        <div class="timeline-step">Validate</div>
+        <div class="timeline-step">Persist</div>
+        <div class="timeline-step">Evaluate</div>
+      </div>
+      <div class="runner-output">
+        <div class="runner-console" id="runner-console"></div>
+        <div class="runner-metrics" id="runner-metrics"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="dashboard-section">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__num">04 /</span>
+      <h2 class="section__title">Gold Layer Analytics Dashboard</h2>
+      <div class="section__line"></div>
+    </div>
+    <div class="map-card">
+      <div class="dashboard">
+        <div class="dash-header">
+          <div>
+            <div class="dash-title" id="gold-dash-title">Gold Layer Analytics Dashboard</div>
+            <div class="dash-meta">
+              <span>Executive Delivery Layer</span>
+              <span class="dash-meta-sep">·</span>
+              <span id="gold-dash-status">Awaiting domain execution</span>
+              <span class="dash-meta-sep">·</span>
+              <span class="dash-meta-ok">Capability scores active after runner execution</span>
+            </div>
+          </div>
+        </div>
+        <div class="kpi-grid" id="gold-kpi-grid"></div>
+      </div>
+
+      <div class="service-grid dashboard-kpis">
+        <div class="service-item"><h3>Domain Coverage</h3><p>Track how the 7 capability areas contribute to platform maturity and operating readiness.</p></div>
+        <div class="service-item"><h3>Industry Readiness</h3><p>Use the industry section above to frame these capability scores in healthcare, finance, retail, manufacturing, and HR contexts.</p></div>
+      </div>
+      <div class="summary-row" id="map-summary"></div>
+      <div class="capability-table-wrap"><table class="capability-table" id="capability-table"></table></div>
+      <div class="map-detail" id="map-detail">Select a capability cell after running domains to inspect techniques, tools, and impact.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="skills-section">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__num">05 /</span>
+      <h2 class="section__title">Skills and Experience</h2>
+      <div class="section__line"></div>
+    </div>
+    <div class="service-card">
+      <p class="service-card__intro">Senior Data Engineer focused on production Gen AI and analytics platforms with strong delivery in governance, automation, and measurable business outcomes.</p>
+      <div class="service-grid">
+        <div class="service-item"><h3>Core Stack</h3><p>Python, SQL, dbt Core, Snowflake, Databricks, Airflow, Azure Data Factory, Power BI.</p></div>
+        <div class="service-item"><h3>Engineering Focus</h3><p>Data contracts, quality gates, orchestration, observability, and reusable pipeline architecture.</p></div>
+        <div class="service-item"><h3>Gen AI Readiness</h3><p>Prompt workflows, retrieval chains, governance controls, and domain adaptation patterns.</p></div>
+        <div class="service-item"><h3>Delivery Style</h3><p>Fast prototyping with production controls: test coverage, lineage, and cost-aware operations.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__name">Dawit Adane</div>
+      <div class="footer__links">
+        <a href="https://www.linkedin.com/in/dawit1221" target="_blank">linkedin.com/in/dawit1221</a>
+        <span class="footer__sep">.</span>
+        <span>Senior Data Engineer</span>
+        <span class="footer__sep">.</span>
+        <span>Dallas, TX</span>
+      </div>
+      <div class="footer__stack">Gen AI . Data Engineering . dbt . Snowflake . Databricks . Airflow</div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

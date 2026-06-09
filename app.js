@@ -97,10 +97,99 @@ const INDUSTRIES = {
   }
 };
 
+const INDUSTRY_SQL = {
+  healthcare: {
+    bronze: {
+      title: "stg_patient_encounters.sql",
+      desc: "Staging keys, casts, and null checks from EHR encounters.",
+      code: `SELECT encounter_id, patient_id, encounter_date, billed_amount\nFROM ehr_raw.encounters\nWHERE encounter_id IS NOT NULL AND patient_id IS NOT NULL;`
+    },
+    silver: {
+      title: "silver_encounters.sql",
+      desc: "Standardize status and compute length-of-stay and readmission flags.",
+      code: `SELECT src_patient_id,\n       CASE encounter_status_raw WHEN 'COMP' THEN 'Completed' ELSE 'Unknown' END AS encounter_status,\n       DATEDIFF('hour', admission_at, COALESCE(discharge_at, CURRENT_TIMESTAMP())) AS los_hours\nFROM stg_patient_encounters;`
+    },
+    gold: {
+      title: "fct_monthly_clinical_ops.sql",
+      desc: "Monthly operational KPI table for executive and clinical dashboards.",
+      code: `SELECT DATE_TRUNC('month', encounter_date) AS report_month,\n       COUNT(*) AS total_encounters,\n       ROUND(AVG(los_hours), 1) AS avg_los_hours\nFROM silver_encounters\nGROUP BY 1;`
+    }
+  },
+  finance: {
+    bronze: {
+      title: "stg_transactions.sql",
+      desc: "Deduplicate transaction feed and enforce base data quality constraints.",
+      code: `SELECT transaction_id, account_id, txn_date, amount\nFROM core_banking.transactions\nWHERE transaction_id IS NOT NULL AND amount > 0;`
+    },
+    silver: {
+      title: "silver_transactions.sql",
+      desc: "Build rolling spend windows and anomaly indicator fields.",
+      code: `SELECT src_account_id, txn_date, txn_amount_local,\n       SUM(txn_amount_local) OVER (PARTITION BY src_account_id ORDER BY txn_date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS rolling_7d_spend\nFROM stg_transactions;`
+    },
+    gold: {
+      title: "fct_account_risk_summary.sql",
+      desc: "Daily risk KPI mart for fraud monitoring workflows.",
+      code: `SELECT txn_date, src_account_id,\n       SUM(is_high_risk::INT) AS flagged_txn_count,\n       ROUND(SUM(is_high_risk::INT) * 100.0 / NULLIF(COUNT(*),0), 2) AS risk_rate_pct\nFROM silver_transactions\nGROUP BY 1,2;`
+    }
+  },
+  retail: {
+    bronze: {
+      title: "stg_orders.sql",
+      desc: "Standardize omnichannel order records into one ingestion format.",
+      code: `SELECT order_id, customer_id, order_date, channel_raw, gross_amount\nFROM raw_orders\nWHERE order_id IS NOT NULL;`
+    },
+    silver: {
+      title: "silver_customer_orders.sql",
+      desc: "Normalize channels and calculate customer order cadence metrics.",
+      code: `SELECT customer_id, order_date,\n       CASE UPPER(channel_raw) WHEN 'WEB' THEN 'Online' ELSE 'Store' END AS channel,\n       COUNT(*) OVER (PARTITION BY customer_id ORDER BY order_date ROWS BETWEEN 29 PRECEDING AND CURRENT ROW) AS orders_30d\nFROM stg_orders;`
+    },
+    gold: {
+      title: "fct_customer_ltv.sql",
+      desc: "Customer-level LTV and repeat behavior analytics layer.",
+      code: `SELECT customer_id,\n       SUM(gross_amount) AS lifetime_revenue,\n       COUNT(*) AS total_orders\nFROM silver_customer_orders\nGROUP BY 1;`
+    }
+  },
+  manufacturing: {
+    bronze: {
+      title: "stg_machine_events.sql",
+      desc: "Ingest raw machine events and production line telemetry.",
+      code: `SELECT event_id, machine_id, event_ts, event_type, duration_sec\nFROM raw_machine_events\nWHERE event_id IS NOT NULL;`
+    },
+    silver: {
+      title: "silver_line_efficiency.sql",
+      desc: "Classify downtime events and compute shift-level efficiency metrics.",
+      code: `SELECT machine_id, DATE_TRUNC('hour', event_ts) AS event_hr,\n       SUM(CASE WHEN event_type='RUN' THEN duration_sec ELSE 0 END) AS run_sec,\n       SUM(CASE WHEN event_type='DOWN' THEN duration_sec ELSE 0 END) AS down_sec\nFROM stg_machine_events\nGROUP BY 1,2;`
+    },
+    gold: {
+      title: "fct_oee_daily.sql",
+      desc: "Daily OEE and downtime KPI model for operations leadership.",
+      code: `SELECT production_date, line_id,\n       ROUND(availability * performance * quality * 100, 2) AS oee_pct\nFROM silver_line_efficiency_daily;`
+    }
+  },
+  hr: {
+    bronze: {
+      title: "stg_employees.sql",
+      desc: "Create PII-safe workforce staging table with standardized fields.",
+      code: `SELECT employee_id, SHA2(email_address, 256) AS email_hash, hire_date, termination_date\nFROM adp.employee_master\nWHERE employee_id IS NOT NULL;`
+    },
+    silver: {
+      title: "silver_workforce.sql",
+      desc: "Derive active flags, tenure bands, and separation categories.",
+      code: `SELECT src_employee_id,\n       CASE WHEN termination_date IS NULL THEN TRUE ELSE FALSE END AS is_active,\n       DATEDIFF('month', hire_date, COALESCE(termination_date, CURRENT_DATE())) AS tenure_months\nFROM stg_employees;`
+    },
+    gold: {
+      title: "fct_monthly_attrition.sql",
+      desc: "Monthly attrition and headcount KPI layer for HR analytics.",
+      code: `SELECT DATE_TRUNC('month', hire_date) AS cohort_month,\n       COUNT(*) AS total_headcount,\n       ROUND(SUM(CASE WHEN NOT is_active THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(*), 0), 2) AS attrition_rate_pct\nFROM silver_workforce\nGROUP BY 1;`
+    }
+  }
+};
+
 const DIMENSIONS = ["readiness", "quality", "speed", "cost", "automation"];
 let currentDomain = 1;
 let currentIndustry = "healthcare";
 const executed = new Set();
+const openDomains = new Set([1]);
 
 function el(id) { return document.getElementById(id); }
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
@@ -133,25 +222,101 @@ function renderDomainCards() {
   container.innerHTML = DOMAINS.map(domain => `
     <article class="domain-card reveal" id="domain-${domain.id}">
       <div class="domain-card__head">
-        <span class="domain-chip">Domain ${domain.id}</span>
-        <h3>${domain.title}</h3>
-      </div>
-      <p class="domain-desc">${domain.outcome}</p>
-      <div class="domain-grid">
-        <div class="code-card">
-          <div class="code-card__title">Python</div>
-          <pre>${domain.python}</pre>
+        <div class="domain-card__head-main">
+          <span class="domain-chip">Domain ${domain.id}</span>
+          <h3>${domain.title}</h3>
         </div>
-        <div class="code-card">
-          <div class="code-card__title">SQL</div>
-          <pre>${domain.sql}</pre>
-        </div>
+        <button class="domain-toggle" type="button" data-domain="${domain.id}" aria-expanded="${openDomains.has(domain.id)}">
+          ${openDomains.has(domain.id) ? "Hide" : "Show"}
+        </button>
       </div>
-      <div class="tool-row">
-        ${domain.tools.map(tool => `<span class="tool-pill">${tool}</span>`).join("")}
+      <div class="domain-card__body ${openDomains.has(domain.id) ? "is-open" : ""}">
+        <p class="domain-desc">${domain.outcome}</p>
+        <div class="domain-grid">
+          <div class="code-card">
+            <div class="code-card__title">Python</div>
+            <pre>${domain.python}</pre>
+          </div>
+          <div class="code-card">
+            <div class="code-card__title">SQL</div>
+            <pre>${domain.sql}</pre>
+          </div>
+        </div>
+        <div class="tool-row">
+          ${domain.tools.map(tool => `<span class="tool-pill">${tool}</span>`).join("")}
+        </div>
       </div>
     </article>
   `).join("");
+
+  container.querySelectorAll(".domain-toggle").forEach(button => {
+    button.addEventListener("click", () => {
+      const id = Number(button.dataset.domain);
+      if (openDomains.has(id)) {
+        openDomains.delete(id);
+      } else {
+        openDomains.add(id);
+      }
+      renderDomainCards();
+    });
+  });
+}
+
+function renderIndustrySQLPatterns() {
+  document.querySelectorAll("[data-industry-sql]").forEach(holder => {
+    const industryId = holder.getAttribute("data-industry-sql");
+    const sql = INDUSTRY_SQL[industryId];
+    if (!sql) return;
+
+    holder.innerHTML = `
+      <div class="sql-patterns-head">
+        <h3>Industry SQL Patterns</h3>
+        <p>Bronze -> Silver -> Gold transformations for ${INDUSTRIES[industryId].label}.</p>
+      </div>
+      <div class="sql-patterns-list">
+        <article class="sql-pattern open">
+          <button class="sql-pattern__head" type="button">
+            <span class="sql-pattern__badge bronze">Bronze</span>
+            <span class="sql-pattern__title">${sql.bronze.title}</span>
+            <span class="sql-pattern__chev">▾</span>
+          </button>
+          <div class="sql-pattern__body">
+            <p>${sql.bronze.desc}</p>
+            <pre>${sql.bronze.code}</pre>
+          </div>
+        </article>
+        <article class="sql-pattern">
+          <button class="sql-pattern__head" type="button">
+            <span class="sql-pattern__badge silver">Silver</span>
+            <span class="sql-pattern__title">${sql.silver.title}</span>
+            <span class="sql-pattern__chev">▾</span>
+          </button>
+          <div class="sql-pattern__body">
+            <p>${sql.silver.desc}</p>
+            <pre>${sql.silver.code}</pre>
+          </div>
+        </article>
+        <article class="sql-pattern">
+          <button class="sql-pattern__head" type="button">
+            <span class="sql-pattern__badge gold">Gold</span>
+            <span class="sql-pattern__title">${sql.gold.title}</span>
+            <span class="sql-pattern__chev">▾</span>
+          </button>
+          <div class="sql-pattern__body">
+            <p>${sql.gold.desc}</p>
+            <pre>${sql.gold.code}</pre>
+          </div>
+        </article>
+      </div>
+    `;
+  });
+
+  document.querySelectorAll(".sql-pattern__head").forEach(button => {
+    button.addEventListener("click", () => {
+      const card = button.closest(".sql-pattern");
+      if (card) card.classList.toggle("open");
+    });
+  });
 }
 
 function renderRunnerPills() {
@@ -205,7 +370,7 @@ function renderGoldDashboard() {
   const executedDomains = DOMAINS.filter(domain => executed.has(domain.id));
   const industry = INDUSTRIES[currentIndustry];
 
-  title.textContent = `Gold Layer Dashboard / ${industry.label}`;
+  title.textContent = `Gold Layer Analytics Dashboard / ${industry.label}`;
 
   if (!executedDomains.length) {
     status.textContent = `${industry.label} selected - awaiting domain execution`;
@@ -349,6 +514,7 @@ function initNavActive() {
 
 function init() {
   renderDomainCards();
+  renderIndustrySQLPatterns();
   renderRunnerPills();
   renderRunnerCode();
   renderCapabilityMap();
