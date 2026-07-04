@@ -5,6 +5,7 @@ This guide is designed for Senior Data Engineer, Analytics Engineer, and Gen AI 
 Companion file with practice responses:
 - [INTERVIEW_SAMPLE_ANSWERS.md](INTERVIEW_SAMPLE_ANSWERS.md)
 - [INTERVIEW_ANSWERS_TABLE.md](INTERVIEW_ANSWERS_TABLE.md)
+- [data-engineering-interview-questions.html](data-engineering-interview-questions.html)
 
 It is organized step by step so you can prepare for:
 - Recruiter screens

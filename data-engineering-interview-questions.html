@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Engineering Technical Interview Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .iq-shell {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: clamp(20px, 4vw, 40px);
+  }
+
+  .iq-hero {
+    background: linear-gradient(180deg, rgba(14,16,24,0.95), rgba(10,12,19,0.95));
+    border: 1px solid var(--border-md);
+    border-radius: var(--radius);
+    padding: clamp(18px, 3vw, 28px);
+    margin-bottom: 14px;
+  }
+
+  .iq-kicker {
+    display: inline-block;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .iq-title {
+    font-family: var(--f-display);
+    font-size: clamp(24px, 4vw, 40px);
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  .iq-sub {
+    color: var(--txt-2);
+    max-width: 72ch;
+    line-height: 1.6;
+  }
+
+  .iq-controls {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 1fr auto;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .iq-field,
+  .iq-search,
+  .iq-btn {
+    border-radius: 9px;
+    border: 1px solid var(--border-md);
+    background: var(--bg-card);
+    color: var(--txt);
+    padding: 10px 12px;
+    font-family: var(--f-body);
+    font-size: 14px;
+  }
+
+  .iq-btn {
+    background: var(--gold-dim);
+    color: var(--gold);
+    border-color: rgba(242,201,76,0.3);
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s var(--ease), background var(--dur) var(--ease);
+  }
+
+  .iq-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(242,201,76,0.15);
+  }
+
+  .iq-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .iq-chip {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--txt-2);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 10px;
+  }
+
+  .iq-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .iq-card {
+    background: linear-gradient(180deg, rgba(14,16,24,0.96), rgba(10,12,19,0.96));
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  }
+
+  .iq-card.hit {
+    border-color: rgba(242,201,76,0.4);
+    box-shadow: 0 0 0 1px rgba(242,201,76,0.14), 0 8px 26px rgba(242,201,76,0.07);
+  }
+
+  .iq-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .iq-q {
+    color: var(--txt);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .iq-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .iq-tag {
+    font-family: var(--f-mono);
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1px solid var(--border-md);
+    color: var(--txt-2);
+    border-radius: 6px;
+    padding: 3px 7px;
+  }
+
+  .iq-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .iq-mini-btn {
+    border: 1px solid var(--border-md);
+    background: var(--bg-card);
+    color: var(--txt-2);
+    border-radius: 7px;
+    padding: 6px 9px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+  }
+
+  .iq-mini-btn:hover {
+    border-color: var(--border-hi);
+    color: var(--txt);
+  }
+
+  .iq-mini-btn.done {
+    color: var(--green);
+    border-color: rgba(74,222,128,0.28);
+    background: rgba(74,222,128,0.08);
+  }
+
+  .iq-points {
+    margin-top: 8px;
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+    color: var(--txt-2);
+    line-height: 1.55;
+    display: none;
+  }
+
+  .iq-points.open {
+    display: block;
+  }
+
+  .iq-empty {
+    color: var(--txt-2);
+    border: 1px dashed var(--border-hi);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .iq-controls {
+      grid-template-columns: 1fr;
+    }
+
+    .iq-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="container" style="padding-top:0;padding-bottom:0;width:100%;">
+    <div class="nav__inner">
+      <div class="nav__brand">Dawit Adane<em>/ Interview Prep</em></div>
+      <div class="nav__tabs" aria-label="Portfolio Sections">
+        <a class="nav__tab" href="site-index.html">Home</a>
+        <a class="nav__tab" href="gen-ai.html">Gen AI</a>
+        <a class="nav__tab nav__tab--consulting" href="consulting.html">Consulting</a>
+        <a class="nav__tab nav__tab--mentoring" href="mentoring.html">Mentoring</a>
+        <a class="nav__tab nav__tab--resume" href="resume.html">Resume</a>
+      </div>
+      <div class="nav__right"><div class="pulse"></div><span>Interactive Interview Bank</span></div>
+    </div>
+  </div>
+</nav>
+
+<main class="iq-shell">
+  <section class="iq-hero">
+    <div class="iq-kicker">Technical Practice Set</div>
+    <h1 class="iq-title">Most Common Data Engineering Interview Questions</h1>
+    <p class="iq-sub">Filter by topic, search by keyword, reveal expected talking points, and track your practiced questions. Your progress is stored in the browser for this device.</p>
+  </section>
+
+  <section>
+    <div class="iq-controls">
+      <select id="category" class="iq-field" aria-label="Filter by category">
+        <option value="all">All categories</option>
+      </select>
+      <select id="level" class="iq-field" aria-label="Filter by level">
+        <option value="all">All levels</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <input id="search" class="iq-search" type="search" placeholder="Search questions, e.g. SCD2, retries, partition" aria-label="Search questions">
+      <button id="random" class="iq-btn" type="button">Random Question</button>
+    </div>
+
+    <div class="iq-stats">
+      <span class="iq-chip" id="stat-total">Total: 0</span>
+      <span class="iq-chip" id="stat-visible">Visible: 0</span>
+      <span class="iq-chip" id="stat-practiced">Practiced: 0</span>
+    </div>
+
+    <div id="list" class="iq-list"></div>
+  </section>
+</main>
+
+<script>
+const QUESTIONS = [
+  { id: 1, cat: "SQL", level: "easy", q: "How would you deduplicate records and keep the latest version?", points: ["Use ROW_NUMBER partitioned by business key", "Order by event/update timestamp descending", "Filter to row_number = 1", "Define tie-breaker to keep deterministic output"] },
+  { id: 2, cat: "SQL", level: "medium", q: "When do you choose ROW_NUMBER vs RANK vs DENSE_RANK?", points: ["ROW_NUMBER for strict single-row selection", "RANK for tied ranking with gaps", "DENSE_RANK for tied ranking without gaps", "Mention deduplication usually uses ROW_NUMBER"] },
+  { id: 3, cat: "SQL", level: "medium", q: "How do you implement incremental loading for large fact tables?", points: ["Use watermark column like updated_at", "Load only new or changed records", "Use MERGE for upsert semantics", "Support backfill window for late data"] },
+  { id: 4, cat: "SQL", level: "hard", q: "How do you design and query an SCD Type 2 dimension?", points: ["Store surrogate key and business key", "Track effective_start, effective_end, current_flag", "Expire old record and insert new row on change", "Join facts by business date in validity range"] },
+  { id: 5, cat: "SQL", level: "medium", q: "How would you debug a query that suddenly became slow?", points: ["Check execution plan and scan size", "Review join cardinality and skew", "Validate partition/clustering pruning", "Break logic into staged transformations"] },
+  { id: 37, cat: "SQL", level: "easy", q: "How do you get top 3 products per category using ranking functions?", points: ["Use ROW_NUMBER or DENSE_RANK partitioned by category", "Order by metric descending inside partition", "Filter to rank <= 3", "Explain tie behavior and when to choose DENSE_RANK"] },
+  { id: 38, cat: "SQL", level: "medium", q: "How do you return the second highest salary per department?", points: ["Use DENSE_RANK over department ordered by salary desc", "Filter where rank = 2", "Handle departments with fewer than two salaries", "Mention null/duplicate salary edge cases"] },
+  { id: 39, cat: "SQL", level: "medium", q: "How do you compute running totals and month-to-date metrics?", points: ["Use SUM with window function", "Partition by dimension and order by date", "Define frame correctly for cumulative logic", "Reset logic by month for MTD"] },
+  { id: 40, cat: "SQL", level: "easy", q: "What is the difference between COUNT(*), COUNT(col), and COUNT(DISTINCT col)?", points: ["COUNT(*) includes all rows", "COUNT(col) excludes nulls", "COUNT(DISTINCT) counts unique non-null values", "Discuss performance tradeoff for DISTINCT"] },
+  { id: 41, cat: "SQL", level: "medium", q: "How do you identify duplicate business keys and quantify impact?", points: ["Group by business key with HAVING COUNT(*) > 1", "Return duplicate counts by key", "Estimate affected downstream records", "Define remediation: keep latest or merge"] },
+  { id: 42, cat: "SQL", level: "medium", q: "When would you use LEFT JOIN vs INNER JOIN in analytics models?", points: ["INNER keeps matched records only", "LEFT keeps full left-side population", "Choose based on business completeness requirement", "Validate row-count impact after join"] },
+  { id: 43, cat: "SQL", level: "hard", q: "How do you debug join explosion after adding a new table?", points: ["Validate key cardinality (1:1, 1:N, N:M)", "Check duplicate keys on both sides", "Profile row counts at each join step", "Pre-aggregate/deduplicate before joining"] },
+  { id: 44, cat: "SQL", level: "medium", q: "How do you compare two tables to find missing and mismatched rows?", points: ["Use EXCEPT/MINUS or FULL OUTER JOIN", "Compare key presence and critical columns", "Tag differences by type (missing/mismatch)", "Use hash checks for wide row comparisons"] },
+  { id: 45, cat: "SQL", level: "easy", q: "How do you find customers with no orders in the last 90 days?", points: ["LEFT JOIN customers to filtered recent orders", "Find rows where order key is null", "Use date filters in join condition", "Consider timezone/date boundary correctness"] },
+  { id: 46, cat: "SQL", level: "hard", q: "How do you optimize a heavy aggregation query on billions of rows?", points: ["Push filters early and reduce scanned partitions", "Use pre-aggregation/materialized layers", "Avoid repeated expensive expressions", "Tune clustering/partition keys for access pattern"] },
+  { id: 47, cat: "SQL", level: "medium", q: "How do you select partition and clustering keys for warehouse tables?", points: ["Start from frequent filter/join predicates", "Avoid high-cardinality noisy keys", "Measure pruning/selectivity benefits", "Revisit keys as access patterns change"] },
+  { id: 48, cat: "SQL", level: "medium", q: "How do you profile query plans to locate bottlenecks?", points: ["Inspect scans, joins, and sorts in explain plan", "Identify large shuffles/spills", "Check if stats are stale or missing", "Prioritize fixes by highest-cost operators"] },
+  { id: 49, cat: "SQL", level: "hard", q: "How do you design late-arriving fact handling without corrupting aggregates?", points: ["Use ingestion timestamp and business event timestamp", "Maintain correction/backfill strategy", "Recompute impacted windows only", "Track restatement versions or audit columns"] },
+  { id: 50, cat: "SQL", level: "easy", q: "What is the practical difference between WHERE and QUALIFY?", points: ["WHERE filters before window functions", "QUALIFY filters on window-function results", "Simplifies top-N per group patterns", "Depends on SQL dialect support"] },
+  { id: 51, cat: "SQL", level: "medium", q: "How do you validate aggregation correctness after model changes?", points: ["Reconcile totals with trusted baseline", "Compare by dimensions and time buckets", "Add row-level and metric-level assertions", "Include tolerance thresholds for expected variance"] },
+  { id: 52, cat: "SQL", level: "medium", q: "How do you detect null anomalies and unexpected default values?", points: ["Track null rates per column over time", "Alert on threshold breaches", "Check suspicious defaults like 0 or 'UNKNOWN'", "Tie checks to source/system change events"] },
+  { id: 53, cat: "SQL", level: "hard", q: "How do you enforce uniqueness and referential integrity in ELT models?", points: ["Primary-key and relationship tests in pipeline", "Reject or quarantine failing records", "Surface failure metrics to monitoring", "Block downstream publish on critical failures"] },
+  { id: 54, cat: "SQL", level: "medium", q: "How do you design percentile and median metrics efficiently?", points: ["Use approximate percentile functions for scale", "Use exact percentile when precision required", "Segment by partition dimensions", "Document precision/performance tradeoffs"] },
+  { id: 55, cat: "SQL", level: "hard", q: "How do you rewrite correlated subqueries for better performance?", points: ["Replace with joins or window functions", "Materialize intermediary results when useful", "Ensure same semantics after rewrite", "Validate plan improvements and row counts"] },
+  { id: 56, cat: "SQL", level: "medium", q: "How do you prevent double counting in multi-join KPI queries?", points: ["Define fact grain explicitly before joins", "Aggregate at stable grain first", "Join dimensions after aggregation when possible", "Use distinct counts carefully and validate with control totals"] },
+  { id: 6, cat: "Data Modeling", level: "easy", q: "What is the difference between a fact table and a dimension table?", points: ["Facts contain measurable events/metrics", "Dimensions provide descriptive context", "Facts join to dimensions through keys", "Design for clear business grain"] },
+  { id: 7, cat: "Data Modeling", level: "medium", q: "When would you use star schema vs wide denormalized tables?", points: ["Star schema for governed BI and reusable metrics", "Wide table for speed in narrow use cases", "Discuss maintainability and duplicate logic risk", "Match choice to workload and team maturity"] },
+  { id: 8, cat: "Data Modeling", level: "hard", q: "How do you choose the grain for a fact table?", points: ["Start from business question and event level", "Pick smallest meaningful unit", "Avoid mixing grains in one fact", "Document grain in model metadata"] },
+  { id: 9, cat: "Python", level: "easy", q: "How do you process multi-GB files in Python safely?", points: ["Stream in chunks/generators", "Avoid loading full file in memory", "Validate and log chunk progress", "Write idempotent checkpoints for restart"] },
+  { id: 10, cat: "Python", level: "medium", q: "How do you call external APIs reliably inside pipelines?", points: ["Timeouts and retries with backoff", "Handle status codes explicitly", "Idempotency keys or deduplication", "Structured logging for request/response"] },
+  { id: 11, cat: "Python", level: "medium", q: "What does production-ready pipeline code look like?", points: ["Modular functions and clear config", "Schema validation and error boundaries", "Observability and run context", "Unit tests for core transformations"] },
+  { id: 12, cat: "Python", level: "hard", q: "How would you design retry logic without causing duplicate writes?", points: ["Use idempotent operations", "Write with natural/business keys", "Upsert instead of blind append", "Track processed offsets or run state"] },
+  { id: 13, cat: "Orchestration", level: "easy", q: "What makes a DAG idempotent?", points: ["Rerun produces same final state", "No duplicate side effects", "Deterministic inputs/outputs", "Safe retries and backfills"] },
+  { id: 14, cat: "Orchestration", level: "medium", q: "How do you design retries and alerts for data workflows?", points: ["Classify transient vs permanent failures", "Set retry count/delay per task criticality", "Alert on terminal failure and SLA misses", "Include runbook link in alert payload"] },
+  { id: 15, cat: "Orchestration", level: "hard", q: "How do you prevent one upstream failure from cascading across many pipelines?", points: ["Circuit breaker or dependency guards", "Data quality gates before downstream fan-out", "Fallback or stale-but-known-good strategy", "Clear ownership and incident protocol"] },
+  { id: 16, cat: "Warehouse", level: "easy", q: "How do you separate compute and storage concerns in cloud warehouses?", points: ["Independent scaling of compute", "Keep storage centralized", "Right-size warehouse per workload", "Control cost with auto-suspend policies"] },
+  { id: 17, cat: "Warehouse", level: "medium", q: "How would you tune warehouse cost without hurting SLAs?", points: ["Profile heavy queries and schedules", "Increase incremental logic usage", "Use workload-specific compute sizes", "Track cost per pipeline/domain"] },
+  { id: 18, cat: "Warehouse", level: "hard", q: "How do you manage schema drift from source systems?", points: ["Detect changes at ingestion boundary", "Version contracts and transformations", "Add compatibility strategy for additions/removals", "Notify owners before downstream breakage"] },
+  { id: 19, cat: "Spark", level: "easy", q: "What causes shuffles and why are they expensive?", points: ["Joins/group by/order often trigger shuffles", "Data moves across partitions/nodes", "Increases IO and network costs", "Can create skew and long tail tasks"] },
+  { id: 20, cat: "Spark", level: "medium", q: "How do you handle skewed keys in distributed joins?", points: ["Detect skew in execution metrics", "Use salting or skew hints", "Broadcast smaller side when possible", "Pre-aggregate before join"] },
+  { id: 21, cat: "Spark", level: "hard", q: "How would you choose partition strategy for Delta/Spark tables?", points: ["Partition by common filter columns", "Avoid high-cardinality over-partitioning", "Balance file counts and scan pruning", "Use compaction and optimization jobs"] },
+  { id: 22, cat: "Data Quality", level: "easy", q: "What checks do you run before publishing a Gold table?", points: ["Null and uniqueness checks", "Referential integrity", "Accepted values/domain checks", "Metric reconciliation against baseline"] },
+  { id: 23, cat: "Data Quality", level: "medium", q: "How do you monitor data freshness and completeness?", points: ["Expected arrival windows", "Row count thresholds", "Freshness SLA dashboards", "Automated anomaly notifications"] },
+  { id: 24, cat: "Data Quality", level: "hard", q: "How do you build data contracts between producer and consumer teams?", points: ["Define schema and semantic expectations", "Version contract and change process", "Set ownership and escalation paths", "Enforce contract checks in CI/runtime"] },
+  { id: 25, cat: "System Design", level: "easy", q: "Design a daily batch pipeline for clickstream data. What components do you include?", points: ["Ingestion and raw landing", "Transformation/modeling layers", "Orchestration and retry policy", "Validation, observability, and serving layer"] },
+  { id: 26, cat: "System Design", level: "medium", q: "How would you design near real-time fraud feature pipelines?", points: ["Stream ingestion and low-latency feature store", "Stateful aggregations with windows", "Exactly-once or deduplication strategy", "Monitoring for lag, drift, and model impact"] },
+  { id: 27, cat: "System Design", level: "hard", q: "How would you migrate a legacy ETL stack to modern ELT with minimal business risk?", points: ["Parallel run and output reconciliation", "Prioritize high-impact domains first", "Build rollback plan and checkpoints", "Phase cutover by data product"] },
+  { id: 28, cat: "Cloud", level: "medium", q: "How do you secure sensitive data in analytics pipelines?", points: ["Least privilege and role-based access", "Masking/tokenization for PII", "Encryption in transit and at rest", "Audit logs and policy enforcement"] },
+  { id: 29, cat: "Cloud", level: "hard", q: "How do you design multi-environment promotion for data pipelines?", points: ["Dev/test/prod isolation", "Versioned code and migration scripts", "Automated CI checks before deploy", "Environment-specific configs and secrets"] },
+  { id: 30, cat: "Cloud", level: "medium", q: "How do you explain cost tradeoffs to non-technical stakeholders?", points: ["Translate to business outcomes and SLA", "Show fixed vs variable cost drivers", "Present low-risk optimization options", "Use before/after impact metrics"] },
+  { id: 31, cat: "Streaming", level: "easy", q: "What is the difference between event time and processing time?", points: ["Event time is when event happened", "Processing time is when system handled it", "Late events affect window correctness", "Need watermarking/window strategy"] },
+  { id: 32, cat: "Streaming", level: "medium", q: "How do you handle out-of-order events?", points: ["Use watermarking and allowed lateness", "Stateful window updates", "Deduplication by event ID", "Define correction/replay policy"] },
+  { id: 33, cat: "Streaming", level: "hard", q: "How do you guarantee exactly-once processing in practice?", points: ["Transactional sinks/checkpointing", "Idempotent writes to downstream store", "Commit offsets only after durable write", "Know tradeoffs with external systems"] },
+  { id: 34, cat: "Governance", level: "easy", q: "What metadata should every production table include?", points: ["Owner and data domain", "Data freshness expectation", "Business definition and grain", "Lineage and quality status"] },
+  { id: 35, cat: "Governance", level: "medium", q: "How do you enforce naming and modeling standards across teams?", points: ["Shared standards and examples", "Linters and CI checks", "Architecture review checkpoints", "Template repositories/macros"] },
+  { id: 36, cat: "Governance", level: "hard", q: "How do you decide what belongs in Bronze, Silver, and Gold layers?", points: ["Bronze keeps source fidelity", "Silver standardizes/conforms", "Gold is business-ready semantic layer", "Keep responsibilities clear to reduce coupling"] }
+];
+
+const categorySelect = document.getElementById("category");
+const levelSelect = document.getElementById("level");
+const searchInput = document.getElementById("search");
+const randomButton = document.getElementById("random");
+const listNode = document.getElementById("list");
+const statTotal = document.getElementById("stat-total");
+const statVisible = document.getElementById("stat-visible");
+const statPracticed = document.getElementById("stat-practiced");
+
+const practicedKey = "de-interview-practiced";
+const practiced = new Set(JSON.parse(localStorage.getItem(practicedKey) || "[]"));
+
+function initCategories() {
+  const categories = [...new Set(QUESTIONS.map((q) => q.cat))].sort();
+  categories.forEach((cat) => {
+    const opt = document.createElement("option");
+    opt.value = cat;
+    opt.textContent = cat;
+    categorySelect.appendChild(opt);
+  });
+}
+
+function getFilteredQuestions() {
+  const category = categorySelect.value;
+  const level = levelSelect.value;
+  const query = searchInput.value.trim().toLowerCase();
+
+  return QUESTIONS.filter((item) => {
+    const byCategory = category === "all" || item.cat === category;
+    const byLevel = level === "all" || item.level === level;
+    const byQuery = query.length === 0 || `${item.q} ${item.cat} ${item.points.join(" ")}`.toLowerCase().includes(query);
+    return byCategory && byLevel && byQuery;
+  });
+}
+
+function savePracticed() {
+  localStorage.setItem(practicedKey, JSON.stringify([...practiced]));
+}
+
+function render() {
+  const filtered = getFilteredQuestions();
+
+  statTotal.textContent = `Total: ${QUESTIONS.length}`;
+  statVisible.textContent = `Visible: ${filtered.length}`;
+  statPracticed.textContent = `Practiced: ${practiced.size}`;
+
+  if (filtered.length === 0) {
+    listNode.innerHTML = '<div class="iq-empty">No questions match this filter. Try another category, level, or keyword.</div>';
+    return;
+  }
+
+  listNode.innerHTML = filtered.map((item) => {
+    const isDone = practiced.has(item.id);
+    return `
+      <article class="iq-card" id="q-${item.id}">
+        <div class="iq-head">
+          <p class="iq-q"><strong>Q${item.id}.</strong> ${item.q}</p>
+        </div>
+        <div class="iq-tags">
+          <span class="iq-tag">${item.cat}</span>
+          <span class="iq-tag">${item.level}</span>
+        </div>
+        <div class="iq-actions">
+          <button type="button" class="iq-mini-btn" data-action="toggle" data-id="${item.id}">Reveal expected points</button>
+          <button type="button" class="iq-mini-btn ${isDone ? "done" : ""}" data-action="done" data-id="${item.id}">${isDone ? "Practiced" : "Mark practiced"}</button>
+        </div>
+        <div class="iq-points" id="pts-${item.id}">
+          <ul>
+            ${item.points.map((pt) => `<li>${pt}</li>`).join("")}
+          </ul>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function togglePoints(id) {
+  const node = document.getElementById(`pts-${id}`);
+  if (!node) return;
+  node.classList.toggle("open");
+}
+
+function togglePracticed(id) {
+  if (practiced.has(id)) {
+    practiced.delete(id);
+  } else {
+    practiced.add(id);
+  }
+  savePracticed();
+  render();
+}
+
+function jumpToRandom() {
+  const filtered = getFilteredQuestions();
+  if (filtered.length === 0) return;
+  const pick = filtered[Math.floor(Math.random() * filtered.length)];
+  const node = document.getElementById(`q-${pick.id}`);
+  if (!node) return;
+
+  document.querySelectorAll(".iq-card").forEach((n) => n.classList.remove("hit"));
+  node.classList.add("hit");
+  node.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+categorySelect.addEventListener("change", render);
+levelSelect.addEventListener("change", render);
+searchInput.addEventListener("input", render);
+randomButton.addEventListener("click", jumpToRandom);
+
+listNode.addEventListener("click", (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return;
+  const action = target.dataset.action;
+  const id = Number(target.dataset.id);
+  if (!action || Number.isNaN(id)) return;
+
+  if (action === "toggle") togglePoints(id);
+  if (action === "done") togglePracticed(id);
+});
+
+initCategories();
+render();
+</script>
+</body>
+</html>
