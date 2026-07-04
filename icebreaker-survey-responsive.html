@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Icebreaker Survey - Introduction to Orthodox Marriage</title>
+<style>
+  :root {
+    --burgundy: #6d1a2c;
+    --burgundy-dark: #4a0f1d;
+    --gold: #c9a24b;
+    --gold-light: #e3cd8e;
+    --cream: #f5efe2;
+    --cream-white: #fbf8f1;
+    --ink: #231815;
+    --ink-soft: #4a3f3a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  body {
+    font-family: "Calibri", "Segoe UI", sans-serif;
+    background:
+      radial-gradient(circle at 85% 8%, rgba(201, 162, 75, 0.22), transparent 35%),
+      linear-gradient(150deg, #3d0d18 0%, var(--burgundy-dark) 55%, #2b0812 100%);
+    color: var(--ink);
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(12px, 2.5vw, 28px);
+  }
+
+  .stage {
+    width: 100%;
+    max-width: 980px;
+    position: relative;
+  }
+
+  .card {
+    background: var(--cream-white);
+    border-radius: clamp(12px, 2vw, 18px);
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-top {
+    background: var(--burgundy-dark);
+    padding: clamp(18px, 3.2vw, 30px) clamp(16px, 4vw, 40px) clamp(14px, 2.8vw, 24px);
+    position: relative;
+  }
+
+  .ring {
+    position: absolute;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    opacity: 0.35;
+  }
+
+  .eyebrow {
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0 0 6px;
+  }
+
+  .title-serif {
+    font-family: "Cambria", "Georgia", serif;
+    color: var(--cream-white);
+    font-size: clamp(1.15rem, 1.2rem + 1.2vw, 1.6rem);
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.28;
+    max-width: 38ch;
+  }
+
+  .progress-track {
+    margin-top: 16px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.35s ease;
+  }
+
+  .progress-label {
+    color: var(--gold-light);
+    font-size: 0.78rem;
+    margin-top: 8px;
+    font-style: italic;
+    line-height: 1.35;
+  }
+
+  .card-body {
+    padding: clamp(18px, 3.6vw, 36px) clamp(16px, 4vw, 38px) clamp(20px, 3.8vw, 34px);
+  }
+
+  .welcome-icon {
+    width: clamp(52px, 9vw, 66px);
+    height: clamp(52px, 9vw, 66px);
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+
+  .welcome-icon svg {
+    width: clamp(24px, 4.5vw, 30px);
+    height: clamp(24px, 4.5vw, 30px);
+  }
+
+  .welcome-text {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: clamp(0.92rem, 0.88rem + 0.3vw, 1rem);
+    line-height: 1.55;
+    margin: 0 auto 24px;
+    max-width: 62ch;
+  }
+
+  .welcome-text strong { color: var(--burgundy); }
+
+  .survey-tag {
+    display: inline-block;
+    background: var(--cream);
+    color: var(--burgundy);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .question-text {
+    font-family: "Cambria", "Georgia", serif;
+    font-size: clamp(1.1rem, 1rem + 0.9vw, 1.35rem);
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 20px;
+    line-height: 1.35;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .option-btn {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    background: var(--cream);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: clamp(0.9rem, 0.86rem + 0.2vw, 0.95rem);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.1s ease, background 0.15s ease;
+    font-family: inherit;
+  }
+
+  .option-btn:hover {
+    border-color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  .option-btn:focus-visible {
+    outline: 3px solid var(--burgundy);
+    outline-offset: 2px;
+  }
+
+  .option-btn.selected {
+    background: var(--burgundy);
+    color: var(--cream-white);
+    border-color: var(--burgundy);
+  }
+
+  .option-letter {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--burgundy);
+    color: var(--cream-white);
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .option-btn.selected .option-letter {
+    background: var(--gold);
+    color: var(--burgundy-dark);
+  }
+
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    min-height: 44px;
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.1s ease;
+  }
+
+  .btn:active { transform: scale(0.97); }
+
+  .btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+  }
+
+  .btn-ghost:hover:not(:disabled) { color: var(--burgundy); }
+
+  .btn-primary {
+    background: var(--burgundy);
+    color: var(--cream-white);
+  }
+
+  .btn-primary:hover:not(:disabled) { background: var(--burgundy-dark); }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--burgundy-dark);
+  }
+
+  .btn-gold:hover { background: var(--gold-light); }
+
+  .results-head {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .results-head .welcome-icon { background: var(--gold); }
+
+  .results-sub {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+
+  .results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: min(52vh, 460px);
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+
+  .result-row {
+    display: flex;
+    gap: 12px;
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 12px 14px;
+    align-items: flex-start;
+  }
+
+  .result-num {
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--burgundy);
+    color: var(--cream-white);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .result-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .result-tag {
+    font-size: 0.69rem;
+    font-weight: 700;
+    color: var(--gold);
+    background: var(--burgundy-dark);
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  .result-q {
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+    margin: 0 0 4px;
+    line-height: 1.35;
+  }
+
+  .result-a {
+    font-size: 0.92rem;
+    color: var(--ink);
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.35;
+  }
+
+  .result-a .letter-chip {
+    display: inline-block;
+    background: var(--burgundy);
+    color: var(--cream-white);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 11px;
+    text-align: center;
+    line-height: 20px;
+    margin-right: 6px;
+    font-weight: 700;
+  }
+
+  .skipped {
+    color: var(--ink-soft);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .results-footer {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .results-footer p {
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+    font-style: italic;
+    margin: 12px 0 0;
+    line-height: 1.45;
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+    padding: 0 8px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .dot.active { background: var(--gold); }
+  .dot.done { background: var(--gold-light); }
+
+  .hidden { display: none !important; }
+
+  @media (min-width: 700px) {
+    .options {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .nav-row {
+      margin-top: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card {
+      border-radius: 12px;
+    }
+
+    .btn {
+      width: 100%;
+    }
+
+    .nav-row {
+      justify-content: stretch;
+    }
+
+    .result-row {
+      padding: 11px 12px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="card">
+    <div class="card-top">
+      <div class="ring" style="width:140px;height:140px;top:-50px;right:-40px;"></div>
+      <p class="eyebrow" id="headerEyebrow">Icebreaker Survey</p>
+      <h1 class="title-serif" id="headerTitle">Introduction to Orthodox Marriage</h1>
+      <div class="progress-track" id="progressTrack">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p class="progress-label" id="progressLabel">15 quick questions</p>
+    </div>
+
+    <div class="card-body">
+      <div id="screen-welcome">
+        <div class="welcome-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-8-4.7-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 6.3-8 11-8 11z" fill="#4A0F1D"></path></svg>
+        </div>
+        <p class="welcome-text">
+          Answer 15 quick questions together. There are no wrong answers, just what best fits both of you.
+        </p>
+        <div class="nav-row" style="justify-content:center;">
+          <button class="btn btn-primary" id="startBtn" style="padding-inline:28px;">Start the survey</button>
+        </div>
+      </div>
+
+      <div id="screen-question" class="hidden">
+        <span class="survey-tag" id="questionTag">Topic</span>
+        <h2 class="question-text" id="questionText">Question text goes here</h2>
+        <div class="options" id="optionsContainer"></div>
+
+        <div class="nav-row">
+          <button class="btn btn-ghost" id="backBtn">Back</button>
+          <button class="btn btn-primary" id="nextBtn" disabled>Next</button>
+        </div>
+      </div>
+
+      <div id="screen-results" class="hidden">
+        <div class="results-head">
+          <div class="welcome-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="#4A0F1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+          <h2 class="title-serif" style="color:var(--burgundy);">Your Answers</h2>
+          <p class="results-sub" id="resultsSummary">You answered 15 of 15 questions.</p>
+        </div>
+
+        <div class="results-list" id="resultsList"></div>
+
+        <div class="results-footer">
+          <button class="btn btn-gold" id="restartBtn">Take it again</button>
+          <p>Share your answers with your partner or group and compare what you have in common before the session begins.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dots" id="dotsRow"></div>
+</div>
+
+<script>
+(function () {
+  const QUESTIONS = [
+    {
+      tag: "Topic 1 - Mystery of Love",
+      q: "When did you first sense this relationship might be the real thing?",
+      options: [
+        "A single moment I can still picture",
+        "It grew slowly over time",
+        "My family or priest said something that confirmed it",
+        "Honestly, still figuring that out"
+      ]
+    },
+    {
+      tag: "Topic 2 - The Conscience and Mixed Marriage",
+      q: "How would you describe your spiritual upbringing?",
+      options: [
+        "Deeply rooted in one church my whole life",
+        "A mix of traditions or cultures",
+        "I found my faith later in life",
+        "Still exploring what fits"
+      ]
+    },
+    {
+      tag: "Topic 3 - Choosing a Life Partner",
+      q: "Which key would you lean on most when making a big life decision?",
+      options: [
+        "Talking to my priest or spiritual guide",
+        "Prayer and fasting",
+        "My parents' blessing",
+        "Watching whether doors open or close"
+      ]
+    },
+    {
+      tag: "Topic 4 - Dealing with the Past",
+      q: "What is your go-to way of letting go of something that is bothering you?",
+      options: [
+        "Talk it out with someone",
+        "Pray about it",
+        "Give it time",
+        "Write it down"
+      ]
+    },
+    {
+      tag: "Topic 5 - Personality Compatibility",
+      q: "Which personality type sounds most like you?",
+      options: [
+        "The Leader - likes control and challenges",
+        "The Friendly type - likes people and fun",
+        "The Steady type - likes peace and helping",
+        "The Careful type - likes order and detail"
+      ]
+    },
+    {
+      tag: "Topic 6 - Male and Female Roles",
+      q: "What does good leadership in a marriage look like to you?",
+      options: [
+        "Leading by example",
+        "Making big decisions together",
+        "Serving your spouse first",
+        "Still thinking this one through"
+      ]
+    },
+    {
+      tag: "Topic 7 - Dynamics of Marital Relationships",
+      q: "What is most likely to compete for your attention in a busy season?",
+      options: [
+        "Work",
+        "Extended family",
+        "Friends or hobbies",
+        "Kids, current or future"
+      ]
+    },
+    {
+      tag: "Topic 8 - Setting Rules",
+      q: "How do you feel about budgeting as a couple?",
+      options: [
+        "I love a good spreadsheet",
+        "A simple plan is enough for me",
+        "I would rather my partner handle the details",
+        "Honestly, we need to talk about this"
+      ]
+    },
+    {
+      tag: "Topic 9 - Marital Needs",
+      q: "Which of these matters most to you on a daily basis?",
+      options: [
+        "Quality time together",
+        "Words of encouragement",
+        "Acts of service",
+        "Physical affection"
+      ]
+    },
+    {
+      tag: "Topic 10 - Spirituality and Sexuality",
+      q: "How do you and your partner usually nurture closeness?",
+      options: [
+        "Praying together",
+        "Deep conversation",
+        "Physical affection",
+        "Shared activities or hobbies"
+      ]
+    },
+    {
+      tag: "Topic 11 - Anger and Domestic Violence",
+      q: "When you are upset, what helps you calm down fastest?",
+      options: [
+        "Taking a walk or some space",
+        "Talking it through right away",
+        "Prayer",
+        "Time and a good night's sleep"
+      ]
+    },
+    {
+      tag: "Topic 12 - Basic Communication Skills",
+      q: "Which best describes you as a listener?",
+      options: [
+        "I focus completely on the other person",
+        "I sometimes start planning my reply too early",
+        "I ask a lot of follow-up questions",
+        "Honestly, I am working on this"
+      ]
+    },
+    {
+      tag: "Topic 13 - Advanced Communication Skills",
+      q: "In a disagreement, you are most likely to be...",
+      options: [
+        "Quiet, and avoid it",
+        "Direct and to the point",
+        "Calm but honest",
+        "Somewhere in between"
+      ]
+    },
+    {
+      tag: "Topic 14 - Church Laws for Marital Affairs",
+      q: "How much do you already know about your church's marriage requirements?",
+      options: [
+        "Pretty well-informed",
+        "I know the basics",
+        "Honestly, not much yet",
+        "Excited to learn more today"
+      ]
+    },
+    {
+      tag: "Topic 15 - Personality and Psychoemotional Disorders",
+      q: "How comfortable are you talking openly about mental health?",
+      options: [
+        "Very comfortable",
+        "Comfortable with the right person",
+        "A bit hesitant",
+        "Still working on it"
+      ]
+    }
+  ];
+
+  const LETTERS = ["A", "B", "C", "D"];
+  let current = 0;
+  const answers = new Array(QUESTIONS.length).fill(null);
+
+  const screenWelcome = document.getElementById("screen-welcome");
+  const screenQuestion = document.getElementById("screen-question");
+  const screenResults = document.getElementById("screen-results");
+
+  const headerEyebrow = document.getElementById("headerEyebrow");
+  const headerTitle = document.getElementById("headerTitle");
+  const progressTrack = document.getElementById("progressTrack");
+  const progressFill = document.getElementById("progressFill");
+  const progressLabel = document.getElementById("progressLabel");
+  const dotsRow = document.getElementById("dotsRow");
+
+  const questionTag = document.getElementById("questionTag");
+  const questionText = document.getElementById("questionText");
+  const optionsContainer = document.getElementById("optionsContainer");
+  const backBtn = document.getElementById("backBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  const startBtn = document.getElementById("startBtn");
+  const restartBtn = document.getElementById("restartBtn");
+  const resultsList = document.getElementById("resultsList");
+  const resultsSummary = document.getElementById("resultsSummary");
+
+  function buildDots() {
+    dotsRow.innerHTML = "";
+    QUESTIONS.forEach(function (_, i) {
+      const d = document.createElement("div");
+      d.className = "dot";
+      d.id = "dot-" + i;
+      dotsRow.appendChild(d);
+    });
+  }
+
+  function updateDots() {
+    QUESTIONS.forEach(function (_, i) {
+      const d = document.getElementById("dot-" + i);
+      d.classList.remove("active", "done");
+      if (i === current) d.classList.add("active");
+      else if (answers[i] !== null) d.classList.add("done");
+    });
+  }
+
+  function showScreen(name) {
+    screenWelcome.classList.add("hidden");
+    screenQuestion.classList.add("hidden");
+    screenResults.classList.add("hidden");
+    dotsRow.classList.remove("hidden");
+
+    if (name === "welcome") {
+      screenWelcome.classList.remove("hidden");
+      dotsRow.classList.add("hidden");
+      headerEyebrow.textContent = "Icebreaker Survey";
+      headerTitle.textContent = "Introduction to Orthodox Marriage";
+      progressTrack.classList.add("hidden");
+      progressLabel.textContent = "15 quick questions";
+      return;
+    }
+
+    if (name === "question") {
+      screenQuestion.classList.remove("hidden");
+      progressTrack.classList.remove("hidden");
+      renderQuestion();
+      return;
+    }
+
+    screenResults.classList.remove("hidden");
+    dotsRow.classList.add("hidden");
+    headerEyebrow.textContent = "All Done";
+    headerTitle.textContent = "Here is What You Shared";
+    progressTrack.classList.add("hidden");
+    progressLabel.textContent = "A quick look at your 15 answers";
+    renderResults();
+  }
+
+  function renderQuestion() {
+    const item = QUESTIONS[current];
+    questionTag.textContent = item.tag;
+    questionText.textContent = current + 1 + ". " + item.q;
+
+    optionsContainer.innerHTML = "";
+    item.options.forEach(function (opt, idx) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "option-btn";
+      if (answers[current] === idx) btn.classList.add("selected");
+      btn.innerHTML = "<span class=\"option-letter\">" + LETTERS[idx] + "</span><span>" + opt + "</span>";
+      btn.addEventListener("click", function () {
+        selectOption(idx);
+      });
+      optionsContainer.appendChild(btn);
+    });
+
+    backBtn.disabled = current === 0;
+    nextBtn.disabled = answers[current] === null;
+    nextBtn.textContent = current === QUESTIONS.length - 1 ? "See results" : "Next";
+
+    const pct = Math.round((current / QUESTIONS.length) * 100);
+    progressFill.style.width = pct + "%";
+    progressLabel.textContent = "Question " + (current + 1) + " of " + QUESTIONS.length;
+
+    updateDots();
+  }
+
+  function selectOption(idx) {
+    answers[current] = idx;
+    renderQuestion();
+  }
+
+  function goNext() {
+    if (answers[current] === null) return;
+    if (current === QUESTIONS.length - 1) {
+      showScreen("results");
+    } else {
+      current += 1;
+      renderQuestion();
+    }
+  }
+
+  function goBack() {
+    if (current === 0) return;
+    current -= 1;
+    renderQuestion();
+  }
+
+  function renderResults() {
+    const answeredCount = answers.filter(function (a) {
+      return a !== null;
+    }).length;
+    resultsSummary.textContent = "You answered " + answeredCount + " of " + QUESTIONS.length + " questions.";
+
+    resultsList.innerHTML = "";
+
+    QUESTIONS.forEach(function (item, i) {
+      const row = document.createElement("div");
+      row.className = "result-row";
+
+      const num = document.createElement("div");
+      num.className = "result-num";
+      num.textContent = i + 1;
+
+      const main = document.createElement("div");
+      main.className = "result-main";
+
+      const tagEl = document.createElement("div");
+      tagEl.className = "result-tag";
+      tagEl.textContent = item.tag;
+
+      const qEl = document.createElement("p");
+      qEl.className = "result-q";
+      qEl.textContent = item.q;
+
+      const aEl = document.createElement("p");
+      aEl.className = "result-a";
+
+      if (answers[i] === null) {
+        aEl.innerHTML = "<span class=\"skipped\">Skipped</span>";
+      } else {
+        aEl.innerHTML = "<span class=\"letter-chip\">" + LETTERS[answers[i]] + "</span>" + item.options[answers[i]];
+      }
+
+      main.appendChild(tagEl);
+      main.appendChild(qEl);
+      main.appendChild(aEl);
+
+      row.appendChild(num);
+      row.appendChild(main);
+      resultsList.appendChild(row);
+    });
+  }
+
+  function restart() {
+    current = 0;
+    answers.fill(null);
+    progressFill.style.width = "0%";
+    showScreen("welcome");
+  }
+
+  buildDots();
+
+  startBtn.addEventListener("click", function () {
+    showScreen("question");
+  });
+
+  nextBtn.addEventListener("click", goNext);
+  backBtn.addEventListener("click", goBack);
+  restartBtn.addEventListener("click", restart);
+
+  showScreen("welcome");
+})();
+</script>
+
+</body>
+</html>

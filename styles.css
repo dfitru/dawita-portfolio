@@ -1217,6 +1217,123 @@ pre {
   gap: 8px;
 }
 
+.impact-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.impact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.impact-card__title {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.impact-card__body {
+  color: var(--txt-2);
+  font-size: clamp(12.5px, 1.4vw, 14px);
+  line-height: 1.6;
+}
+
+.impact-card__result {
+  margin-top: 8px;
+  color: var(--txt);
+  font-family: var(--f-mono);
+  font-size: 11px;
+}
+
+.trust-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.quote-card {
+  background: rgba(242,201,76,0.06);
+  border: 1px solid rgba(242,201,76,0.2);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.quote-card blockquote {
+  color: var(--txt);
+  font-size: clamp(13px, 1.5vw, 15px);
+  line-height: 1.6;
+}
+
+.quote-card cite {
+  margin-top: 8px;
+  display: block;
+  color: var(--txt-2);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-style: normal;
+}
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge-list span {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border-md);
+  color: var(--txt-2);
+  background: var(--bg-card);
+}
+
+.cta-strip {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(91,141,238,0.08);
+  border: 1px solid rgba(91,141,238,0.2);
+  border-radius: 10px;
+}
+
+.cta-strip__text {
+  color: var(--txt-2);
+  font-size: clamp(12px, 1.4vw, 14px);
+}
+
+.cta-strip__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .impact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trust-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ════════════════════════════════════════════
    FOOTER
 ════════════════════════════════════════════ */
