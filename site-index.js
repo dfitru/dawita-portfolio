@@ -1,30 +1,28 @@
-/* ═══════════════════════════════════════════
-   SCROLL REVEAL
-═══════════════════════════════════════════ */
-new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('in');} });
-},{threshold:.07,rootMargin:'0px 0px -32px 0px'})
-.observe = (() => {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); } });
-  },{threshold:.07,rootMargin:'0px 0px -32px 0px'});
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  return obs.observe.bind(obs);
-})();
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ═══════════════════════════════════════════
    INDUSTRY TAB SWITCHER
 ═══════════════════════════════════════════ */
 function switchInd(id, el) {
   document.querySelectorAll('.ind-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.ind-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.ind-tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
   const panel = document.getElementById('panel-' + id);
   if (panel) {
     panel.classList.add('active');
     const first = panel.querySelector('.sql-block');
-    if (first && !first.classList.contains('open')) first.classList.add('open');
+    if (first && !first.classList.contains('open')) {
+      first.classList.add('open');
+      const header = first.querySelector('.sql-block__hd');
+      if (header) header.setAttribute('aria-expanded', 'true');
+    }
   }
-  if (el) el.classList.add('active');
+  if (el) {
+    el.classList.add('active');
+    el.setAttribute('aria-selected', 'true');
+  }
   // Also sync the sim select
   const sel = document.getElementById('sim-select');
   if (sel) sel.value = id;
@@ -36,7 +34,10 @@ function switchInd(id, el) {
 ═══════════════════════════════════════════ */
 function toggleCode(id) {
   const b = document.getElementById(id);
-  if (b) b.classList.toggle('open');
+  if (!b) return;
+  b.classList.toggle('open');
+  const header = b.querySelector('.sql-block__hd');
+  if (header) header.setAttribute('aria-expanded', b.classList.contains('open') ? 'true' : 'false');
 }
 
 /* ═══════════════════════════════════════════
@@ -47,7 +48,7 @@ document.querySelectorAll('.ind-chip').forEach(chip => {
     const target = chip.dataset.target;
     document.querySelectorAll('.ind-chip').forEach(c => c.classList.remove('active','dimmed'));
     chip.classList.add('active');
-    document.getElementById('sql-section')?.scrollIntoView({behavior:'smooth',block:'start'});
+    document.getElementById('sql-section')?.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth',block:'start'});
     setTimeout(() => {
       const tab = document.querySelector(`.ind-tab[data-id="${target}"]`);
       if (tab) switchInd(target, tab);
@@ -457,7 +458,7 @@ function buildDashboard(p) {
     }
   });
 
-  setTimeout(() => dash.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+  setTimeout(() => dash.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth',block:'nearest'}),100);
 }
 
 /* ═══════════════════════════════════════════
@@ -470,11 +471,58 @@ document.addEventListener('DOMContentLoaded', () => {
   },{threshold:.07,rootMargin:'0px 0px -32px 0px'});
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
+  // Nav toggle for mobile
+  const nav = document.getElementById('main-nav');
+  const navToggle = document.querySelector('.nav__ham');
+  if (nav && navToggle) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+
+  // Industry tab interactions
+  document.querySelectorAll('.ind-tab').forEach((tab) => {
+    tab.addEventListener('click', () => switchInd(tab.dataset.id, tab));
+  });
+
+  // SQL accordion interactions with keyboard support
+  document.querySelectorAll('.sql-block__hd').forEach((header) => {
+    const block = header.closest('.sql-block');
+    if (!block) return;
+
+    header.setAttribute('role', 'button');
+    header.setAttribute('tabindex', '0');
+    header.setAttribute('aria-expanded', block.classList.contains('open') ? 'true' : 'false');
+
+    header.addEventListener('click', () => toggleCode(block.id));
+    header.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleCode(block.id);
+      }
+    });
+  });
+
+  // Simulator controls
+  const simSelect = document.getElementById('sim-select');
+  if (simSelect) simSelect.addEventListener('change', (event) => simSelectInd(event.target.value));
+
+  const runButton = document.getElementById('run-btn');
+  if (runButton) runButton.addEventListener('click', runPipeline);
+
+  const resetButton = document.getElementById('reset-btn');
+  if (resetButton) resetButton.addEventListener('click', resetSim);
+
   // Open first SQL block in active panel
   const active = document.querySelector('.ind-panel.active');
   if (active) {
     const first = active.querySelector('.sql-block');
-    if (first) first.classList.add('open');
+    if (first) {
+      first.classList.add('open');
+      const header = first.querySelector('.sql-block__hd');
+      if (header) header.setAttribute('aria-expanded', 'true');
+    }
   }
 
   // Init sim
