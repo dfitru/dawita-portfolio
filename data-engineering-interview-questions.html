@@ -55,6 +55,135 @@
     line-height: 1.6;
   }
 
+  .sql-practice {
+    background: linear-gradient(180deg, rgba(14,16,24,0.96), rgba(10,12,19,0.96));
+    border: 1px solid var(--border-md);
+    border-radius: var(--radius);
+    padding: clamp(18px, 3vw, 24px);
+    margin-bottom: 14px;
+  }
+
+  .sql-practice__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .sql-practice__title {
+    font-family: var(--f-display);
+    font-size: clamp(20px, 3vw, 28px);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .sql-practice__sub {
+    color: var(--txt-2);
+    max-width: 76ch;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .sql-practice__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .sql-practice__card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(18,21,31,0.98), rgba(12,15,22,0.98));
+    padding: 14px;
+  }
+
+  .sql-practice__cardHead {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .sql-practice__badge {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid rgba(242,201,76,0.24);
+    background: rgba(242,201,76,0.09);
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--f-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+
+  .sql-practice__cardTitle {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.35;
+    color: var(--txt);
+  }
+
+  .sql-practice__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 10px;
+  }
+
+  .sql-practice__pill {
+    font-family: var(--f-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--txt-2);
+    border: 1px solid var(--border-md);
+    border-radius: 999px;
+    padding: 3px 8px;
+    background: var(--bg-card);
+  }
+
+  .sql-practice__sectionLabel {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 10px 0 6px;
+  }
+
+  .sql-practice__text {
+    margin: 0;
+    color: var(--txt-2);
+    line-height: 1.55;
+  }
+
+  .sql-practice__code {
+    margin: 0;
+    border: 1px solid var(--border-md);
+    border-radius: 12px;
+    background: rgba(8,10,16,0.96);
+    padding: 12px;
+    color: #cfe1ff;
+    overflow-x: auto;
+    font-family: var(--f-mono);
+    font-size: 12px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+  }
+
+  .sql-practice__notes {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    color: var(--txt-2);
+    line-height: 1.5;
+  }
+
   .iq-controls {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr 1fr auto;
@@ -242,6 +371,17 @@
     <p class="iq-sub">Filter by topic, search by keyword, reveal expected talking points, and track your practiced questions. Your progress is stored in the browser for this device.</p>
   </section>
 
+  <section class="sql-practice" aria-labelledby="sql-practice-title">
+    <div class="sql-practice__head">
+      <div>
+        <div class="iq-kicker">Illustrated Practice</div>
+        <h2 class="sql-practice__title" id="sql-practice-title">SQL practice cards from the illustrated set</h2>
+      </div>
+      <p class="sql-practice__sub">A compact walkthrough of the image-based SQL prompts, with a scenario summary and the core query pattern for each one.</p>
+    </div>
+    <div id="sql-practice-grid" class="sql-practice__grid"></div>
+  </section>
+
   <section>
     <div class="iq-controls">
       <select id="category" class="iq-field" aria-label="Filter by category">
@@ -268,6 +408,29 @@
 </main>
 
 <script>
+const SQL_PRACTICE_CARDS = [
+  { num: 1, title: "Find the second highest salary", scenario: "Employees table with emp_id, name, salary. Return the second highest distinct salary.", answer: "SELECT MAX(salary) AS second_highest_salary\nFROM employees\nWHERE salary < (SELECT MAX(salary) FROM employees);", notes: ["Use a distinct second value, not a duplicated top salary.", "A DENSE_RANK version also works if ties matter."] },
+  { num: 2, title: "List all departments", scenario: "Departments table with dept_id and dept_name. Return every department row.", answer: "SELECT dept_id, dept_name\nFROM departments;", notes: ["Straight projection query.", "Useful baseline before joins or filters."] },
+  { num: 3, title: "Count employees in each department", scenario: "Employees table with emp_id and dept_id. Return employee count per department.", answer: "SELECT dept_id, COUNT(*) AS emp_count\nFROM employees\nGROUP BY dept_id;", notes: ["Group by the department key.", "COUNT(*) counts rows per group."] },
+  { num: 4, title: "Employees above average salary", scenario: "Find employees whose salary is greater than the company average.", answer: "SELECT emp_id, name, salary\nFROM employees\nWHERE salary > (SELECT AVG(salary) FROM employees);", notes: ["A scalar subquery supplies the benchmark.", "This is a common correlated-thinking pattern."] },
+  { num: 5, title: "Customers with no orders", scenario: "Find customers who have not placed any orders.", answer: "SELECT c.customer_id, c.customer_name, c.email\nFROM customers c\nLEFT JOIN orders o\n  ON c.customer_id = o.customer_id\nWHERE o.customer_id IS NULL;", notes: ["LEFT JOIN plus NULL filter finds missing matches.", "Anti-join logic is the key idea."] },
+  { num: 6, title: "Duplicate emails in users", scenario: "Find emails registered by more than one user.", answer: "SELECT email, COUNT(*) AS occurrence_count\nFROM users\nGROUP BY email\nHAVING COUNT(*) > 1;", notes: ["GROUP BY + HAVING is the standard duplicate check.", "You can join the result back to inspect the full duplicate records."] },
+  { num: 7, title: "Top 3 products by revenue in each category", scenario: "Return the top 3 products by total sales inside each category.", answer: "SELECT product_id, product_name, category, total_sales\nFROM (\n  SELECT product_id, product_name, category,\n         SUM(amount) AS total_sales,\n         ROW_NUMBER() OVER(PARTITION BY category ORDER BY SUM(amount) DESC) AS rn\n  FROM sales\n  GROUP BY product_id, product_name, category\n) t\nWHERE rn <= 3;", notes: ["Partition by category, rank by revenue descending.", "Use DENSE_RANK if tied items should share rank."] },
+  { num: 8, title: "Employees with no projects", scenario: "Find employees who are not assigned to any project.", answer: "SELECT e.emp_id, e.emp_name\nFROM employees e\nLEFT JOIN projects p\n  ON e.emp_id = p.emp_id\nWHERE p.project_id IS NULL;", notes: ["Another anti-join pattern.", "Filter on the right-side key being NULL."] },
+  { num: 9, title: "Customers with more than 5 orders in a month", scenario: "Find customers who placed more than five orders in any month.", answer: "SELECT customer_id, DATE_TRUNC('month', order_date) AS month, COUNT(*) AS total_orders\nFROM orders\nGROUP BY customer_id, DATE_TRUNC('month', order_date)\nHAVING COUNT(*) > 5;", notes: ["Group by customer and month.", "HAVING applies the threshold after aggregation."] },
+  { num: 10, title: "Running total of sales", scenario: "Return a cumulative sum of sales ordered by date.", answer: "SELECT sale_id, sale_date, amount,\n       SUM(amount) OVER (ORDER BY sale_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total\nFROM sales\nORDER BY sale_date;", notes: ["Window functions avoid self-joins for cumulative metrics.", "Always define the ordering column clearly."] },
+  { num: 11, title: "New vs returning customers", scenario: "Classify each order as New or Returning based on the customer’s first order date.", answer: "SELECT customer_id, order_id, order_date,\n       CASE WHEN order_date = first_order THEN 'New' ELSE 'Returning' END AS customer_type\nFROM (\n  SELECT o.*, MIN(order_date) OVER(PARTITION BY customer_id) AS first_order\n  FROM orders o\n) t\nORDER BY customer_id, order_date;", notes: ["MIN OVER tells you the first event per customer.", "CASE turns the timestamp comparison into a label."] },
+  { num: 12, title: "Nth highest salary in the company", scenario: "Find the 3rd highest distinct salary.", answer: "SELECT DISTINCT salary\nFROM employees\nORDER BY salary DESC\nLIMIT 1 OFFSET 2;", notes: ["DISTINCT removes duplicate salary values.", "OFFSET n-1 returns the nth ranked value."] },
+  { num: 13, title: "Departments with highest average salary", scenario: "Return the department(s) that have the maximum average salary.", answer: "SELECT dept_id, AVG(salary) AS avg_salary\nFROM employees\nGROUP BY dept_id\nHAVING AVG(salary) = (\n  SELECT MAX(avg_salary)\n  FROM (\n    SELECT AVG(salary) AS avg_salary\n    FROM employees\n    GROUP BY dept_id\n  ) x\n);", notes: ["Aggregate once per department, then compare against the max.", "Keeps all tied top departments."] },
+  { num: 14, title: "Consecutive login days by user", scenario: "Find users with at least 3 consecutive login days.", answer: "SELECT user_id\nFROM (\n  SELECT user_id, login_date,\n         login_date - INTERVAL '1 day' * ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY login_date) AS grp\n  FROM login_logs\n) t\nGROUP BY user_id, grp\nHAVING COUNT(*) >= 3;", notes: ["Row-number normalization groups consecutive dates.", "Then count rows per streak."] },
+  { num: 15, title: "Products never purchased by any customer", scenario: "Find products that never appear in the orders table.", answer: "SELECT p.product_id, p.product_name\nFROM products p\nLEFT JOIN orders o\n  ON p.product_id = o.product_id\nWHERE o.product_id IS NULL;", notes: ["Another classic NULL anti-join.", "Useful for catalog cleanup and demand analysis."] },
+  { num: 16, title: "Second highest salary in each department", scenario: "Return the second highest distinct salary per department.", answer: "SELECT dept_id, salary AS second_highest_salary\nFROM (\n  SELECT dept_id, salary,\n         DENSE_RANK() OVER(PARTITION BY dept_id ORDER BY salary DESC) AS rk\n  FROM employees\n) t\nWHERE rk = 2;", notes: ["DENSE_RANK preserves ties without gaps.", "Filter on rank 2 to get the second level."] },
+  { num: 17, title: "Month-over-month revenue growth", scenario: "Compare each month’s revenue to the previous month.", answer: "SELECT month, revenue,\n       LAG(revenue) OVER (ORDER BY month) AS prev_month_revenue,\n       ROUND((revenue - LAG(revenue) OVER (ORDER BY month)) * 100.0 / NULLIF(LAG(revenue) OVER (ORDER BY month), 0), 2) AS growth_percent\nFROM (...) t\nORDER BY month;", notes: ["LAG retrieves the previous row in time order.", "NULLIF avoids divide-by-zero."] },
+  { num: 18, title: "Active users in the last 7 days", scenario: "Return users active on each of the last 7 days, including today.", answer: "SELECT user_id\nFROM user_activity\nWHERE activity_date >= CURRENT_DATE - INTERVAL '6 day'\nGROUP BY user_id\nHAVING COUNT(DISTINCT activity_date) = 7;", notes: ["Count distinct active dates to ensure daily activity.", "The date range covers today plus six prior days."] },
+  { num: 19, title: "Customers who spent more than average in their country", scenario: "Compare each customer’s total spend to the average spend in the same country.", answer: "SELECT c.customer_id, c.customer_name, c.country, SUM(o.amount) AS total_spent\nFROM customers c\nJOIN orders o ON c.customer_id = o.customer_id\nGROUP BY c.customer_id, c.customer_name, c.country\nHAVING SUM(o.amount) > (\n  SELECT AVG(total_amount)\n  FROM (\n    SELECT c2.country, c2.customer_id, SUM(o2.amount) AS total_amount\n    FROM customers c2\n    JOIN orders o2 ON c2.customer_id = o2.customer_id\n    GROUP BY c2.country, c2.customer_id\n  ) t\n  WHERE t.country = c.country\n);", notes: ["This uses a per-country benchmark.", "It is a good correlated-subquery interview pattern."] },
+  { num: 20, title: "Employees with salary higher than department average", scenario: "Find employees earning more than their department’s average salary.", answer: "SELECT emp_id, emp_name, dept_id, salary\nFROM employees e\nWHERE salary > (\n  SELECT AVG(salary)\n  FROM employees\n  WHERE dept_id = e.dept_id\n);", notes: ["A correlated subquery compares each row to its department mean.", "This is one of the most common interview filters."] }
+];
+
 const QUESTIONS = [
   { id: 1, cat: "SQL", level: "easy", q: "How would you deduplicate records and keep the latest version?", points: ["Use ROW_NUMBER partitioned by business key", "Order by event/update timestamp descending", "Filter to row_number = 1", "Define tie-breaker to keep deterministic output"] },
   { id: 2, cat: "SQL", level: "medium", q: "When do you choose ROW_NUMBER vs RANK vs DENSE_RANK?", points: ["ROW_NUMBER for strict single-row selection", "RANK for tied ranking with gaps", "DENSE_RANK for tied ranking without gaps", "Mention deduplication usually uses ROW_NUMBER"] },
@@ -332,6 +495,7 @@ const levelSelect = document.getElementById("level");
 const searchInput = document.getElementById("search");
 const randomButton = document.getElementById("random");
 const listNode = document.getElementById("list");
+const sqlPracticeGrid = document.getElementById("sql-practice-grid");
 const statTotal = document.getElementById("stat-total");
 const statVisible = document.getElementById("stat-visible");
 const statPracticed = document.getElementById("stat-practiced");
@@ -364,6 +528,33 @@ function getFilteredQuestions() {
 
 function savePracticed() {
   localStorage.setItem(practicedKey, JSON.stringify([...practiced]));
+}
+
+function renderPracticeCards() {
+  if (!sqlPracticeGrid) return;
+
+  sqlPracticeGrid.innerHTML = SQL_PRACTICE_CARDS.map((card) => `
+    <article class="sql-practice__card">
+      <div class="sql-practice__cardHead">
+        <div class="sql-practice__badge">Q${card.num}</div>
+        <div>
+          <h3 class="sql-practice__cardTitle">${card.title}</h3>
+          <div class="sql-practice__meta">
+            <span class="sql-practice__pill">Image prompt</span>
+            <span class="sql-practice__pill">SQL interview</span>
+          </div>
+        </div>
+      </div>
+      <div class="sql-practice__sectionLabel">Scenario</div>
+      <p class="sql-practice__text">${card.scenario}</p>
+      <div class="sql-practice__sectionLabel">Answer</div>
+      <pre class="sql-practice__code"><code>${card.answer}</code></pre>
+      <div class="sql-practice__sectionLabel">Key points</div>
+      <ul class="sql-practice__notes">
+        ${card.notes.map((note) => `<li>${note}</li>`).join("")}
+      </ul>
+    </article>
+  `).join("");
 }
 
 function render() {
@@ -448,6 +639,7 @@ listNode.addEventListener("click", (event) => {
 });
 
 initCategories();
+renderPracticeCards();
 render();
 </script>
 </body>
